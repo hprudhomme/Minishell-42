@@ -1,60 +1,102 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: hprudhom <marvin@42.fr>                    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/12/11 15:52:47 by hprudhom          #+#    #+#              #
-#    Updated: 2020/12/20 18:36:04 by hprudhom         ###   ########lyon.fr    #
-#                                                                              #
-# **************************************************************************** #
+NAME		:=	libft.a
+BUFFER_SIZE	:=	4096
 
-SRCS	= ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c \
-			ft_memmove.c ft_memchr.c ft_memcmp.c ft_strlen.c \
-			ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c \
-			ft_isprint.c ft_toupper.c ft_tolower.c ft_strchr.c \
-			ft_strrchr.c ft_strncmp.c ft_strlcpy.c ft_strlcat.c \
-			ft_strnstr.c ft_atoi.c ft_calloc.c ft_strdup.c \
-			ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c \
-			ft_itoa.c ft_strmapi.c ft_putchar_fd.c ft_putstr_fd.c \
-			ft_putendl_fd.c ft_putnbr_fd.c ft_islower.c \
-			ft_isupper.c ft_strcpy.c ft_strnew.c
+CC			:=	clang
+FLAGS		:= -Wall -Werror -Wextra
 
-OBJS	= $(SRCS:.c=.o)
+DIR_SRCS	:=	srcs
+DIR_OBJS	:=	.objs
+DIR_INCS	:=	include
 
-BONUS	= ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
-		  ft_lstadd_back.c
+LST_SRCS	:=	ft_atoi.c \
+				ft_bzero.c \
+				ft_calloc.c \
+				ft_isalnum.c \
+				ft_isalpha.c \
+				ft_isascii.c \
+				ft_isdigit.c \
+				ft_isprint.c \
+				ft_itoa.c \
+				ft_memchr.c \
+				ft_memcmp.c \
+				ft_memcpy.c \
+				ft_memmove.c \
+				ft_memset.c \
+				ft_putchar_fd.c \
+				ft_putendl_fd.c \
+				ft_putnbr_fd.c \
+				ft_putstr_fd.c \
+				ft_split.c \
+				ft_strchr.c \
+				ft_strdup.c \
+				ft_striteri.c \
+				ft_strjoin.c \
+				ft_strlcat.c \
+				ft_strlcpy.c \
+				ft_strlen.c \
+				ft_strmapi.c \
+				ft_strncmp.c \
+				ft_strnstr.c \
+				ft_strrchr.c \
+				ft_strtrim.c \
+				ft_substr.c \
+				ft_tolower.c \
+				ft_toupper.c \
+				get_next_line/get_next_line.c \
+				get_next_line/get_next_line_utils.c \
+				ft_printf/ft_printf.c \
+				ft_printf/print_utils/ft_printbnum.c \
+				ft_printf/print_utils/ft_printchar.c \
+				ft_printf/print_utils/ft_printnum.c \
+				ft_printf/print_utils/ft_printpointer.c \
+				ft_printf/print_utils/ft_printstr.c \
+				ft_printf/print_utils/ft_printunum.c \
+				ft_printf/print_utils/utils.c \
+				# ft_lstadd_back.c \
+				# ft_lstadd_front.c \
+				# ft_lstclear.c \
+				# ft_lstdelone.c \
+				# ft_lstiter.c \
+				# ft_lstlast.c \
+				# ft_lstmap.c \
+				# ft_lstnew.c \
+				# ft_lstsize.c
+LST_OBJS	:=	$(LST_SRCS:.c=.o)
+LST_INCS	:=	libft.h get_next_line.h ft_printf.h
 
-B_OBJS	= $(BONUS:.c=.o)
+SRCS		:=	$(addprefix $(DIR_SRCS)/,$(LST_SRCS))
+OBJS		:=	$(addprefix $(DIR_OBJS)/,$(LST_OBJS))
+INCS		:=	$(addprefix $(DIR_INCS)/,$(LST_INCS))
 
-NAME 	= libft.a
+ERASE		:=	\033[2K\r
+BLUE		:=	\033[34m
+YELLOW		:=	\033[33m
+GREEN		:=	\033[32m
+END			:=	\033[0m
 
-CC 		= cc
+$(DIR_OBJS)/%.o: $(DIR_SRCS)/%.c $(INCS) Makefile
+	mkdir -p $(DIR_OBJS)
+	mkdir -p $(DIR_OBJS)/get_next_line
+	mkdir -p $(DIR_OBJS)/ft_printf
+	mkdir -p $(DIR_OBJS)/ft_printf/print_utils
+	$(CC) $(FLAGS) -D BUFFER_SIZE=${BUFFER_SIZE} -I $(DIR_INCS) -c $< -o $@
+	printf "$(ERASE)$(BLUE) > Compilation :$(END) $<"
 
-RM		= rm -f
-
-CFLAGS	= -Wall -Wextra -Werror
-
-.c.o:
-			$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
-
-all:		$(NAME)
+all:	$(NAME)
 
 $(NAME):	$(OBJS)
-			ar rc $(NAME) $(OBJS)
-			ranlib $(NAME)
-
-bonus:		$(B_OBJS)
-			ar rc $(NAME) $(B_OBJS)
-			ranlib $(NAME)
+	ar rcs $@ $^
+	printf "$(ERASE)$(GREEN)$@ made\n$(END)"
 
 clean:
-			$(RM) $(OBJS) $(B_OBJS)
+	rm -rf $(DIR_OBJS)
+	printf "$(YELLOW)$(DIR_OBJS) removed$(END)\n"
 
 fclean:		clean
-			$(RM) $(NAME)
+	rm -rdf	$(NAME)
+	printf "$(YELLOW)$(NAME) removed$(END)\n"
 
 re:			fclean all
 
-.PHONY:		all clean fclean re bonus
+.PHONY:	all clean fclean re
+.SILENT:
