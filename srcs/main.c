@@ -1,4 +1,4 @@
-# include "../include/minishell.h"
+#include "../include/minishell.h"
 
 char *my_getenv(char **env, char *elem/*"PATH"*/)
 {
@@ -32,20 +32,20 @@ char *my_getenv(char **env, char *elem/*"PATH"*/)
     return (str);
 }
 
-int takeInput(char* str)
+char	*take_input(void)
 {
-	char* buf;
+	char	*buf;
 
-	buf = readline(">> ");
-	if (strlen(buf) != 0) {
-		add_history(buf);
-		//str = ft_strdup(buf);
-        // str = malloc(sizeof(char) * ft_strlen(buf));
-		strcpy(str, buf);
-		return 0;
-	} else {
-		return 1;
+	buf = readline("mon_prompt>>> ");
+	if (!buf)
+		return (NULL);
+	if (ft_strlen(buf) == 0)
+	{
+		free(buf);
+		return (NULL);
 	}
+	add_history(buf);
+	return (buf);
 }
 
 void    exec_pipe(t_list2 *list, char **path_tab)
@@ -200,10 +200,11 @@ int main(int ac, char **av)
     while (42)
     {
         list = initialisation();
-        printf("mon_prompt>");
-        if (takeInput(str))
+		str = take_input();
+        if (!str)
 			continue;
         tab_pipe_split = ft_split(str, '|');
+		free(str);
         len = tab_2d_len(tab_pipe_split);
 
         do_list_simple_cmd(tab_pipe_split, list);
