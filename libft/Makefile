@@ -52,15 +52,15 @@ LST_SRCS	:=	ft_atoi.c \
 				ft_printf/print_utils/ft_printstr.c \
 				ft_printf/print_utils/ft_printunum.c \
 				ft_printf/print_utils/utils.c \
-				# ft_lstadd_back.c \
-				# ft_lstadd_front.c \
-				# ft_lstclear.c \
-				# ft_lstdelone.c \
-				# ft_lstiter.c \
-				# ft_lstlast.c \
-				# ft_lstmap.c \
-				# ft_lstnew.c \
-				# ft_lstsize.c
+				ft_lstadd_back.c \
+				ft_lstadd_front.c \
+				ft_lstclear.c \
+				ft_lstdelone.c \
+				ft_lstiter.c \
+				ft_lstlast.c \
+				ft_lstmap.c \
+				ft_lstnew.c \
+				ft_lstsize.c
 LST_OBJS	:=	$(LST_SRCS:.c=.o)
 LST_INCS	:=	libft.h get_next_line.h ft_printf.h
 

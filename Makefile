@@ -3,19 +3,20 @@ NAME		:=	minishell
 CC			:=	clang
 FLAGS		:=	-lreadline -Llibft -lft
 #FLAGS		+=	-Wall -Wextra -Werror
-FLAGS		+=	-g -fsanitize=address
+FLAGS		+=	-g
+#FLAGS		+=	-fsanitize=address
 
 DIR_SRCS	:=	srcs
 DIR_OBJS	:=	.objs
 DIR_INCS	:=	include
 
-LST_SRCS	:=	exec.c \
-				list.c \
-				main.c \
-				path.c \
-				pipe_tab_to_list.c \
-				str_to_wordtab.c \
-				utils.c
+LST_SRCS	:=	parsing/parsing.c \
+				parsing/quotes.c \
+				parsing/test.c \
+				parsing/utils.c \
+				utils/ft_split_multi_string.c \
+				utils/ft_strstr.c \
+				utils/strings.c
 LST_OBJS	:=	$(LST_SRCS:.c=.o)
 LST_INCS	:=	minishell.h
 
@@ -30,7 +31,7 @@ GREEN		:=	\033[32m
 END			:=	\033[0m
 
 $(DIR_OBJS)/%.o: $(DIR_SRCS)/%.c $(INCS) Makefile libft/libft.a
-	mkdir -p $(DIR_OBJS)
+	mkdir -p $(DIR_OBJS) $(DIR_OBJS)/parsing $(DIR_OBJS)/utils
 	$(CC) -I $(DIR_INCS) -c $< -o $@
 	printf "$(ERASE)$(BLUE) > Compilation :$(END) $<"
 
