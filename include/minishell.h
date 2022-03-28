@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:57:56 by ocartier          #+#    #+#             */
-/*   Updated: 2022/03/25 23:21:39 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/03/28 07:20:39 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@
 char			**ft_split_multi_string(char const *s, char **seps);
 char			*ft_strstr(char *str, char *to_find);
 int				count_char(char *str, char c);
+int				index_of(char *str, char c);
 
 // PARSING
 typedef struct s_command_list
@@ -95,6 +96,10 @@ typedef struct s_command_list
 	char					*out_filename;
 	struct s_command_list	*next;
 }	t_command_list;
+// parsing/lst.c
+void			lst_append(t_list **lst, char *str);
+void			print_list(t_list *lst);
+int				create_command_lst(t_command_list **command_list, t_list *args);
 // parsing/parsing.c
 t_command_list	*parsing(char *command);
 // parsing/quotes.c

@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 09:08:51 by ocartier          #+#    #+#             */
-/*   Updated: 2022/03/25 23:21:22 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/03/28 11:16:20 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,18 @@ char	*ft_strldup(const char *s1, size_t size)
 	while (--s1_len >= 0)
 		dup[s1_len] = s1[s1_len];
 	return (dup);
+}
+
+int	index_of(char *str, char c)
+{
+	int	cur;
+
+	cur = 0;
+	while (str[cur])
+	{
+		if (str[cur] == c && cur != 0)
+			return (cur);
+		cur++;
+	}
+	return (cur);
 }
