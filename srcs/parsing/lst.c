@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 07:14:34 by ocartier          #+#    #+#             */
-/*   Updated: 2022/03/28 10:21:20 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/03/28 12:14:46 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ int	create_command_lst(t_command_list **command_list, t_list *args)
 			|| ft_strncmp(args->content, "||", ft_strlen(args->content)) == 0)
 		{
 
-			printf("-> %s + \n", args->next->content);
+			//printf("-> %s + \n", args->next->content);
 			args = args->next;
 			while (args)
 			{
-				printf("%s ", args->content);
+				//printf("%s ", args->content);
 				args = args->next;
 			}
 		}

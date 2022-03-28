@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 09:08:51 by ocartier          #+#    #+#             */
-/*   Updated: 2022/03/28 11:16:20 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/03/28 12:13:33 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,16 @@ char	*ft_strldup(const char *s1, size_t size)
 	return (dup);
 }
 
-int	index_of(char *str, char c)
+int	index_of(char *str, char *search, int n)
 {
 	int	cur;
 
 	cur = 0;
 	while (str[cur])
 	{
-		if (str[cur] == c && cur != 0)
+		if (ft_strncmp(str + cur, search, ft_strlen(search)) == 0)
+			n--;
+		if (n <= 0)
 			return (cur);
 		cur++;
 	}
