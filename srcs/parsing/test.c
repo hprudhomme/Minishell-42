@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 09:09:05 by ocartier          #+#    #+#             */
-/*   Updated: 2022/03/28 13:25:13 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/03/29 08:19:40 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	main(int argc, char **argv)
 		command = ft_strjoin(command, argv[cur]);
 		free(temp);
 	}
-
 	parsing(command);
 	free(command);
 }

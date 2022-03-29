@@ -4,7 +4,7 @@ CC			:=	clang
 FLAGS		:=	-lreadline -Llibft -lft
 #FLAGS		+=	-Wall -Wextra -Werror
 FLAGS		+=	-g
-#FLAGS		+=	-fsanitize=address
+FLAGS		+=	-fsanitize=address
 
 DIR_SRCS	:=	srcs
 DIR_OBJS	:=	.objs

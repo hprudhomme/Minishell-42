@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 09:08:48 by ocartier          #+#    #+#             */
-/*   Updated: 2022/03/28 13:28:50 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/03/29 10:51:40 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,37 +26,38 @@ int	get_arg_end(char *str, int quote_index)
 	{
 		test_index = index_of(str + quote_index, splitchar[cur], 1);
 		if (test_index < end_index)
-			return (test_index + quote_index);
+			return (test_index + quote_index + free_array(splitchar));
 	}
-	return (end_index + quote_index);
+	return (end_index + quote_index + free_array(splitchar));
 }
 
-int	get_end_index(char *str, int existing_end)
+int	get_end_index(char *str, int e_end)
 {
 	int		end_index;
 	char	**splitchar;
 	int		cur;
 
 	splitchar = ft_split("&& || | << < >> >", ' ');
-	end_index = 0;
+	end_index = -2;
 	if (str[0] == '\'')
-		return (index_of(str + 1, "'", 1) + 2);
-	if (existing_end > -1 && index_of(str, "'", 1) < existing_end)
-		return (get_arg_end(str, index_of(str + 1, "'", 2) + 2));
-	if (str[0] == '"')
-		return (index_of(str + 1, "\"", 1) + 2);
-	if (existing_end > -1 && index_of(str, "\"", 1) < existing_end)
-		return (get_arg_end(str, index_of(str + 1, "\"", 2) + 2));
+		end_index = index_of(str + 1, "'", 1) + 2;
+	else if (e_end > -1 && index_of(str, "'", 1) < e_end)
+		end_index = get_arg_end(str, index_of(str + 1, "'", 2) + 2);
+	else if (str[0] == '"')
+		end_index = index_of(str + 1, "\"", 1) + 2;
+	else if (e_end > -1 && index_of(str, "\"", 1) < e_end)
+		end_index = get_arg_end(str, index_of(str + 1, "\"", 2) + 2);
+	if (end_index != -2)
+		return (end_index + free_array(splitchar));
 	cur = -1;
 	while (splitchar[++cur])
 	{
-		if ((existing_end > -1
-				&& index_of(str, splitchar[cur], 1) < existing_end))
-			return (index_of(str, splitchar[cur], 1));
+		if ((e_end > -1 && index_of(str, splitchar[cur], 1) < e_end))
+			return (index_of(str, splitchar[cur], 1) + free_array(splitchar));
 		if (index_of(str, splitchar[cur], 1) == 0)
-			return (ft_strlen(splitchar[cur]));
+			return (ft_strlen(splitchar[cur]) + free_array(splitchar));
 	}
-	return (existing_end);
+	return (e_end + free_array(splitchar));
 }
 
 int	split_args(t_list **args, char *cmd)
@@ -92,16 +93,16 @@ t_command_list	*parsing(char *command)
 	args = NULL;
 	printf("Input command : %s\n", command);
 	printf("\n GET ARGS\n");
-	int split_return = split_args(&args, command);
-	if (split_return == 2)
+	if (split_args(&args, command) == 2)
 		printf("minishell > Error : missing quote");
 	else
 	{
 		print_list(args);
 		printf("\n COMMAND LIST\n");
 		create_command_lst(&command_list, args);
-		//print_list(args);
+		print_cmdlist(command_list);
 	}
 	ft_lstclear(&args, free);
+	cmdlst_clear(&command_list);
 	return (command_list);
 }

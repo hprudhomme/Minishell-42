@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 09:08:51 by ocartier          #+#    #+#             */
-/*   Updated: 2022/03/28 12:13:33 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/03/28 13:37:18 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,15 @@ int	index_of(char *str, char *search, int n)
 		cur++;
 	}
 	return (cur);
+}
+
+int	free_array(char **array)
+{
+	int	cur;
+
+	cur = -1;
+	while (array[++cur])
+		free(array[cur]);
+	free(array);
+	return (0);
 }
