@@ -6,17 +6,19 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 22:53:22 by ocartier          #+#    #+#             */
-/*   Updated: 2022/03/25 23:34:13 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/01 16:55:10 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+/// NOT USED
+
 static int	replace_env(char **str)
 {
 	char	*replaced;
 
-	replaced = ft_strdup(".il y a un env à remplacer.");
+	replaced = ft_strdup(".il y a un env à remplacer."); // TODO : can fail
 	free(*str);
 	*str = replaced;
 	return (1);

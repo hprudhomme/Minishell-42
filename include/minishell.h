@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:57:56 by ocartier          #+#    #+#             */
-/*   Updated: 2022/03/29 17:11:04 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/01 17:16:59 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int				count_char(char *str, char c);
 int				index_of(char *str, char *search, int n);
 
 // PARSING
+# define NEXT_END		0
 # define NEXT_PIPE		1
 # define NEXT_AND		2
 # define NEXT_OR		3
@@ -104,6 +105,7 @@ typedef struct s_command_list
 // parsing/lst.c
 void			lst_append(t_list **lst, char *str);
 void			print_list(t_list *lst);
+int				lst_clear(t_list **lst);
 void			print_cmdlist(t_command_list *lst);
 int				create_command_lst(t_command_list **command_list, t_list *args);
 void			cmdlst_clear(t_command_list **lst);

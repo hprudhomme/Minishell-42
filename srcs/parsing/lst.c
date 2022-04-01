@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 07:14:34 by ocartier          #+#    #+#             */
-/*   Updated: 2022/03/29 17:19:37 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/01 17:16:44 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	lst_append(t_list **lst, char *str)
 {
 	t_list	*new;
 
-	new = ft_lstnew(str);
+	new = ft_lstnew(str); // TODO : can fail
 	ft_lstadd_back(lst, new);
 }
 
@@ -101,6 +101,22 @@ int	strarr_free(char **array)
 	}
 	return (0);
 }
+
+int	lst_clear(t_list **lst)
+{
+	t_list	*next;
+
+	while (*lst)
+	{
+		next = (*lst)->next;
+		free((*lst)->content);
+		free(*lst);
+		*lst = next;
+	}
+	*lst = NULL;
+	return (0);
+}
+
 
 void	cmdlst_clear(t_command_list **lst)
 {
@@ -137,14 +153,14 @@ int	strarr_append(char ***array, char *str)
 	int		cur;
 
 	new_len = strarr_len(*array) + 1;
-	new = malloc(sizeof(char *) * (new_len + 1));
+	new = malloc(sizeof(char *) * (new_len + 1)); // TODO : can fail
 	cur = 0;
 	while ((*array) && (*array)[cur])
 	{
-		new[cur] = ft_strdup((*array)[cur]);
+		new[cur] = ft_strdup((*array)[cur]); // TODO : can fail
 		cur++;
 	}
-	new[cur] = ft_strdup(str);
+	new[cur] = ft_strdup(str); // TODO : can fail
 	cur++;
 	new[cur] = 0;
 	strarr_free(*array);
@@ -160,7 +176,7 @@ int get_arg_type(char *str)
 		return (NEXT_AND);
 	if (ft_strncmp(str, "||", ft_strlen(str)) == 0)
 		return (NEXT_OR);
-	return (0);
+	return (NEXT_END);
 }
 
 int	create_command_lst(t_command_list **command_list, t_list *args)
@@ -171,15 +187,15 @@ int	create_command_lst(t_command_list **command_list, t_list *args)
 	*command_list = NULL;
 	while (args && args->next)
 	{
-		new = malloc(sizeof(t_command_list));
-		new->command = ft_strdup(args->content);
+		new = malloc(sizeof(t_command_list)); // TODO : can fail
+		new->command = ft_strdup(args->content); // TODO : can fail
 		new->next = NULL;
 		new->todo_next = 0;
 		new->args = NULL;
 		new->infiles = NULL;
 		new->outfiles = NULL;
 		// ARGS
-		strarr_append(&(new->args), args->content);
+		strarr_append(&(new->args), args->content); // TODO : can fail
 		args = args->next;
 		while (args && !get_arg_type(args->content))
 		{
@@ -188,7 +204,7 @@ int	create_command_lst(t_command_list **command_list, t_list *args)
 			{
 				args = args->next;
 				if (args)
-					strarr_append(&(new->outfiles), args->content);
+					strarr_append(&(new->outfiles), args->content); // TODO : can fail
 				args = args->next;
 				continue ;
 			}
@@ -197,18 +213,18 @@ int	create_command_lst(t_command_list **command_list, t_list *args)
 			{
 				args = args->next;
 				if (args)
-					strarr_append(&(new->infiles), args->content);
+					strarr_append(&(new->infiles), args->content); // TODO : can fail
 				args = args->next;
 				continue ;
 			}
-			strarr_append(&(new->args), args->content);
+			strarr_append(&(new->args), args->content); // TODO : can fail
 			args = args->next;
 		}
 		// TODO NEXT
 		if (args)
 			new->todo_next = get_arg_type(args->content);
 		else
-			new->todo_next = 0;
+			new->todo_next = NEXT_END;
 		// ADD TO LIST
 		if (*command_list)
 			cmdlst_last(*command_list)->next = new;
