@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:57:56 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/03 13:08:04 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/03 13:22:05 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void			print_list(t_list *lst);
 int				lst_clear(t_list **lst);
 void			print_cmdlist(t_command_list *lst);
 int				create_command_lst(t_command_list **command_list, t_list *args);
-void			cmdlst_clear(t_command_list **lst);
+int				cmdlst_clear(t_command_list **lst);
 // parsing/parsing.c
 t_command_list	*parsing(char *command);
 // parsing/quotes.c

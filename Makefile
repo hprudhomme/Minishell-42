@@ -2,7 +2,7 @@ NAME		:=	minishell
 
 CC			:=	clang
 FLAGS		:=	-lreadline -Llibft -lft
-#FLAGS		+=	-Wall -Wextra -Werror
+FLAGS		+=	-Wall -Wextra -Werror
 FLAGS		+=	-g
 #FLAGS		+=	-fsanitize=address
 

@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 09:08:48 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/03 13:08:23 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/03 14:10:13 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,20 +102,17 @@ t_command_list	*parsing(char *command)
 {
 	t_command_list	*command_list;
 	t_list			*args;
-	int				split_return;
 
 	args = NULL;
-	split_return = split_args(&args, command);
-	if (!split_return)
+	if (!split_args(&args, command))
 		return (NULL);
-	if (split_return == 2)
-		printf("minishell > Error : missing quote");
-	else
+	if (!create_command_lst(&command_list, args))
 	{
-		create_command_lst(&command_list, args); // TODO : can fail
-		print_cmdlist(command_list);
+		lst_clear(&args);
+		return (NULL);
 	}
-	ft_lstclear(&args, free);
+	print_cmdlist(command_list);
+	lst_clear(&args);
 	cmdlst_clear(&command_list);
 	return (command_list);
 }
