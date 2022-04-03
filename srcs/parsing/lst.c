@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 07:14:34 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/03 13:08:53 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/03 13:13:31 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	lst_append(t_list **lst, char *str)
 	t_list	*new;
 
 	new = ft_lstnew(str);
-	if (!new || 1)
+	if (!new)
 		return (lst_clear(&new));
 	ft_lstadd_back(lst, new);
 	return (1);
