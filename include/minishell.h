@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:57:56 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/01 17:16:59 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/03 13:08:04 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ typedef struct s_command_list
 	struct s_command_list	*next;
 }	t_command_list;
 // parsing/lst.c
-void			lst_append(t_list **lst, char *str);
+int				lst_append(t_list **lst, char *str);
 void			print_list(t_list *lst);
 int				lst_clear(t_list **lst);
 void			print_cmdlist(t_command_list *lst);
