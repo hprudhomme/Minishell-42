@@ -1,4 +1,0 @@
-1 : retourner sur le site pour bien comprendre les commandes;
-2 : faire un parsing simple, commme expliquer sur le site;
-3 : essayer de faire des builtins;
-4 : gerer les doubles quotes et tout ca;
