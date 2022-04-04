@@ -6,11 +6,11 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 09:09:05 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/04 16:39:00 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/04 17:15:06 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../include/minishell.h"
 
 void	print_list(t_list *lst)
 {

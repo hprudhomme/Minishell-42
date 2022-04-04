@@ -15,8 +15,8 @@ LST_SRCS	:=	parsing/cmdlst.c \
 				parsing/lst.c \
 				parsing/parsing.c \
 				parsing/quotes.c \
-				parsing/test.c \
-				parsing/utils.c
+				parsing/utils.c \
+				test.c
 LST_OBJS	:=	$(LST_SRCS:.c=.o)
 LST_INCS	:=	minishell.h
 
