@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 09:08:48 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/03 14:10:13 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/04 17:12:57 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,25 @@ int	get_arg_end(char *str, int quote_index)
 	{
 		test_index = index_of(str + quote_index, splitchar[cur], 1);
 		if (test_index < end_index)
-			return (test_index + quote_index + free_array(splitchar));
+			return (test_index + quote_index + strarr_free(splitchar));
 	}
-	return (end_index + quote_index + free_array(splitchar));
+	return (end_index + quote_index + strarr_free(splitchar));
+}
+
+int	get_quotes_end(char *str, int e_end)
+{
+	int	end_index;
+
+	end_index = -2;
+	if (str[0] == '\'')
+		end_index = index_of(str + 1, "'", 1) + 2;
+	else if (e_end > -1 && index_of(str, "'", 1) < e_end)
+		end_index = get_arg_end(str, index_of(str + 1, "'", 2) + 2);
+	else if (str[0] == '"')
+		end_index = index_of(str + 1, "\"", 1) + 2;
+	else if (e_end > -1 && index_of(str, "\"", 1) < e_end)
+		end_index = get_arg_end(str, index_of(str + 1, "\"", 2) + 2);
+	return (end_index);
 }
 
 int	get_end_index(char *str, int e_end)
@@ -44,28 +60,20 @@ int	get_end_index(char *str, int e_end)
 	splitchar = ft_split("&& || | << < >> >", ' ');
 	if (!splitchar)
 		return (0);
-	end_index = -2;
-	if (str[0] == '\'')
-		end_index = index_of(str + 1, "'", 1) + 2;
-	else if (e_end > -1 && index_of(str, "'", 1) < e_end)
-		end_index = get_arg_end(str, index_of(str + 1, "'", 2) + 2);
-	else if (str[0] == '"')
-		end_index = index_of(str + 1, "\"", 1) + 2;
-	else if (e_end > -1 && index_of(str, "\"", 1) < e_end)
-		end_index = get_arg_end(str, index_of(str + 1, "\"", 2) + 2);
+	end_index = get_quotes_end(str, e_end);
 	if (end_index == 0)
-		return (free_array(splitchar));
+		return (strarr_free(splitchar));
 	if (end_index != -2)
-		return (end_index + free_array(splitchar));
+		return (end_index + strarr_free(splitchar));
 	cur = -1;
 	while (splitchar[++cur])
 	{
 		if ((e_end > -1 && index_of(str, splitchar[cur], 1) < e_end))
-			return (index_of(str, splitchar[cur], 1) + free_array(splitchar));
+			return (index_of(str, splitchar[cur], 1) + strarr_free(splitchar));
 		if (index_of(str, splitchar[cur], 1) == 0)
-			return (ft_strlen(splitchar[cur]) + free_array(splitchar));
+			return (ft_strlen(splitchar[cur]) + strarr_free(splitchar));
 	}
-	return (e_end + free_array(splitchar));
+	return (e_end + strarr_free(splitchar));
 }
 
 int	split_args(t_list **args, char *cmd)
@@ -86,8 +94,6 @@ int	split_args(t_list **args, char *cmd)
 			end_index = get_end_index(cmd + cur, get_arg_end(cmd + cur, 0));
 		if (!end_index)
 			return (lst_clear(args));
-		if (cmd[cur] != ' ' && end_index + cur > ft_strlen(cmd))
-			return (2);
 		arg = ft_strldup(cmd + cur, end_index);
 		if (!arg)
 			return (lst_clear(args));
@@ -98,10 +104,10 @@ int	split_args(t_list **args, char *cmd)
 	return (1);
 }
 
-t_command_list	*parsing(char *command)
+t_cmdlst	*parsing(char *command)
 {
-	t_command_list	*command_list;
-	t_list			*args;
+	t_cmdlst	*command_list;
+	t_list		*args;
 
 	args = NULL;
 	if (!split_args(&args, command))

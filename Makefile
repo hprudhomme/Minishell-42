@@ -10,7 +10,9 @@ DIR_SRCS	:=	srcs
 DIR_OBJS	:=	.objs
 DIR_INCS	:=	include
 
-LST_SRCS	:=	parsing/lst.c \
+LST_SRCS	:=	parsing/cmdlst.c \
+				parsing/free.c \
+				parsing/lst.c \
 				parsing/parsing.c \
 				parsing/quotes.c \
 				parsing/test.c \

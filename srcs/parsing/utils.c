@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 09:08:51 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/01 16:55:31 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/04 16:46:45 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,28 @@ int	index_of(char *str, char *search, int n)
 	return (cur);
 }
 
-int	free_array(char **array)
+int	get_arg_type(char *str)
 {
-	int	cur;
+	if (ft_strncmp(str, "|", ft_strlen(str)) == 0)
+		return (NEXT_PIPE);
+	if (ft_strncmp(str, "&&", ft_strlen(str)) == 0)
+		return (NEXT_AND);
+	if (ft_strncmp(str, "||", ft_strlen(str)) == 0)
+		return (NEXT_OR);
+	return (NEXT_END);
+}
 
-	cur = -1;
-	while (array[++cur])
-		free(array[cur]);
-	free(array);
-	return (0);
+int	is_not_sep(char *str)
+{
+	if (get_arg_type(str) != 0)
+		return (0);
+	if (ft_strncmp(str, ">", ft_strlen(str)) == 0)
+		return (0);
+	if (ft_strncmp(str, "<", ft_strlen(str)) == 0)
+		return (0);
+	if (ft_strncmp(str, "<<", ft_strlen(str)) == 0)
+		return (0);
+	if (ft_strncmp(str, ">>", ft_strlen(str)) == 0)
+		return (0);
+	return (1);
 }
