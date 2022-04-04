@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:57:56 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/03 13:22:05 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/04 13:36:46 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,9 @@ typedef struct s_command_list
 	char					*command;
 	char					**args;
 	char					**infiles;
-	char					**outfiles;
+	char					**write_in;
+	char					**append_in;
+	char					**heredocs;
 	int						todo_next;
 	struct s_command_list	*next;
 }	t_command_list;
