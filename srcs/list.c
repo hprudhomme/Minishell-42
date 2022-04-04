@@ -106,6 +106,7 @@ void    free_list(t_list2 *list)
     i = 0;
     if (list == NULL)
         exit(EXIT_FAILURE);
+    //printf("list_len = %d\n", list_len(list));
     while (i <= list_len(list))
     {
         actuel = list->premier;
@@ -114,6 +115,7 @@ void    free_list(t_list2 *list)
             int i = 0;
             while (list->premier->cmd[i])
             {
+                //printf("s = %s\n", list->premier->cmd[i]);
                 free(list->premier->cmd[i]);
                 i++;
             }

@@ -1,5 +1,7 @@
 #include "../include/minishell.h"
 
+int ctrlC = 0;
+
 char *my_getenv(char **env, char *elem/*"PATH"*/)
 {
     char    *str;
@@ -29,6 +31,7 @@ char *my_getenv(char **env, char *elem/*"PATH"*/)
         i++;
         x++;
     }
+    str[x] = '\0';
     return (str);
 }
 
@@ -36,9 +39,22 @@ char	*take_input(void)
 {
 	char	*buf;
 
+    // Changing readlin's getc function works due to getc returning -1 on a Ctrl+C, which causes readline to return NULL.
+    rl_getc_function = getc;
 	buf = readline("mon_prompt>>> ");
 	if (!buf)
-		return (NULL);
+    {
+        if (ctrlC)
+        {
+            ctrlC = 0;
+            return NULL;
+        }
+        else
+        {
+            write(1, "\n", 1);
+            exit(0);
+        }
+    }
 	if (ft_strlen(buf) == 0)
 	{
 		free(buf);
@@ -48,171 +64,96 @@ char	*take_input(void)
 	return (buf);
 }
 
-void    exec_pipe(t_list2 *list, char **path_tab)
+void    handler()
 {
-    char *redirect_path;
-    char *pwd = getenv("PWD");
-    char *right_path;
-    if (list == NULL)
-    {
-        exit(EXIT_FAILURE);
-    }
-
-    t_list2_simple_cmd *actuel = list->premier;
-    	// 0 is read end, 1 is write end
-	int pipefd[2];
-	pid_t p1, p2;
-
-	if (pipe(pipefd) < 0) {
-		printf("\nPipe could not be initialized");
-		return;
-	}
-	p1 = fork();
-	if (p1 < 0) {
-		printf("\nCould not fork");
-		return;
-	}
-	// printf("p1 = %d\n", p1);
-	if (p1 == 0) {
-		// Child 1 executing..
-		// It only needs to write at the write end
-		close(pipefd[0]);
-		dup2(pipefd[1], STDOUT_FILENO); //  stdout = pipefd[1] // change la sortie standard (console) pr la mettre dans fd[1]
-		close(pipefd[1]);
-
-        right_path = find_right_path(path_tab, actuel->cmd[0], right_path);
-
-		if (execve(right_path,actuel->cmd, NULL) < 0) {
-			printf("\nCould not execute command 1..");
-			exit(0);
-		}
-	} else {
-		// Parent executing
-        actuel = actuel->next;
-		p2 = fork();
-		if (p2 < 0) {
-			printf("\nCould not fork");
-			return;
-		}
-
-		// Child 2 executing..
-		// It only needs to read at the read end
-		if (p2 == 0) {
-            // printf("actuel->cmd[2] = %s\n", actuel->cmd[2]);
-            if (actuel->cmd[2][0] == '>')
-            {
-                printf("buzz\n");
-                redirect_path = find_path_redirect_file(pwd, actuel->cmd[3], redirect_path);
-                printf("redirect path = %s\n", redirect_path);
-                // if (redirect_path != NULL)
-                // {
-                    close(pipefd[1]);
-			        dup2(pipefd[0], open(redirect_path, O_CREAT | O_WRONLY | O_TRUNC)); // stdin = pipefd[0] qui est la sortie deniere de pipefd[1]
-			        close(pipefd[0]);
-                // }
-                // open(redirect_path, O_RDWR, O_CREAT);
-            }
-            else
-            {
-                close(pipefd[1]);
-			    dup2(pipefd[0], STDIN_FILENO); // stdin = pipefd[0] qui est la sortie deniere de pipefd[1]
-			    close(pipefd[0]);
-            }
-            right_path = find_right_path(path_tab, actuel->cmd[0], right_path);
-			if (execve(right_path,actuel->cmd, NULL) < 0) {
-				printf("\nCould not execute command 2..");
-				exit(0);
-			}
-		} else {
-			// parent executing, waiting for two children
-			wait(NULL);
-			wait(NULL);
-		}
-	}
+    ctrlC = 1;
+    write(1, "\n", 1);
 }
 
-// int main(int argc, char **argv, char **env)
-// {
-//     char *str;
-//     char *env_path;
-//     char ** array = NULL;
-//     int pid;
-//     int len;
-
-//     char **tab_pipe_split;
-//     char **path_tab;
-//     char *right_path;
-
-//     t_list2 *list;
-
-//     list = initialisation();
-//     // printf("%d\n", list->premier->nb);
-//     // list->premier->cmd = str_to_wordtab("ls -la");
-
-//     env_path = getenv("PATH");
-//     path_tab = ft_split(env_path, ':');
-
-//     while (42)
-//     {
-//         printf("mon_prompt>");
-//         if (takeInput(str))
-// 			continue;
-//         tab_pipe_split = ft_split(str, '|');
-//         len = tab_2d_len(tab_pipe_split);
-//         if (len > 1)
-//         {
-//             printf("buzz\n");
-//             do_list_simple_cmd(tab_pipe_split, list);
-//             exec_pipe(list, path_tab);
-//         }
-//         else
-//         {
-//             array = str_to_wordtab(str);
-
-//             right_path = find_right_path(path_tab, array[0], right_path);
-//             pid = fork();
-//             if (pid == 0)
-//             {
-//                 execve(right_path, array, NULL);
-//             }
-//             else
-//                 wait(NULL);
-//         }
-//     }
-// }
-
-int main(int ac, char **av)
+char    **my_getenvs(char **env)
 {
+    char **my_env;
+    int i;
+    int len;
+
+    len = 0;
+    i = 0;
+    while (env[i++])
+        len++;
+    my_env = (char **)malloc(sizeof(char *) * (len + 2));
+    i = 0;
+    while (env[i])
+    {
+        my_env[i] = ft_strdup(env[i]);
+        i++;
+    }
+    my_env[i] = NULL;
+    return my_env;
+}
+
+int main(int ac, char **av, char **env)
+{
+    t_mem *mem;
     char *str;
     char *env_path;
     char ** array = NULL;
     int pid;
     int len;
+    
+    char **my_env;
 
+    char **tab_esp_list;
     char **tab_pipe_split;
     char **path_tab;
     char *right_path;
 
     t_list2 *list;
 
+    mem = initialize_mem();
+    signal(SIGINT, handler);
     env_path = getenv("PATH");
+    // printf("s = %s\n", env_path);
     path_tab = ft_split(env_path, ':');
+    // int z = 0;
+    // while (path_tab[z])
+    // {
+    //     printf("str = %s\n", path_tab[z]);
+    //     z++;
+    // }
+    
+    mem->my_env = my_getenvs(env);
+    
+    // if (chdir("buzz") == -1)
+    // {
+    //     printf("buzz\n");
+    //     printf("%s\n", strerror( errno ));
+    // }
     while (42)
     {
-        list = initialisation();
 		str = take_input();
         if (!str)
 			continue;
-        tab_pipe_split = ft_split(str, '|');
-		free(str);
-        len = tab_2d_len(tab_pipe_split);
 
-        do_list_simple_cmd(tab_pipe_split, list);
-        check_redirection(list);
-        execute(list, path_tab);
+        // test &&
+        tab_esp_list = ft_split(str, '&');
+        free(str);
+        int i = 0;
+        while (i < tab_2d_len(tab_esp_list))
+        {
+            list = initialisation();
+            tab_pipe_split = ft_split(tab_esp_list[i], '|');
+            len = tab_2d_len(tab_pipe_split);
+            do_list_simple_cmd(tab_pipe_split, list);
+            check_redirection(list);
+            execute2(list, path_tab, env, mem);
 
-        free_list(list);
-        if (list)
-            free(list);
+            free_list(list);
+            if (list)
+                free(list);
+            free_tab_2d(tab_pipe_split);
+            i++;
+        }
     }
+    free_tab_2d(my_env);
+    return 0;
 }

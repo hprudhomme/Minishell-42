@@ -3,18 +3,28 @@ NAME		:=	minishell
 CC			:=	clang
 FLAGS		:=	-lreadline -Llibft -lft
 #FLAGS		+=	-Wall -Wextra -Werror
-FLAGS		+=	-g -fsanitize=address
+FLAGS		+=	-g
 
 DIR_SRCS	:=	srcs
 DIR_OBJS	:=	.objs
 DIR_INCS	:=	include
 
 LST_SRCS	:=	exec.c \
+				exec2.c \
 				list.c \
 				main.c \
 				path.c \
 				pipe_tab_to_list.c \
 				str_to_wordtab.c \
+				cd.c \
+				pwd.c \
+				exit.c \
+				env.c \
+				export.c \
+				unset.c \
+				echo.c \
+				init_mem.c \
+				cd_utils.c \
 				utils.c
 LST_OBJS	:=	$(LST_SRCS:.c=.o)
 LST_INCS	:=	minishell.h
