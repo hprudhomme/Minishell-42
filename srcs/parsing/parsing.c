@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 09:08:48 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/04 17:12:57 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/05 10:36:17 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,6 @@ t_cmdlst	*parsing(char *command)
 		lst_clear(&args);
 		return (NULL);
 	}
-	print_cmdlist(command_list);
 	lst_clear(&args);
-	cmdlst_clear(&command_list);
 	return (command_list);
 }

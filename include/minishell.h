@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:57:56 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/04 17:11:53 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/05 10:41:55 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int			get_quotes_end(char *str, int e_end);
 int			get_end_index(char *str, int e_end);
 int			split_args(t_list **args, char *cmd);
 t_cmdlst	*parsing(char *command);
+// parsing/quotes.c
+int			replace_quotes(char ***args);
 // parsing/utils.c
 char		*ft_strldup(const char *s1, size_t size);
 int			index_of(char *str, char *search, int n);
