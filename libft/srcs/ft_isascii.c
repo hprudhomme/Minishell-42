@@ -1,27 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: ocartier <ocartier@student.42lyon.f>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 13:57:46 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/04 17:19:00 by ocartier         ###   ########.fr       */
+/*   Created: 2021/11/02 14:28:09 by ocartier          #+#    #+#             */
+/*   Updated: 2021/11/10 08:59:32 by ocartier         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
-
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+int	ft_isascii(int c)
 {
-	t_list	*next;
-
-	while (*lst)
-	{
-		next = (*lst)->next;
-		del((*lst)->content);
-		free(*lst);
-		*lst = next;
-	}
-	*lst = NULL;
+	return (c >= 0 && c <= 127);
 }

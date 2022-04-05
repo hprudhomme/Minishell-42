@@ -1,1 +1,0 @@
-1 : changer les strcmp et faire une fct qui retourne si c'est une cmd builtin ou pas.

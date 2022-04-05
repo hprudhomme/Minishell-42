@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear.c                                      :+:      :+:    :+:   */
+/*   ft_printchar.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 13:57:46 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/04 17:19:00 by ocartier         ###   ########.fr       */
+/*   Created: 2021/11/29 13:58:41 by ocartier          #+#    #+#             */
+/*   Updated: 2022/01/31 15:10:15 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "../../../include/ft_printf.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+int	print_char(char c)
 {
-	t_list	*next;
+	write(1, &c, 1);
+	return (1);
+}
 
-	while (*lst)
-	{
-		next = (*lst)->next;
-		del((*lst)->content);
-		free(*lst);
-		*lst = next;
-	}
-	*lst = NULL;
+int	pf_printchar(char c, t_opt opt)
+{
+	int	cur;
+
+	cur = 0;
+	while (cur + 1 < opt.min_width)
+		cur += print_char(' ');
+	cur += print_char(c);
+	while (cur < opt.offset)
+		cur += print_char(' ');
+	return (cur);
 }
