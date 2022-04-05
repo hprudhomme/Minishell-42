@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 09:08:48 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/05 10:36:17 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/05 14:55:42 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	get_quotes_end(char *str, int e_end)
 		end_index = index_of(str + 1, "\"", 1) + 2;
 	else if (e_end > -1 && index_of(str, "\"", 1) < e_end)
 		end_index = get_arg_end(str, index_of(str + 1, "\"", 2) + 2);
+	if (end_index != -2 && str[end_index] != ' ')
+		end_index += index_of(str + end_index, " ", 1);
 	return (end_index);
 }
 

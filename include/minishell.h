@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:57:56 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/05 10:41:55 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/05 14:51:33 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int			get_arg_type(char *str);
 int			is_not_sep(char *str);
 
 // parsing/test.c
+void		print_list(t_list *lst);
 void		print_cmdlist(t_cmdlst *lst);
 
 #endif
