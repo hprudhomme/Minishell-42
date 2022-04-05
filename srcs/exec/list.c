@@ -1,6 +1,6 @@
-# include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-t_list2_simple_cmd	*ft_lstlast(t_list2_simple_cmd *lst)
+t_list2_simple_cmd	*ft_lstlast2(t_list2_simple_cmd *lst)
 {
 	while (lst)
 	{
@@ -31,7 +31,7 @@ t_list2 *initialisation()
     return liste;
 }
 
-t_list2_simple_cmd	*ft_lstnew(char **content)
+t_list2_simple_cmd	*ft_lstnew2(char **content)
 {
 	t_list2_simple_cmd	*elmt;
 
@@ -47,11 +47,11 @@ t_list2_simple_cmd	*ft_lstnew(char **content)
 	return (elmt);
 }
 
-void	ft_lstadd_back(t_list2 *list, t_list2_simple_cmd *new_elm)
+void	ft_lstadd_back2(t_list2 *list, t_list2_simple_cmd *new_elm)
 {
 	t_list2_simple_cmd	*last_elem;
 
-	last_elem = ft_lstlast(list->premier);
+	last_elem = ft_lstlast2(list->premier);
 	last_elem->next = new_elm;
 }
 
@@ -106,6 +106,7 @@ void    free_list(t_list2 *list)
     i = 0;
     if (list == NULL)
         exit(EXIT_FAILURE);
+    //printf("list_len = %d\n", list_len(list));
     while (i <= list_len(list))
     {
         actuel = list->premier;
@@ -114,6 +115,7 @@ void    free_list(t_list2 *list)
             int i = 0;
             while (list->premier->cmd[i])
             {
+                //printf("s = %s\n", list->premier->cmd[i]);
                 free(list->premier->cmd[i]);
                 i++;
             }

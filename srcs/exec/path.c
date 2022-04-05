@@ -1,4 +1,4 @@
-# include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 char    *find_right_path(char **path_tab, char *cmd, char *right_path)
 {
