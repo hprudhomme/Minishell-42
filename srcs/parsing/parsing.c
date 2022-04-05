@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 09:08:48 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/05 16:27:16 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/05 16:35:25 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,9 @@ int	get_end_index(char *str, int e_end)
 	Works like a split on spaces, but it also split on <, <<, >, >>, &&, |, ||
 	Of course, it doesn't split on these characters if they are surrounded
 	by simple or double quotes
+
+	E.g.: `echo 'Hello World' && cat -n 5 Makefile`
+			return : ["echo", "'Hello World'", "&&", "cat", "-n", "5", "Makefile"]
 */
 int	split_args(t_list **args, char *cmd)
 {
@@ -141,6 +144,11 @@ int	split_args(t_list **args, char *cmd)
 	return (1);
 }
 
+/*
+	Main parsing function, return a list of commands
+	Start by splitting the command in a list of args with split_args(),
+	then parse that string list into a list of commands with create_command_lst()
+*/
 t_cmdlst	*parsing(char *command)
 {
 	t_cmdlst	*command_list;
