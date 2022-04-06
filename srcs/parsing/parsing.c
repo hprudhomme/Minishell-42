@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 09:08:48 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/05 16:35:25 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/06 09:08:15 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	get_arg_end(char *str, int quote_index)
 	int		test_index;
 	int		cur;
 
-	splitchar = ft_split("&& || | << < >> >", ' ');
+	splitchar = ft_split("&& || | << < >> > &", ' ');
 	if (!splitchar)
 		return (0);
 	end_index = index_of(str + quote_index, " ", 1);
@@ -88,7 +88,7 @@ int	get_end_index(char *str, int e_end)
 
 	if (e_end == 0)
 		return (0);
-	splitchar = ft_split("&& || | << < >> >", ' ');
+	splitchar = ft_split("&& || | << < >> > &", ' ');
 	if (!splitchar)
 		return (0);
 	end_index = get_quotes_end(str, e_end);
@@ -148,6 +148,8 @@ int	split_args(t_list **args, char *cmd)
 	Main parsing function, return a list of commands
 	Start by splitting the command in a list of args with split_args(),
 	then parse that string list into a list of commands with create_command_lst()
+	Return NULL on malloc error
+	Return NULL on syntax error
 */
 t_cmdlst	*parsing(char *command)
 {
@@ -155,8 +157,15 @@ t_cmdlst	*parsing(char *command)
 	t_list		*args;
 
 	args = NULL;
+	if (check_quotes(command))
+		return (NULL);
 	if (!split_args(&args, command))
 		return (NULL);
+	if (check_specials(args))
+	{
+		lst_clear(&args);
+		return (NULL);
+	}
 	if (!create_command_lst(&command_list, args))
 	{
 		lst_clear(&args);

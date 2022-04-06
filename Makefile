@@ -4,7 +4,7 @@ CC			:=	clang
 FLAGS		:=	-lreadline -Llibft -lft
 FLAGS		+=	-Wall -Wextra -Werror
 FLAGS		+=	-g
-FLAGS		+=	-fsanitize=address
+#FLAGS		+=	-fsanitize=address
 
 DIR_SRCS	:=	srcs
 DIR_OBJS	:=	.objs
@@ -27,13 +27,14 @@ LST_SRCS	:=	exec/cd_utils.c \
 				exec/str_to_wordtab.c \
 				exec/unset.c \
 				exec/utils.c \
+				parsing/check.c \
 				parsing/cmdlst.c \
 				parsing/free.c \
 				parsing/lst.c \
 				parsing/parsing.c \
 				parsing/quotes.c \
 				parsing/utils.c \
-				#main_parsing.c
+				main_parsing.c
 LST_OBJS	:=	$(LST_SRCS:.c=.o)
 LST_INCS	:=	minishell.h
 

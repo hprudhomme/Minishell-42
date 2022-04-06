@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:57:56 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/06 09:03:16 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/06 09:04:57 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,9 @@ typedef struct s_cmdlst
 	int				todo_next;
 	struct s_cmdlst	*next;
 }	t_cmdlst;
+// parsing/check.c
+int			check_quotes(char *command);
+int			check_specials(t_list *args);
 // parsing/cmdlst.c
 t_cmdlst	*cmdlst_new(void);
 t_cmdlst	*cmdlst_last(t_cmdlst *lst);

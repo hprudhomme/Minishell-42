@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 09:09:05 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/05 14:56:50 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/06 08:46:07 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,12 @@ int	main(int argc, char **argv)
 		command = ft_strjoin(command, argv[cur]);
 		free(temp);
 	}
-	command_list = parsing(command); // can return null (malloc error)
-	replace_quotes(&(command_list->args)); // can return 0 (malloc error)
-	print_cmdlist(command_list);
-	cmdlst_clear(&command_list);
+	command_list = parsing(command); // can return null on error (syntax error, malloc error...)
+	if (command_list)
+	{
+		replace_quotes(&(command_list->args)); // can return 0 (malloc error)
+		print_cmdlist(command_list);
+		cmdlst_clear(&command_list);
+	}
 	free(command);
 }
