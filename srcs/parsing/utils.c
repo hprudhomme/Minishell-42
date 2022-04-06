@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 09:08:51 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/04 16:46:45 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/06 09:07:39 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,19 @@ int	get_arg_type(char *str)
 	return (NEXT_END);
 }
 
-int	is_not_sep(char *str)
+int	is_sep(char *str)
 {
 	if (get_arg_type(str) != 0)
-		return (0);
+		return (1);
 	if (ft_strncmp(str, ">", ft_strlen(str)) == 0)
-		return (0);
+		return (1);
 	if (ft_strncmp(str, "<", ft_strlen(str)) == 0)
-		return (0);
+		return (1);
 	if (ft_strncmp(str, "<<", ft_strlen(str)) == 0)
-		return (0);
+		return (1);
 	if (ft_strncmp(str, ">>", ft_strlen(str)) == 0)
-		return (0);
-	return (1);
+		return (1);
+	if (ft_strncmp(str, "&", ft_strlen(str)) == 0)
+		return (1);
+	return (0);
 }
