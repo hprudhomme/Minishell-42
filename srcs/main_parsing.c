@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 09:09:05 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/06 08:46:07 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/06 19:52:50 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ void	print_list(t_list *lst)
 
 void	print_cmdlist(t_cmdlst *lst)
 {
-	int	cur;
-	int	a_cur;
+	int			cur;
+	int			a_cur;
+	t_outlst	*out_it;
 
 	cur = 0;
 	printf("\nCommands List : \n");
@@ -40,7 +41,7 @@ void	print_cmdlist(t_cmdlst *lst)
 		a_cur = 0;
 		while (lst->args && lst->args[a_cur])
 		{
-			printf("\"%s\",", lst->args[a_cur]);
+			printf("\"%s\", ", lst->args[a_cur]);
 			a_cur++;
 		}
 		printf("]\n");
@@ -52,27 +53,22 @@ void	print_cmdlist(t_cmdlst *lst)
 			printf("     -> Next : PIPE\n");
 		else
 			printf("     -> Next : END\n");
-		printf("     outfiles (write): [");
-		a_cur = 0;
-		while (lst->write_in && lst->write_in[a_cur])
+		printf("     outfiles: [");
+		out_it = lst->outfiles;
+		while (out_it)
 		{
-			printf("\"%s\",", lst->write_in[a_cur]);
-			a_cur++;
-		}
-		printf("]\n");
-		printf("     outfiles (append): [");
-		a_cur = 0;
-		while (lst->append_in && lst->append_in[a_cur])
-		{
-			printf("\"%s\",", lst->append_in[a_cur]);
-			a_cur++;
+			if (out_it->action == OUT_APPEND)
+				printf("append : \"%s\", ", out_it->filename);
+			if (out_it->action == OUT_WRITE)
+				printf("write : \"%s\", ", out_it->filename);
+			out_it = out_it->next;
 		}
 		printf("]\n");
 		printf("     infiles: [");
 		a_cur = 0;
 		while (lst->infiles && lst->infiles[a_cur])
 		{
-			printf("\"%s\",", lst->infiles[a_cur]);
+			printf("\"%s\", ", lst->infiles[a_cur]);
 			a_cur++;
 		}
 		printf("]\n");
@@ -80,7 +76,7 @@ void	print_cmdlist(t_cmdlst *lst)
 		a_cur = 0;
 		while (lst->heredocs && lst->heredocs[a_cur])
 		{
-			printf("\"%s\",", lst->heredocs[a_cur]);
+			printf("\"%s\", ", lst->heredocs[a_cur]);
 			a_cur++;
 		}
 		printf("]\n");

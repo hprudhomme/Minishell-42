@@ -30,6 +30,7 @@ LST_SRCS	:=	exec/cd_utils.c \
 				parsing/check.c \
 				parsing/cmdlst.c \
 				parsing/free.c \
+				parsing/outfiles.c \
 				parsing/lst.c \
 				parsing/parsing.c \
 				parsing/quotes.c \
