@@ -14,13 +14,12 @@ LST_SRCS	:=	exec/cd_utils.c \
 				exec/cd.c \
 				exec/echo.c \
 				exec/env.c \
-				exec/exec.c \
-				exec/exec2.c \
+				exec/exec3.c \
 				exec/exit.c \
 				exec/export.c \
 				exec/init_mem.c \
 				exec/list.c \
-				exec/main.c \
+				exec/main2.c \
 				exec/path.c \
 				exec/pipe_tab_to_list.c \
 				exec/pwd.c \

@@ -13,6 +13,11 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# define NEXT_END		0
+# define NEXT_PIPE		1
+# define NEXT_AND		2
+# define NEXT_OR		3
+
 # include <stdlib.h>
 # include <stdio.h>
 # include <fcntl.h>
@@ -66,6 +71,18 @@ typedef struct s_mem
 	t_exec_loop *exec_loop;
 }					t_mem;
 
+typedef struct s_cmdlst
+{
+	char			*command;
+	char			**args;
+	char			**infiles;
+	char			**write_in;
+	char			**append_in;
+	char			**heredocs;
+	int				todo_next;
+	struct s_cmdlst	*next;
+}	t_cmdlst;
+
 
 
 char **str_to_wordtab(char * str);
@@ -99,6 +116,7 @@ void    check_var(char **cmd, char **my_env);
 
 void 	execute(t_list2 *list, char **path_tab, char **env, t_mem *mem);
 void	execute2(t_list2 *list, char **path_tab, char **env, t_mem *mem);
+void 	execute3(t_cmdlst *lst, char **path_tab, char **env, t_mem *mem);
 
 char    **ft_export(char **my_env, char *s);
 void    ft_env(char **my_env);
@@ -107,7 +125,8 @@ char    **ft_unset(char **my_env, char *s);
 // built-in
 
 void ft_pwd(char **my_env);
-void ft_exit(t_list2 *list);
+// void ft_exit(t_list2 *list);
+void ft_exit();
 void    ft_echo(char **s);
 void 	ft_cd(char ** cmd, char **my_env);
 
@@ -120,6 +139,7 @@ char    **append_env(char **my_env, char *s);
 char    **supp_elem_env(char **my_env, char *s);
 int     is_in_env(char **my_env, char *s);
 char 	*my_getenv(char **env, char *elem);
+int		cmdlist_len(t_cmdlst *lst);
 
 // env_utils
 
@@ -131,22 +151,6 @@ char *concat_path(char **tab, char *str);
 	PARSING
 */
 
-# define NEXT_END		0
-# define NEXT_PIPE		1
-# define NEXT_AND		2
-# define NEXT_OR		3
-
-typedef struct s_cmdlst
-{
-	char			*command;
-	char			**args;
-	char			**infiles;
-	char			**write_in;
-	char			**append_in;
-	char			**heredocs;
-	int				todo_next;
-	struct s_cmdlst	*next;
-}	t_cmdlst;
 // parsing/cmdlst.c
 t_cmdlst	*cmdlst_new(void);
 t_cmdlst	*cmdlst_last(t_cmdlst *lst);

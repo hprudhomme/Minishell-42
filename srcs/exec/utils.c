@@ -108,3 +108,15 @@ int     is_in_env(char **my_env, char *s)
 //     return new;
 // }
 
+int cmdlist_len(t_cmdlst *lst)
+{
+	int	cur;
+
+	cur = 0;
+	while (lst)
+	{
+		cur++;
+		lst = lst->next;
+	}
+    return cur;
+}
