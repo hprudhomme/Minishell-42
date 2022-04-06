@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 09:09:05 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/06 19:52:50 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/06 20:07:20 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	print_cmdlist(t_cmdlst *lst)
 		lst = lst->next;
 	}
 }
-
+/*
 int	main(int argc, char **argv)
 {
 	int			cur;
@@ -109,3 +109,4 @@ int	main(int argc, char **argv)
 	}
 	free(command);
 }
+*/
