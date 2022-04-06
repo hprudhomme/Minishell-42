@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:31:53 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/04 16:39:00 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/06 09:02:16 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int	append_args(t_list **args, t_cmdlst *new, char *op, char ***array)
 		*args = (*args)->next;
 		if (*args && !strarr_append(array, (*args)->content))
 			return (0);
-		*args = (*args)->next;
+		if ((*args)->next)
+			*args = (*args)->next;
 		return (2);
 	}
 	return (1);
@@ -66,7 +67,7 @@ int	cmdlist_append_args(t_list **args, t_cmdlst *new)
 			return (0);
 		else if (!append_args(args, new, "<<", &(new->heredocs)))
 			return (0);
-		if ((*args) && is_not_sep((*args)->content))
+		if ((*args) && !is_sep((*args)->content))
 		{
 			if (!strarr_append(&(new->args), (*args)->content))
 				return (0);

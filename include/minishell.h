@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:57:56 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/05 17:22:29 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/06 09:03:16 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,6 @@ int			replace_quotes(char ***args);
 char		*ft_strldup(const char *s1, size_t size);
 int			index_of(char *str, char *search, int n);
 int			get_arg_type(char *str);
-int			is_not_sep(char *str);
+int			is_sep(char *str);
 
 #endif
