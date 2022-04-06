@@ -125,7 +125,7 @@ char    **ft_unset(char **my_env, char *s);
 
 void ft_pwd(char **my_env);
 // void ft_exit(t_list2 *list);
-void ft_exit();
+void	ft_exit();
 void    ft_echo(char **s);
 void 	ft_cd(char ** cmd, char **my_env);
 

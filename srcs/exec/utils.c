@@ -124,6 +124,8 @@ int cmdlist_len(t_cmdlst *lst)
 int    outlst_len(t_outlst *lst)
 {
     int i;
+
+    i = 0;
     while (lst)
     {
         i++;

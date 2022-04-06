@@ -91,7 +91,6 @@ char    **my_getenvs(char **env)
 
 void    print_outlst(t_outlst *lst)
 {
-    printf("buzz\n");
     while (lst)
     {
         if (lst->filename)
@@ -99,7 +98,6 @@ void    print_outlst(t_outlst *lst)
             printf("filename : %s\n", lst->filename);
             printf("action : %d\n", lst->action);
         }
-        
         lst = lst->next;
     }
 }
@@ -162,6 +160,7 @@ void	printf_cmdlist(t_cmdlst *lst)
 			a_cur++;
 		}
 		printf("]\n");
+        printf("outfiles_len = %d\n", outlst_len(lst->outfiles));
 		lst = lst->next;
 	}
 }
