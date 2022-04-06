@@ -120,3 +120,15 @@ int cmdlist_len(t_cmdlst *lst)
 	}
     return cur;
 }
+
+int    outlst_len(t_outlst *lst)
+{
+    int i;
+    while (lst)
+    {
+        i++;
+        lst = lst->next;
+    }
+    return i;
+}
+

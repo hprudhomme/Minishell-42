@@ -6,17 +6,12 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:57:56 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/05 17:22:29 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/06 19:51:35 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-# define NEXT_END		0
-# define NEXT_PIPE		1
-# define NEXT_AND		2
-# define NEXT_OR		3
 
 # include <stdlib.h>
 # include <stdio.h>
@@ -71,19 +66,23 @@ typedef struct s_mem
 	t_exec_loop *exec_loop;
 }					t_mem;
 
+typedef struct s_outlst
+{
+	char			*filename;
+	int				action;
+	struct s_outlst	*next;
+}	t_outlst;
+
 typedef struct s_cmdlst
 {
 	char			*command;
 	char			**args;
 	char			**infiles;
-	char			**write_in;
-	char			**append_in;
+	t_outlst		*outfiles;
 	char			**heredocs;
 	int				todo_next;
 	struct s_cmdlst	*next;
 }	t_cmdlst;
-
-
 
 char **str_to_wordtab(char * str);
 
@@ -140,6 +139,7 @@ char    **supp_elem_env(char **my_env, char *s);
 int     is_in_env(char **my_env, char *s);
 char 	*my_getenv(char **env, char *elem);
 int		cmdlist_len(t_cmdlst *lst);
+int    	outlst_len(t_outlst *lst);
 
 // env_utils
 
@@ -151,6 +151,18 @@ char *concat_path(char **tab, char *str);
 	PARSING
 */
 
+# define NEXT_END		0
+# define NEXT_PIPE		1
+# define NEXT_AND		2
+# define NEXT_OR		3
+
+# define OUT_WRITE		0
+# define OUT_APPEND		1
+
+// parsing/check.c
+int			check_quotes(char *command);
+int			check_specials(t_list *args);
+
 // parsing/cmdlst.c
 t_cmdlst	*cmdlst_new(void);
 t_cmdlst	*cmdlst_last(t_cmdlst *lst);
@@ -159,6 +171,7 @@ int			cmdlist_append_args(t_list **args, t_cmdlst *new);
 int			create_command_lst(t_cmdlst **command_list, t_list *args);
 // parsing/free.c
 int			cmdlst_clear(t_cmdlst **lst);
+int			outlst_clear(t_outlst **lst);
 int			free_array_n(char **array, int n);
 int			lst_clear(t_list **lst);
 int			strarr_free(char **array);
@@ -166,6 +179,10 @@ int			strarr_free(char **array);
 int			lst_append(t_list **lst, char *str);
 int			strarr_len(char **array);
 int			strarr_append(char ***array, char *str);
+// parsing/outfiles.c
+int			outlst_append(t_outlst **lst, char *filename, char *spe);
+int			append_out_args(t_list **args,
+				t_cmdlst *new, char *op, t_outlst **out);
 // parsing/parsing.c
 int			get_arg_end(char *str, int quote_index);
 int			get_quotes_end(char *str, int e_end);
@@ -178,6 +195,6 @@ int			replace_quotes(char ***args);
 char		*ft_strldup(const char *s1, size_t size);
 int			index_of(char *str, char *search, int n);
 int			get_arg_type(char *str);
-int			is_not_sep(char *str);
+int			is_sep(char *str);
 
 #endif

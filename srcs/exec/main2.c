@@ -89,7 +89,22 @@ char    **my_getenvs(char **env)
     return my_env;
 }
 
-void	print_cmdlist(t_cmdlst *lst)
+void    print_outlst(t_outlst *lst)
+{
+    printf("buzz\n");
+    while (lst)
+    {
+        if (lst->filename)
+        {
+            printf("filename : %s\n", lst->filename);
+            printf("action : %d\n", lst->action);
+        }
+        
+        lst = lst->next;
+    }
+}
+
+void	printf_cmdlist(t_cmdlst *lst)
 {
 	int	cur;
 	int	a_cur;
@@ -114,21 +129,22 @@ void	print_cmdlist(t_cmdlst *lst)
 			printf("     -> Next : PIPE\n");
 		else
 			printf("     -> Next : END\n");
-		printf("     outfiles (write): [");
+		// printf("     outfiles (write): [");
 		a_cur = 0;
-		while (lst->write_in && lst->write_in[a_cur])
-		{
-			printf("\"%s\",", lst->write_in[a_cur]);
-			a_cur++;
-		}
-		printf("]\n");
-		printf("     outfiles (append): [");
-		a_cur = 0;
-		while (lst->append_in && lst->append_in[a_cur])
-		{
-			printf("\"%s\",", lst->append_in[a_cur]);
-			a_cur++;
-		}
+        print_outlst(lst->outfiles);
+		// while (lst->write_in && lst->write_in[a_cur])
+		// {
+		// 	printf("\"%s\",", lst->write_in[a_cur]);
+		// 	a_cur++;
+		// }
+		// printf("]\n");
+		// printf("     outfiles (append): [");
+		// a_cur = 0;
+		// while (lst->append_in && lst->append_in[a_cur])
+		// {
+		// 	printf("\"%s\",", lst->append_in[a_cur]);
+		// 	a_cur++;
+		// }
 		printf("]\n");
 		printf("     infiles: [");
 		a_cur = 0;
@@ -175,7 +191,7 @@ int main(int ac, char **av, char **env)
 			continue;
 
         command_list = parsing(str);
-        print_cmdlist(command_list);
+        printf_cmdlist(command_list);
         free(str);
         // int i = 0;
         // while (i < tab_2d_len(tab_esp_list))
