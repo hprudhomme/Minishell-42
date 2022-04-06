@@ -90,7 +90,7 @@ char    **my_getenvs(char **env)
     my_env[i] = NULL;
     return my_env;
 }
-/*
+
 int main(int ac, char **av, char **env)
 {
     t_mem *mem;
@@ -157,4 +157,3 @@ int main(int ac, char **av, char **env)
     free_tab_2d(my_env);
     return 0;
 }
-*/
