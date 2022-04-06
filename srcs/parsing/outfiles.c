@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 19:04:30 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/06 19:50:39 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/06 21:51:11 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,15 @@ int	outlst_append(t_outlst **lst, char *filename, char *spe)
 
 int	append_out_args(t_list **args, t_cmdlst *new, char *op, t_outlst **out)
 {
+	if (!(*args))
+		return (1);
 	if (ft_strlen(op) == ft_strlen((*args)->content)
 		&& ft_strncmp((*args)->content, op, ft_strlen((*args)->content)) == 0)
 	{
 		*args = (*args)->next;
 		if (*args && !outlst_append(out, (*args)->content, op))
 			return (0);
-		if ((*args)->next)
-			*args = (*args)->next;
+		*args = (*args)->next;
 		return (2);
 	}
 	return (1);
