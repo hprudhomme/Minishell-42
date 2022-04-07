@@ -190,14 +190,14 @@ int main(int ac, char **av, char **env)
 			continue;
 
         command_list = parsing(str);
-        printf_cmdlist(command_list);
+        //printf_cmdlist(command_list);
         free(str);
         // int i = 0;
         // while (i < tab_2d_len(tab_esp_list))
         // {
         //     command_list = parsing(str);
         //     print_cmdlist(command_list);
-        //     execute3(command_list, path_tab, env, mem);
+        execute3(command_list, path_tab, env, mem);
         //     i++;
         // }
     }
