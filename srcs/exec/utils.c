@@ -40,6 +40,7 @@ int     is_in_env(char **my_env, char *s)
         if (strcmp(temp[0], s) == 0)
             break ;
         free_tab_2d(temp);
+        temp = NULL;
         i++;
     }
     if (temp)

@@ -4,7 +4,7 @@ CC			:=	clang
 FLAGS		:=	-lreadline -Llibft -lft
 FLAGS		+=	-Wall -Wextra -Werror
 FLAGS		+=	-g
-#FLAGS		+=	-fsanitize=address
+FLAGS		+=	-fsanitize=address
 
 DIR_SRCS	:=	srcs
 DIR_OBJS	:=	.objs
@@ -15,15 +15,15 @@ LST_SRCS	:=	exec/cd_utils.c \
 				exec/echo.c \
 				exec/env.c \
 				exec/exec3.c \
+				exec/exec_utils.c \
+				exec/exec_utils2.c \
+				exec/exec_infiles.c \
 				exec/exit.c \
 				exec/export.c \
 				exec/init_mem.c \
-				exec/list.c \
 				exec/main2.c \
 				exec/path.c \
-				exec/pipe_tab_to_list.c \
 				exec/pwd.c \
-				exec/str_to_wordtab.c \
 				exec/unset.c \
 				exec/utils.c \
 				parsing/check.c \

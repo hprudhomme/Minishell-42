@@ -57,12 +57,19 @@ typedef struct s_exec_loop
 	int fdpipe[2];
 	int ret;
 	char *redirect_path;
+	char *right_path;
 	// char **path_tab;
 }					t_exec_loop;
 
 typedef struct s_mem
 {
-	char **my_env;
+	char		**my_env;
+	char		**path_tab;
+	int			exit_statue;
+	int			last_cmd_exit_statue;
+	int			fd_exit_statue[2];
+	int			fd_heredocs[2];
+	char		*tmpfile;
 	t_exec_loop *exec_loop;
 }					t_mem;
 
@@ -84,55 +91,56 @@ typedef struct s_cmdlst
 	struct s_cmdlst	*next;
 }	t_cmdlst;
 
-char **str_to_wordtab(char * str);
-
 // init
 
 t_mem	*initialize_mem(void);
 
-// list
+// free
 
-t_list2_simple_cmd	*ft_lstlast2(t_list2_simple_cmd *lst);
-t_list2              *initialisation();
-t_list2_simple_cmd	*ft_lstnew2(char **content);
-void                ft_lstadd_back2(t_list2 *list, t_list2_simple_cmd *new_elm);
-void				aff_list(t_list2 *list);
-int					list_len(t_list2 *list);
-void    			free_list(t_list2 *list);
+void	free_mem(t_mem *mem, int exiting);
 
 //	path
 
 char    *find_right_path(char **path_tab, char *cmd, char *right_path);
 char    *find_path_redirect_file(char *pwd, char *actuel, char *redirect_path);
 
-//
-
-void     do_list_simple_cmd(char **tab_pipe_split, t_list2 *list);
-void    check_redirection(t_list2 *list);
-void    check_var(char **cmd, char **my_env);
-
 // exec
 
 void 	execute(t_list2 *list, char **path_tab, char **env, t_mem *mem);
 void	execute2(t_list2 *list, char **path_tab, char **env, t_mem *mem);
-void 	execute3(t_cmdlst *lst, char **path_tab, char **env, t_mem *mem);
+void 	execute3(t_cmdlst *lst, char **env, t_mem *mem);
 
-char    **ft_export(char **my_env, char *s);
-void    ft_env(char **my_env);
-char    **ft_unset(char **my_env, char *s);
+//	exec_utils
+
+void    init_outlst_loop(t_mem *mem, t_cmdlst *lst, int i);
+int		save_last_exit_statue(t_mem *mem, t_cmdlst *lst);
+void    init_exec(t_mem *mem, t_cmdlst *lst);
+void    reset_exec(t_mem *mem);
+int     is_builtin(char *cmd);
+void    write_exit_statue(t_mem *mem, int i);
+
+// exec_infiles
+
+void    handle_heredocs(t_mem *mem, t_cmdlst *lst);
+void    setup_infiles(t_cmdlst *lst, t_mem *mem);
+void    delete_tpmfile(t_mem *mem);
 
 // built-in
 
-void ft_pwd(char **my_env);
-// void ft_exit(t_list2 *list);
-void	ft_exit();
-void    ft_echo(char **s);
-void 	ft_cd(char ** cmd, char **my_env);
+char 	**ft_export(t_mem *mem, char *s);
+char    **ft_exports(t_mem *mem, char **args);
+int   	ft_env(char **my_env, t_mem *mem);
+char    **ft_unsets(t_mem *mem, char **args);
+char 	**ft_unset(t_mem *mem, char *s);
+
+int 	ft_pwd(char **my_env, t_mem *mem);
+void	ft_exit(t_mem *mem, t_cmdlst *lst);
+int	    ft_echo(char **s, t_mem *mem);
+void 	ft_cd(char ** cmd, t_mem *mem);
 
 // utils
 
 int     tab_2d_len(char **tab);
-int     first_word_is_exit(char *s);
 void    free_tab_2d(char **tab);
 char    **append_env(char **my_env, char *s);
 char    **supp_elem_env(char **my_env, char *s);

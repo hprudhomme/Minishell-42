@@ -33,11 +33,10 @@ char *my_getenv(char **env, char *elem/*"PATH"*/)
     return (str);
 }
 
-char	*take_input(void)
+char	*take_input(t_mem *mem)
 {
 	char	*buf;
 
-    // Changing readlin's getc function works due to getc returning -1 on a Ctrl+C, which causes readline to return NULL.
     rl_getc_function = getc;
 	buf = readline("mon_prompt>>> ");
 	if (!buf)
@@ -50,6 +49,7 @@ char	*take_input(void)
         else
         {
             write(1, "\n", 1);
+            free_mem(mem, 1);
             exit(0);
         }
     }
@@ -168,39 +168,22 @@ void	printf_cmdlist(t_cmdlst *lst)
 int main(int ac, char **av, char **env)
 {
     t_mem *mem;
-    char *str;
-    char *env_path;
-    char **tab_esp_list;
     t_cmdlst *command_list;
-
-    char **my_env;
-    char **path_tab;
-    char *right_path;
+    char *str;
 
     mem = initialize_mem();
     signal(SIGINT, handler);
-    env_path = getenv("PATH");
-    path_tab = ft_split(env_path, ':');
-
+    mem->path_tab = ft_split(getenv("PATH"), ':');
     mem->my_env = my_getenvs(env);
     while (42)
     {
-		str = take_input();
+		str = take_input(mem);
         if (!str)
 			continue;
-
         command_list = parsing(str);
-        //printf_cmdlist(command_list);
+        execute3(command_list, env, mem);
+        cmdlst_clear(&command_list);
         free(str);
-        // int i = 0;
-        // while (i < tab_2d_len(tab_esp_list))
-        // {
-        //     command_list = parsing(str);
-        //     print_cmdlist(command_list);
-        execute3(command_list, path_tab, env, mem);
-        //     i++;
-        // }
     }
-    free_tab_2d(my_env);
     return 0;
 }

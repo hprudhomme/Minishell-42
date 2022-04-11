@@ -1,7 +1,8 @@
 #include "../../include/minishell.h"
 
-void    ft_env(char **my_env)
+int    ft_env(char **my_env, t_mem *mem)
 {
+    close(mem->fd_exit_statue[0]);
     int x;
 
     x = 0;
@@ -11,4 +12,8 @@ void    ft_env(char **my_env)
         write(1, "\n", 1);
         x++;
     }
+    mem->exit_statue = 0;
+    write(mem->fd_exit_statue[1], &mem->exit_statue, sizeof(mem->exit_statue));
+    close(mem->fd_exit_statue[1]);
+    return (1);
 }
