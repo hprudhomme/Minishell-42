@@ -6,12 +6,15 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 08:21:01 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/11 09:05:47 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/11 09:31:15 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+/*
+	Print the error corresponding to the given error code
+*/
 static int	print_error(int error_code, char *content)
 {
 	if (error_code == 1)

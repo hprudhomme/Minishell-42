@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:57:56 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/11 09:27:15 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/11 09:36:52 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,8 +183,7 @@ int			strarr_len(char **array);
 int			strarr_append(char ***array, char *str);
 // parsing/outfiles.c
 int			outlst_append(t_outlst **lst, char *filename, char *spe);
-int			append_out_args(t_list **args,
-				t_cmdlst *new, char *op, t_outlst **out);
+int			append_out_args(t_list **args, char *op, t_outlst **out);
 // parsing/parsing.c
 int			get_arg_end(char *str, int quote_index);
 int			get_quotes_end(char *str, int e_end);

@@ -6,12 +6,20 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 09:26:28 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/11 09:26:37 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/11 09:46:55 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+/*
+	Return the env value (from given env) that correspond to the
+	given env_name.
+	Return $ if env_name is $
+	Return "" (empty string) if env isn't found
+
+	env_name can look likes this : $ENV_NAME@
+*/
 char	*get_env(char *env_name, char **env)
 {
 	int	e_cur;
@@ -30,6 +38,11 @@ char	*get_env(char *env_name, char **env)
 	return ("");
 }
 
+/*
+	Return the env name size that is at the start of the given str
+	Read str (starting with the $) and stop when the character
+	is not an authorized character in env name.
+*/
 int	get_envvar_size(char *str)
 {
 	int	cur;

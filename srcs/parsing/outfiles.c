@@ -6,12 +6,17 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 19:04:30 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/06 21:51:11 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/11 11:17:56 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+/*
+	Create a new outlst element with the given filename and action.
+	It dulpicate the filename with ft_strdup
+	Return 0 on malloc error
+*/
 t_outlst	*outlst_new(char *filename, int action)
 {
 	t_outlst	*new;
@@ -30,6 +35,10 @@ t_outlst	*outlst_new(char *filename, int action)
 	return (new);
 }
 
+/*
+	Return a pointer to the last element of the given
+	outfiles list
+*/
 t_outlst	*outlst_last(t_outlst *lst)
 {
 	if (lst)
@@ -38,6 +47,13 @@ t_outlst	*outlst_last(t_outlst *lst)
 	return (lst);
 }
 
+/*
+	Create a new outlist element (using given filename and spe) using
+	outlst_new.
+	It convert the given spe to an int (> = OUT_WRITE, >> = OUT_APPEND).
+	Then append it at the end of the given lst.
+	Return 0 on malloc error
+*/
 int	outlst_append(t_outlst **lst, char *filename, char *spe)
 {
 	t_outlst	*new;
@@ -58,7 +74,14 @@ int	outlst_append(t_outlst **lst, char *filename, char *spe)
 	return (1);
 }
 
-int	append_out_args(t_list **args, t_cmdlst *new, char *op, t_outlst **out)
+
+/*
+	Append the next arg of given args list to the given outfiles list.
+	Return 0 on malloc error
+	If the args->content is > or >>, it append args->next->content
+	to the given list using outlst_append
+*/
+int	append_out_args(t_list **args, char *op, t_outlst **out)
 {
 	if (!(*args))
 		return (1);
@@ -69,7 +92,6 @@ int	append_out_args(t_list **args, t_cmdlst *new, char *op, t_outlst **out)
 		if (*args && !outlst_append(out, (*args)->content, op))
 			return (0);
 		*args = (*args)->next;
-		return (2);
 	}
 	return (1);
 }
