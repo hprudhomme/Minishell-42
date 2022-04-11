@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:57:56 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/06 19:51:35 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/11 09:36:52 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,13 +170,15 @@ char *concat_path(char **tab, char *str);
 // parsing/check.c
 int			check_quotes(char *command);
 int			check_specials(t_list *args);
-
 // parsing/cmdlst.c
 t_cmdlst	*cmdlst_new(void);
 t_cmdlst	*cmdlst_last(t_cmdlst *lst);
 int			append_args(t_list **args, t_cmdlst *new, char *op, char ***array);
 int			cmdlist_append_args(t_list **args, t_cmdlst *new);
 int			create_command_lst(t_cmdlst **command_list, t_list *args);
+// parsing/env.c
+char		*get_env(char *env_name, char **env);
+int			get_envvar_size(char *str);
 // parsing/free.c
 int			cmdlst_clear(t_cmdlst **lst);
 int			outlst_clear(t_outlst **lst);
@@ -189,8 +191,7 @@ int			strarr_len(char **array);
 int			strarr_append(char ***array, char *str);
 // parsing/outfiles.c
 int			outlst_append(t_outlst **lst, char *filename, char *spe);
-int			append_out_args(t_list **args,
-				t_cmdlst *new, char *op, t_outlst **out);
+int			append_out_args(t_list **args, char *op, t_outlst **out);
 // parsing/parsing.c
 int			get_arg_end(char *str, int quote_index);
 int			get_quotes_end(char *str, int e_end);
@@ -198,11 +199,13 @@ int			get_end_index(char *str, int e_end);
 int			split_args(t_list **args, char *cmd);
 t_cmdlst	*parsing(char *command);
 // parsing/quotes.c
-int			replace_quotes(char ***args);
+int			replace_quotes(char ***args, char **env);
+int			set_in_quotes(char c, int *in_quotes);
 // parsing/utils.c
 char		*ft_strldup(const char *s1, size_t size);
 int			index_of(char *str, char *search, int n);
 int			get_arg_type(char *str);
 int			is_sep(char *str);
+int			ft_strcat(char *dst, char *src);
 
 #endif

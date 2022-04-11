@@ -6,12 +6,17 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 07:14:34 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/05 17:24:45 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/11 09:53:17 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+/*
+	Create a new lst element with the given str
+	and append it at the end of the given list
+	Return 0 on malloc error
+*/
 int	lst_append(t_list **lst, char *str)
 {
 	t_list	*new;
@@ -23,6 +28,9 @@ int	lst_append(t_list **lst, char *str)
 	return (1);
 }
 
+/*
+	Return the len of an str array (that is 0-terminated)
+*/
 int	strarr_len(char **array)
 {
 	int	cur;
@@ -34,6 +42,13 @@ int	strarr_len(char **array)
 	return (cur);
 }
 
+/*
+	Append the given str to the end of the given array
+	It malloc an entire new array, duplicates the existing elements
+	and duplicate the given string. Then it free the original
+	array and replace it's pointer to the new array's one
+	Return 0 on malloc error
+*/
 int	strarr_append(char ***array, char *str)
 {
 	char	**new;

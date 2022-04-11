@@ -6,12 +6,15 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:31:51 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/06 19:47:02 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/11 09:48:57 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+/*
+	Free a command list
+*/
 int	cmdlst_clear(t_cmdlst **lst)
 {
 	t_cmdlst	*next;
@@ -31,6 +34,9 @@ int	cmdlst_clear(t_cmdlst **lst)
 	return (0);
 }
 
+/*
+	Free an outlist (mostly used by cmdlst_clear)
+*/
 int	outlst_clear(t_outlst **lst)
 {
 	t_outlst	*next;
@@ -46,6 +52,9 @@ int	outlst_clear(t_outlst **lst)
 	return (0);
 }
 
+/*
+	Free only the n-first elements of an str array
+*/
 int	free_array_n(char **array, int n)
 {
 	while (n--)
@@ -54,6 +63,9 @@ int	free_array_n(char **array, int n)
 	return (0);
 }
 
+/*
+	Free a t_list
+*/
 int	lst_clear(t_list **lst)
 {
 	t_list	*next;
@@ -69,6 +81,9 @@ int	lst_clear(t_list **lst)
 	return (0);
 }
 
+/*
+	Free an str array
+*/
 int	strarr_free(char **array)
 {
 	int	cur;
