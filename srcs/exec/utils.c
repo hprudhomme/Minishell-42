@@ -40,6 +40,7 @@ int     is_in_env(char **my_env, char *s)
         if (strcmp(temp[0], s) == 0)
             break ;
         free_tab_2d(temp);
+        temp = NULL;
         i++;
     }
     if (temp)
@@ -107,4 +108,30 @@ int     is_in_env(char **my_env, char *s)
 //     free_tab_2d(my_env);
 //     return new;
 // }
+
+int cmdlist_len(t_cmdlst *lst)
+{
+	int	cur;
+
+	cur = 0;
+	while (lst)
+	{
+		cur++;
+		lst = lst->next;
+	}
+    return cur;
+}
+
+int    outlst_len(t_outlst *lst)
+{
+    int i;
+
+    i = 0;
+    while (lst)
+    {
+        i++;
+        lst = lst->next;
+    }
+    return i;
+}
 

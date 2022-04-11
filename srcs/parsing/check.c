@@ -6,11 +6,35 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 08:21:01 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/06 09:12:33 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/11 09:31:15 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+/*
+	Print the error corresponding to the given error code
+*/
+static int	print_error(int error_code, char *content)
+{
+	if (error_code == 1)
+	{
+		ft_printf("\033[91m%s\033[0m\n",
+			"minishell: parse error, quotes are never closed");
+	}
+	else if (error_code == 2)
+	{
+		ft_printf("\033[91m%s '%s'\033[0m\n",
+			"minishell: parse error, near", content);
+	}
+	else if (error_code == 3)
+	{
+		ft_printf("\033[91m%s '%s'\033[0m\n",
+			"minishell: the command cannot end with",
+			content);
+	}
+	return (1);
+}
 
 /*
 	Return 1 on syntax error, 0 if there is no error
@@ -25,25 +49,11 @@ int	check_quotes(char *command)
 	in_quotes = 0;
 	while (command[cur])
 	{
-		if (command[cur] == '\'')
-		{
-			if (in_quotes == 0)
-				in_quotes = 1;
-			else if (in_quotes == 1)
-				in_quotes = 0;
-		}
-		if (command[cur] == '"')
-		{
-			if (in_quotes == 0)
-				in_quotes = 2;
-			else if (in_quotes == 2)
-				in_quotes = 0;
-		}
+		set_in_quotes(command[cur], &in_quotes);
 		cur++;
 	}
 	if (in_quotes != 0)
-		ft_printf("\033[91m%s\033[0m\n",
-			"minishell: parse error, quotes are never closed");
+		print_error(1, NULL);
 	return (in_quotes != 0);
 }
 
@@ -67,11 +77,7 @@ int	check_specials(t_list *args)
 		if (is_sep(it_args->content))
 		{
 			if (is_special)
-			{
-				ft_printf("\033[91m%s '%s'\033[0m\n",
-					"minishell: parse error, near", it_args->content);
-				return (1);
-			}
+				return (print_error(2, it_args->content));
 			is_special = 1;
 		}
 		else
@@ -79,11 +85,7 @@ int	check_specials(t_list *args)
 		if (!it_args->next)
 		{
 			if (is_sep(it_args->content))
-			{
-				ft_printf("\033[91m%s '%s'\033[0m\n",
-					"minishell: the command cannot end with", it_args->content);
-				return (1);
-			}
+				return (print_error(3, it_args->content));
 		}
 		it_args = it_args->next;
 	}

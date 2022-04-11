@@ -6,35 +6,46 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 22:53:22 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/05 14:19:26 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/11 11:24:02 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char	*get_env(char *env_name)
+/*
+	in_quotes is a var that is equal to 1 when a single quote is openned,
+	2 if a double quote is openned or 0 when quotes are closed.
+	The function set given in_quotes to 0, 1 or 2 depending on the
+	value of given char and the current in_quotes value.
+	Return the previous value of in_quotes
+*/
+int	set_in_quotes(char c, int *in_quotes)
 {
-	if (ft_strlen(env_name) >= 1
-		&& env_name[0] == '$' && !ft_isalnum(env_name[1]))
-		return ("$");
-	return ("monenv");
-}
+	int	cquotes;
 
-int	get_envvar_size(char *str)
-{
-	int	cur;
-
-	cur = 0;
-	while (str[cur] || (cur == 0 && str[cur] == '$'))
+	cquotes = *in_quotes;
+	if (c == '\'')
 	{
-		if (!ft_isalnum(str[cur]) && cur != 0)
-			return (cur);
-		cur++;
+		if (cquotes == 0)
+			*in_quotes = 1;
+		else if (cquotes == 1)
+			*in_quotes = 0;
 	}
-	return (cur);
+	if (c == '"')
+	{
+		if (cquotes == 0)
+			*in_quotes = 2;
+		else if (cquotes == 2)
+			*in_quotes = 0;
+	}
+	return (cquotes);
 }
 
-int	get_future_arg_len(char *arg)
+/*
+	Calulate and return the len of the given arg when
+	it's values (env vars) will be replaced.
+*/
+int	get_future_arg_len(char *arg, char **env)
 {
 	int	cur;
 	int	in_quotes;
@@ -47,26 +58,11 @@ int	get_future_arg_len(char *arg)
 	future_len = 0;
 	while (arg[cur])
 	{
-		if (arg[cur] == '\'')
-		{
-			if (in_quotes == 0)
-				new_in_quotes = 1;
-			else if (in_quotes == 1)
-				new_in_quotes = 0;
-		}
-		if (arg[cur] == '"')
-		{
-			if (in_quotes == 0)
-				new_in_quotes = 2;
-			else if (in_quotes == 2)
-				new_in_quotes = 0;
-		}
-		if (new_in_quotes == in_quotes)
+		if (set_in_quotes(arg[cur], &in_quotes) == in_quotes)
 			future_len++;
-		in_quotes = new_in_quotes;
 		if (in_quotes != 1 && arg[cur] == '$')
 		{
-			future_len += ft_strlen(get_env(arg + cur)) - 1;
+			future_len += ft_strlen(get_env(arg + cur, env)) - 1;
 			cur += get_envvar_size(arg + cur) - 1;
 		}
 		cur++;
@@ -74,61 +70,48 @@ int	get_future_arg_len(char *arg)
 	return (future_len);
 }
 
-char	*replace_in_arg(char *arg)
+/*
+	Replace the env vars of the given arg and return the
+	modified arg.
+	Return NULL on malloc error
+*/
+char	*replace_in_arg(char *arg, char **env)
 {
-	char	*new_arg;
+	char	*n_arg;
 	int		cur;
 	int		in_quotes;
 	int		new_in_quotes;
 	int		n_cur;
 
-	new_arg = malloc(sizeof(char) * (get_future_arg_len(arg) + 1));
+	n_arg = ft_calloc(get_future_arg_len(arg, env) + 1, sizeof(char));
+	if (!n_arg)
+		return (NULL);
 	cur = 0;
 	n_cur = 0;
 	in_quotes = 0;
 	new_in_quotes = 0;
 	while (arg[cur])
 	{
-		if (arg[cur] == '\'')
-		{
-			if (in_quotes == 0)
-				new_in_quotes = 1;
-			else if (in_quotes == 1)
-				new_in_quotes = 0;
-		}
-		if (arg[cur] == '"')
-		{
-			if (in_quotes == 0)
-				new_in_quotes = 2;
-			else if (in_quotes == 2)
-				new_in_quotes = 0;
-		}
-		if (new_in_quotes == in_quotes)
-		{
-			new_arg[n_cur] = arg[cur];
-			n_cur++;
-		}
-		in_quotes = new_in_quotes;
+		if (set_in_quotes(arg[cur], &in_quotes) == in_quotes)
+			n_arg[n_cur++] = arg[cur];
 		if (in_quotes != 1 && arg[cur] == '$')
 		{
-			n_cur--;
-			char *env_val = get_env(arg + cur);
-			int	ev_cur = 0;
-			while (env_val[ev_cur])
-			{
-				new_arg[n_cur] = env_val[ev_cur];
-				n_cur++;
-				ev_cur++;
-			}
+			n_cur += ft_strcat(n_arg + n_cur - 1, get_env(arg + cur, env)) - 1;
 			cur += get_envvar_size(arg + cur) - 1;
 		}
 		cur++;
 	}
-	new_arg[n_cur] = 0;
-	return (new_arg);
+	return (n_arg);
 }
 
-int	replace_quotes(char ***args)
+/*
+	Replace the env vars of every args in given array using replace_in_arg.
+	It malloc a whole new array and duplicate every args (and replace env vars
+	when needed), then it free the old arg array and set the args pointer
+	to the new array.
+	Return 0 on malloc error
+*/
+int	replace_quotes(char ***args, char **env)
 {
 	char	**new_args;
 	int		cur;
@@ -139,7 +122,7 @@ int	replace_quotes(char ***args)
 	cur = 0;
 	while ((*args)[cur])
 	{
-		new_args[cur] = replace_in_arg((*args)[cur]);
+		new_args[cur] = replace_in_arg((*args)[cur], env);
 		if (!new_args[cur])
 			return (free_array_n(new_args, cur));
 		cur++;

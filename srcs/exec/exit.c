@@ -1,9 +1,8 @@
 #include "../../include/minishell.h"
 
-void ft_exit(t_list2 *list)
+void ft_exit(t_mem *mem, t_cmdlst *lst)
 {
-    free_list(list);
-    if (list)
-        free(list);
+    free_mem(mem, 1);
+    cmdlst_clear(&lst);
     exit(0);
 }
