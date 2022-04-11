@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:31:51 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/06 19:47:02 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/11 08:22:44 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	cmdlst_clear(t_cmdlst **lst)
 	{
 		next = (*lst)->next;
 		free((*lst)->command);
-		strarr_free((*lst)->args);
+		if ((*lst)->args)
+			strarr_free((*lst)->args);
 		outlst_clear(&(*lst)->outfiles);
 		strarr_free((*lst)->infiles);
 		strarr_free((*lst)->heredocs);

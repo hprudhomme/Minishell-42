@@ -28,6 +28,7 @@ LST_SRCS	:=	exec/cd_utils.c \
 				exec/utils.c \
 				parsing/check.c \
 				parsing/cmdlst.c \
+				parsing/env.c \
 				parsing/free.c \
 				parsing/outfiles.c \
 				parsing/lst.c \

@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 09:09:05 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/06 20:07:20 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/11 09:23:57 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	print_cmdlist(t_cmdlst *lst)
 	}
 }
 /*
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **env)
 {
 	int			cur;
 	char		*command;
@@ -103,8 +103,8 @@ int	main(int argc, char **argv)
 	command_list = parsing(command); // can return null on error (syntax error, malloc error...)
 	if (command_list)
 	{
-		replace_quotes(&(command_list->args)); // can return 0 (malloc error)
-		print_cmdlist(command_list);
+		if (replace_quotes(&(command_list->args), env)) // can return 0 (malloc error)
+			print_cmdlist(command_list);
 		cmdlst_clear(&command_list);
 	}
 	free(command);
