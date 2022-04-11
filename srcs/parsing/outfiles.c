@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 19:04:30 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/11 11:17:56 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/11 11:42:21 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int	outlst_append(t_outlst **lst, char *filename, char *spe)
 		(*lst) = new;
 	return (1);
 }
-
 
 /*
 	Append the next arg of given args list to the given outfiles list.
