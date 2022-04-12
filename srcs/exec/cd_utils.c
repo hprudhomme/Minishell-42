@@ -45,16 +45,26 @@ char **supp_last_elem_tab2d(char **tab)
 char *concat_path(char **tab, char *str)
 {
     char *s;
+    char *temp;
     int i;
-    int j;
 
     i = 0;
     s = ft_strdup(str);
+    temp = ft_strdup(s);
+    free(s);
     while(tab[i])
     {
-        s = ft_strjoin(s, "/");
-        s = ft_strjoin(s, tab[i]);
+        s = ft_strjoin(temp, "/");
+        free(temp);
+        temp = ft_strdup(s);
+        free(s);
+        s = ft_strjoin(temp, tab[i]);
+        free(temp);
+        temp = ft_strdup(s);
+        free(s);
         i++;
     }
+    s = ft_strdup(temp);
+    free(temp);
     return s;
 }

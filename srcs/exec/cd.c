@@ -18,18 +18,30 @@ int my_env_place_elem(char **my_env, char *elem/*"PATH"*/)
 
 char **change_pwd(char **temp2, char **my_env)
 {
-    int env_place;
+    int pwd_place;
     char *new_pwd;
+    char **temp;
+    int i;
 
-    env_place = my_env_place_elem(my_env, "PWD");
-    if (tab_2d_len(temp2) == 0)
-        new_pwd = concat_path(temp2, "PWD=/");
-    else
-        new_pwd = concat_path(temp2, "PWD=");
-    free(my_env[env_place]);
-    my_env[env_place] = ft_strdup(new_pwd);
+    i = 0;
+    pwd_place = my_env_place_elem(my_env, "PWD");
+    temp = (char **)malloc(sizeof(char *) * (tab_2d_len(my_env) + 1));
+    if (!temp)
+        return NULL;
+    pwd_place = my_env_place_elem(my_env, "PWD");
+    new_pwd = concat_path(temp2, "PWD=");
+    while (my_env[i])
+    {
+        if (i == pwd_place)            
+            temp[i] = ft_strdup(new_pwd);
+        else
+            temp[i] = ft_strdup(my_env[i]);
+        i++;
+    }
+    temp[i] = NULL;
+    free_tab_2d(my_env);
     free(new_pwd);
-    return my_env;
+    return temp;
 }
 
 char **change_oldpwd(char *pwd, char **my_env)
@@ -45,7 +57,34 @@ char **change_oldpwd(char *pwd, char **my_env)
     return my_env;
 }
 
-char **change_my_env(char **cmd, char **my_env)
+char **change_pwd_absolute(char *path, char **my_env)
+{
+    int i;
+    int pwd_place;
+    char **temp;
+    char *new_pwd;
+
+    i = 0;
+    temp = (char **)malloc(sizeof(char *) * (tab_2d_len(my_env) + 1));
+    if (!temp)
+        return NULL;
+    pwd_place = my_env_place_elem(my_env, "PWD");
+    new_pwd = ft_strjoin("PWD=", path);
+    while (my_env[i])
+    {
+        if (i == pwd_place)            
+            temp[i] = ft_strdup(new_pwd);
+        else
+            temp[i] = ft_strdup(my_env[i]);
+        i++;
+    }
+    temp[i] = NULL;
+    free_tab_2d(my_env);
+    free(new_pwd);
+    return temp;
+}
+
+char **change_pwd_relativ(char *path, char **my_env)
 {
     char **temp;
     char **temp2;
@@ -53,8 +92,8 @@ char **change_my_env(char **cmd, char **my_env)
     int i;
 
     i = 0;
-    temp = ft_split(cmd[1], '/');
     pwd = my_getenv(my_env, "PWD");
+    temp = ft_split(path, '/');
     temp2 = ft_split(pwd, '/');
     while (temp[i])
     {
@@ -68,6 +107,27 @@ char **change_my_env(char **cmd, char **my_env)
     my_env = change_oldpwd(pwd, my_env);
     free_tab_2d(temp);
     free_tab_2d(temp2);
+    free(pwd);
+    return my_env;
+}
+
+char **change_my_env(char **cmd, char **my_env)
+{
+    char **temp;
+    char **temp2;
+    char *pwd;
+    int i;
+
+    pwd = my_getenv(my_env, "PWD");
+    if (cmd[1][0] == '/')
+    {
+        my_env = change_pwd_absolute(cmd[1], my_env);
+        my_env = change_oldpwd(pwd, my_env);
+        return my_env;
+    }
+    else
+        my_env = change_pwd_relativ(cmd[1], my_env);
+    free(pwd);
     return my_env;
 }
 
