@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 22:53:22 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/13 08:07:09 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/13 08:52:06 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,16 +94,6 @@ char	*malloc_new_arg(char *arg, char **env, int lex)
 	return (n_arg);
 }
 
-int	cat_env_in_arg(char *arg, char *n_arg, int *cur, int *n_cur, char **env, int lex)
-{
-	char	*var_val;
-
-	var_val = get_env(arg + *cur, env, lex);
-	n_cur += ft_strcat(n_arg + *n_cur - 1, var_val) - 1;
-	free(var_val);
-	cur += get_envvar_size(arg + *cur) - 1;
-}
-
 /*
 	Replace the env vars of the given arg and return the
 	modified arg.
@@ -130,6 +120,7 @@ char	*replace_in_arg(char *arg, char **env, int lex)
 			n_arg[n_cur++] = arg[cur];
 		if (in_quotes != 1 && arg[cur] == '$')
 		{
+			n_arg[n_cur - 1] = 0;
 			var_val = get_env(arg + cur, env, lex);
 			if (!var_val)
 			{
