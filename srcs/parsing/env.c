@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 09:26:28 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/13 07:20:25 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/13 07:43:54 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 	given env_name.
 	Return $ if env_name is $
 	Return "" (empty string) if env isn't found
+	Return NULL on malloc error
 
 	env_name can look likes this : $ENV_NAME@
 */
@@ -27,16 +28,16 @@ char	*get_env(char *env_name, char **env, int last_exit)
 	if (env_name[1] == '?')
 		return (ft_itoa(last_exit));
 	else if (!ft_isalnum(env_name[1]))
-		return ("$");
+		return (ft_strdup("$"));
 	e_cur = 0;
 	while (env[e_cur])
 	{
 		if (!ft_strncmp(env[e_cur], env_name + 1,
 				get_envvar_size(env_name) - 1))
-			return (env[e_cur] + get_envvar_size(env_name));
+			return (ft_strdup(env[e_cur] + get_envvar_size(env_name)));
 		e_cur++;
 	}
-	return ("");
+	return (ft_strdup(""));
 }
 
 /*
