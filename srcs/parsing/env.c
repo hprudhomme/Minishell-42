@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 09:26:28 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/13 08:11:45 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/13 08:54:19 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ int	get_envvar_size(char *str)
 	cur = 0;
 	while (str[cur] || (cur == 0 && str[cur] == '$'))
 	{
-		if (starts_with_num && ft_isalpha(str[cur]))
+		if (starts_with_num && (ft_isalpha(str[cur]) || str[cur] == '_' ))
 			return (cur);
-		if (!ft_isalnum(str[cur]) && cur != 0)
+		if (!ft_isalnum(str[cur]) && str[cur] != '_' && cur != 0)
 			return (cur);
 		cur++;
 	}
