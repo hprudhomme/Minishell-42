@@ -33,7 +33,8 @@ int     do_builtin(t_cmdlst *lst, t_mem *mem)
     if (strcmp(lst->command, "cd") == 0 && lst->todo_next != 1)
         ft_cd(lst->args, mem);
     if (strcmp(lst->command, "export") == 0 && lst->todo_next != 1)
-        mem->my_env = ft_exports(mem, lst->args);
+        if (!ft_exports(mem, lst->args))
+			return (0);
     if (strcmp(lst->command, "unset") == 0 && lst->todo_next != 1)
         mem->my_env = ft_unsets(mem, lst->args);
     return 1;

@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 10:50:09 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/13 10:50:45 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/13 14:07:49 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,54 +64,54 @@ int	check_format(char	*arg)
 	return (0);
 }
 
-char    **ft_export(t_mem *mem, char *s)
+/*
+	Parse the current string (an arg) and add it to mem->my_env
+	Return 0 on malloc error
+	Return 1 on succeed
+	Return 2 on command error (bad syntax, etc.)
+*/
+int	ft_export(t_mem *mem, char *s)
 {
-    char **new;
-    char **temp;
-    int i;
+	char	**new;
+	char	**temp;
+	int		i;
 
-    i = 0;
-    if (check_format(s))
-        return mem->my_env;
-    temp = ft_split(s, '=');
-    if (is_in_env(mem->my_env, temp[0]))
-        mem->my_env = ft_unset(mem, temp[0]);
-    free_tab_2d(temp);
-    new = (char **)malloc(sizeof(char *) * (tab_2d_len(mem->my_env) + 2));
-    if (!new)
-        return NULL;
-    while (mem->my_env[i])
-    {
-        new[i] = ft_strdup(mem->my_env[i]);
-        i++;
-    }
-    new[i] = ft_strdup(s);
-    i++;
-    new[i] = NULL;
-    free_tab_2d(mem->my_env);
-    return new;
+	i = 0;
+	if (check_format(s))
+		return (2);
+	temp = ft_split(s, '=');
+	if (!temp)
+		return (0);
+	if (is_in_env(mem->my_env, temp[0])) // TODO : there is malloc in it
+		mem->my_env = ft_unset(mem, temp[0]); // TODO : there is malloc in it
+	strarr_free(temp);
+	if (!strarr_append(&(mem->my_env), s))
+		return (0);
+	return (1);
 }
 
-char    **ft_exports(t_mem *mem, char **args)
+/*
+	Run the function ft_export on every args
+	Return 0 on malloc error (some env var may have been set)
+*/
+int	ft_exports(t_mem *mem, char **args)
 {
-    int i;
+	int	i;
+	int	command_return;
 
-    close(mem->fd_exit_statue[0]);
-    i = 0;
-    while (args[i])
-    {
-        if (strcmp(args[i], "export") == 0)
-            break ;
-        i++;
-    }
-    i++;
-    while (args[i])
-    {
-        mem->my_env = ft_export(mem, args[i]);
-        i++;
-    }
-    mem->exit_statue = 0;
-    write(mem->fd_exit_statue[1], &mem->exit_statue, sizeof(mem->exit_statue));
-    close(mem->fd_exit_statue[1]);
-    return (mem->my_env);
+	close(mem->fd_exit_statue[0]);
+	i = 1;
+	mem->exit_statue = 0;
+	while (args[i])
+	{
+		command_return = ft_export(mem, args[i]);
+		if (command_return == 0)
+			return (0);
+		else if (command_return == 2)
+			mem->exit_statue = 1;
+		i++;
+	}
+	write(mem->fd_exit_statue[1], &mem->exit_statue, sizeof(mem->exit_statue));
+	close(mem->fd_exit_statue[1]);
+	return (1);
 }
