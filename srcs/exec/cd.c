@@ -133,20 +133,15 @@ char **change_my_env(char **cmd, char **my_env)
 
 void ft_cd(char **cmd, t_mem *mem)
 {
-    close(mem->fd_exit_statue[0]);
     if (chdir(cmd[1]) == -1)
     {
         write(1, strerror( errno ), ft_strlen(strerror( errno )));
         write(1, "\n", 1);
         mem->exit_statue = 1;
-        write(mem->fd_exit_statue[1], &mem->exit_statue, sizeof(mem->exit_statue));
-        close(mem->fd_exit_statue[1]);
     }
     else
     {
         mem->my_env = change_my_env(cmd, mem->my_env);
         mem->exit_statue = 0;
-        write(mem->fd_exit_statue[1], &mem->exit_statue, sizeof(mem->exit_statue));
-        close(mem->fd_exit_statue[1]);
     }
 }

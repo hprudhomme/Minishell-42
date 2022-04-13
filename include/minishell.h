@@ -67,7 +67,6 @@ typedef struct s_mem
 	char		**path_tab;
 	int			exit_statue;
 	int			last_cmd_exit_statue;
-	int			fd_exit_statue[2];
 	int			fd_heredocs[2];
 	char		*tmpfile;
 	t_exec_loop *exec_loop;

@@ -38,7 +38,6 @@ char    **ft_unsets(t_mem *mem, char **args)
 {
     int i;
 
-    close(mem->fd_exit_statue[0]);
     mem->exit_statue = 0;
     i = 0;
     while (args[i])
@@ -53,7 +52,5 @@ char    **ft_unsets(t_mem *mem, char **args)
         mem->my_env = ft_unset(mem, args[i]);
         i++;
     }
-    write(mem->fd_exit_statue[1], &mem->exit_statue, sizeof(mem->exit_statue));
-    close(mem->fd_exit_statue[1]);
     return (mem->my_env);
 }

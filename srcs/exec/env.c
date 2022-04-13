@@ -2,7 +2,6 @@
 
 int    ft_env(char **my_env, t_mem *mem)
 {
-    close(mem->fd_exit_statue[0]);
     int x;
 
     x = 0;
@@ -13,7 +12,5 @@ int    ft_env(char **my_env, t_mem *mem)
         x++;
     }
     mem->exit_statue = 0;
-    write(mem->fd_exit_statue[1], &mem->exit_statue, sizeof(mem->exit_statue));
-    close(mem->fd_exit_statue[1]);
     return (1);
 }

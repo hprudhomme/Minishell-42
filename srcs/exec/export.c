@@ -99,7 +99,6 @@ int	ft_exports(t_mem *mem, char **args)
 	int	i;
 	int	command_return;
 
-	close(mem->fd_exit_statue[0]);
 	i = 1;
 	mem->exit_statue = 0;
 	while (args[i])
@@ -111,7 +110,5 @@ int	ft_exports(t_mem *mem, char **args)
 			mem->exit_statue = 1;
 		i++;
 	}
-	write(mem->fd_exit_statue[1], &mem->exit_statue, sizeof(mem->exit_statue));
-	close(mem->fd_exit_statue[1]);
 	return (1);
 }

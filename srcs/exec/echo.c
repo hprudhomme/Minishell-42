@@ -3,7 +3,6 @@
 int    ft_echo(char **s, t_mem *mem)
 {
     char *tmp;
-    close(mem->fd_exit_statue[0]);
     int i;
     int x;
 
@@ -13,8 +12,6 @@ int    ft_echo(char **s, t_mem *mem)
     //     write(1, ft_itoa(mem->last_cmd_exit_statue), ft_strlen(ft_itoa(mem->last_cmd_exit_statue)));
     //     write(1, "\n", 1);
     //     mem->exit_statue = 0;
-    //     write(mem->fd_exit_statue[1], &mem->exit_statue, sizeof(mem->exit_statue));
-    //     close(mem->fd_exit_statue[1]);
     //     return 1;
     // }
     // i = 0;
@@ -23,7 +20,6 @@ int    ft_echo(char **s, t_mem *mem)
     //     if (s[1][i] == ')')
     //     {
     //         mem->exit_statue = 1;
-    //         write(mem->fd_exit_statue[1], &mem->exit_statue, sizeof(mem->exit_statue));
     //         return 1;
     //     }
     //     i++;
@@ -42,7 +38,5 @@ int    ft_echo(char **s, t_mem *mem)
     if (x == 1 || tab_2d_len(s) == 1)
         write(1, "\n", 1);
     mem->exit_statue = 0;
-    write(mem->fd_exit_statue[1], &mem->exit_statue, sizeof(mem->exit_statue));
-    close(mem->fd_exit_statue[1]);
     return 1;
 }

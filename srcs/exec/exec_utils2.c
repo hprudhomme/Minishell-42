@@ -27,7 +27,6 @@ void    init_exec(t_mem *mem, t_cmdlst *lst)
         mem->exec_loop->fdin = open(lst->infiles[0], O_RDONLY);
     else
         mem->exec_loop->fdin = dup(mem->exec_loop->tmpin);
-    pipe(mem->fd_exit_statue);
     mem->exit_statue = 0;
 }
 
@@ -42,12 +41,4 @@ void    reset_exec(t_mem *mem)
     mem->exec_loop->redirect_path = NULL;
     mem->exec_loop->right_path = NULL;
     mem->exit_statue = 0;
-}
-
-void    write_exit_statue(t_mem *mem, int i)
-{
-    close(mem->fd_exit_statue[0]);
-    mem->exit_statue = i;
-    write(mem->fd_exit_statue[1], &mem->exit_statue, sizeof(mem->exit_statue));
-    close(mem->fd_exit_statue[1]);
 }

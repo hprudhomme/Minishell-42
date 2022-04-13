@@ -16,6 +16,7 @@ t_mem	*initialize_mem(void)
 	mem->my_env = NULL;
 	mem->path_tab = NULL;
 	mem->tmpfile = "buzz";
+	mem->exit_statue = 0;
     return (mem);
 }
 
