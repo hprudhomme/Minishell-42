@@ -65,7 +65,7 @@ void execute3(t_cmdlst *lst, char **env, t_mem *mem)
         setup_infiles(lst, mem);
         if ((strcmp(lst->command, "exit") == 0) && ((lst->todo_next == 0 && cmdlist_len(lst) == 1) || lst->todo_next == 2 || lst->todo_next == 3))
             ft_exit(mem, lst);
-        replace_quotes(&(lst->args), mem->my_env);
+        replace_quotes(&(lst->args), mem->my_env, mem->exit_statue);
         if (outlst_len(lst->outfiles) > 0)
             i = 0;
         else

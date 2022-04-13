@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 22:53:22 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/11 11:24:02 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/13 07:12:27 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	set_in_quotes(char c, int *in_quotes)
 	Calulate and return the len of the given arg when
 	it's values (env vars) will be replaced.
 */
-int	get_future_arg_len(char *arg, char **env)
+int	get_future_arg_len(char *arg, char **env, int last_exit)
 {
 	int	cur;
 	int	in_quotes;
@@ -62,7 +62,7 @@ int	get_future_arg_len(char *arg, char **env)
 			future_len++;
 		if (in_quotes != 1 && arg[cur] == '$')
 		{
-			future_len += ft_strlen(get_env(arg + cur, env)) - 1;
+			future_len += ft_strlen(get_env(arg + cur, env, last_exit)) - 1;
 			cur += get_envvar_size(arg + cur) - 1;
 		}
 		cur++;
@@ -73,9 +73,10 @@ int	get_future_arg_len(char *arg, char **env)
 /*
 	Replace the env vars of the given arg and return the
 	modified arg.
+	lex stand for last exit
 	Return NULL on malloc error
 */
-char	*replace_in_arg(char *arg, char **env)
+char	*replace_in_arg(char *arg, char **env, int lex)
 {
 	char	*n_arg;
 	int		cur;
@@ -83,7 +84,7 @@ char	*replace_in_arg(char *arg, char **env)
 	int		new_in_quotes;
 	int		n_cur;
 
-	n_arg = ft_calloc(get_future_arg_len(arg, env) + 1, sizeof(char));
+	n_arg = ft_calloc(get_future_arg_len(arg, env, lex) + 1, sizeof(char));
 	if (!n_arg)
 		return (NULL);
 	cur = 0;
@@ -96,7 +97,7 @@ char	*replace_in_arg(char *arg, char **env)
 			n_arg[n_cur++] = arg[cur];
 		if (in_quotes != 1 && arg[cur] == '$')
 		{
-			n_cur += ft_strcat(n_arg + n_cur - 1, get_env(arg + cur, env)) - 1;
+			n_cur += ft_strcat(n_arg + n_cur - 1, get_env(arg + cur, env, lex)) - 1;
 			cur += get_envvar_size(arg + cur) - 1;
 		}
 		cur++;
@@ -111,7 +112,7 @@ char	*replace_in_arg(char *arg, char **env)
 	to the new array.
 	Return 0 on malloc error
 */
-int	replace_quotes(char ***args, char **env)
+int	replace_quotes(char ***args, char **env, int last_exit)
 {
 	char	**new_args;
 	int		cur;
@@ -122,7 +123,7 @@ int	replace_quotes(char ***args, char **env)
 	cur = 0;
 	while ((*args)[cur])
 	{
-		new_args[cur] = replace_in_arg((*args)[cur], env);
+		new_args[cur] = replace_in_arg((*args)[cur], env, last_exit);
 		if (!new_args[cur])
 			return (free_array_n(new_args, cur));
 		cur++;

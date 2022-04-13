@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 09:26:28 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/11 09:46:55 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/13 07:20:25 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,13 @@
 
 	env_name can look likes this : $ENV_NAME@
 */
-char	*get_env(char *env_name, char **env)
+char	*get_env(char *env_name, char **env, int last_exit)
 {
 	int	e_cur;
 
-	if (ft_strlen(env_name) >= 1
-		&& env_name[0] == '$' && !ft_isalnum(env_name[1]))
+	if (env_name[1] == '?')
+		return (ft_itoa(last_exit));
+	else if (!ft_isalnum(env_name[1]))
 		return ("$");
 	e_cur = 0;
 	while (env[e_cur])
@@ -47,6 +48,8 @@ int	get_envvar_size(char *str)
 {
 	int	cur;
 
+	if (ft_strncmp(str, "$?", ft_strlen(str)) == 0)
+		return (2);
 	cur = 0;
 	while (str[cur] || (cur == 0 && str[cur] == '$'))
 	{
