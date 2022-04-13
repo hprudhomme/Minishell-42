@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:57:56 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/11 09:36:52 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/13 14:06:47 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,8 @@ void    delete_tpmfile(t_mem *mem);
 
 // built-in
 
-char 	**ft_export(t_mem *mem, char *s);
-char    **ft_exports(t_mem *mem, char **args);
+int		ft_export(t_mem *mem, char *s);
+int		ft_exports(t_mem *mem, char **args);
 int   	ft_env(char **my_env, t_mem *mem);
 char    **ft_unsets(t_mem *mem, char **args);
 char 	**ft_unset(t_mem *mem, char *s);
@@ -177,7 +177,7 @@ int			append_args(t_list **args, t_cmdlst *new, char *op, char ***array);
 int			cmdlist_append_args(t_list **args, t_cmdlst *new);
 int			create_command_lst(t_cmdlst **command_list, t_list *args);
 // parsing/env.c
-char		*get_env(char *env_name, char **env);
+char		*get_env(char *env_name, char **env, int last_exit);
 int			get_envvar_size(char *str);
 // parsing/free.c
 int			cmdlst_clear(t_cmdlst **lst);
@@ -199,7 +199,7 @@ int			get_end_index(char *str, int e_end);
 int			split_args(t_list **args, char *cmd);
 t_cmdlst	*parsing(char *command);
 // parsing/quotes.c
-int			replace_quotes(char ***args, char **env);
+int			replace_quotes(char ***args, char **env, int last_exit);
 int			set_in_quotes(char c, int *in_quotes);
 // parsing/utils.c
 char		*ft_strldup(const char *s1, size_t size);
