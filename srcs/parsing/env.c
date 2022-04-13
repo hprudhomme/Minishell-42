@@ -6,11 +6,21 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 09:26:28 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/13 08:54:19 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/13 09:01:39 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	env_name_size(char *env)
+{
+	int	cur;
+
+	cur = 0;
+	while (env[cur] && env[cur] != '=')
+		cur++;
+	return (cur);
+}
 
 /*
 	Return the env value (from given env) that correspond to the
@@ -34,8 +44,7 @@ char	*get_env(char *env_name, char **env, int last_exit)
 	e_cur = 0;
 	while (env[e_cur])
 	{
-		if (!ft_strncmp(env[e_cur], env_name + 1,
-				get_envvar_size(env_name) - 1))
+		if (!ft_strncmp(env[e_cur], env_name + 1, env_name_size(env[e_cur])))
 			return (ft_strdup(env[e_cur] + get_envvar_size(env_name)));
 		e_cur++;
 	}
