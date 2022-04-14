@@ -1,42 +1,25 @@
 #include "../../include/minishell.h"
 
-int    ft_echo(char **s, t_mem *mem)
+int	ft_echo(char **s, t_mem *mem)
 {
-    char *tmp;
-    int i;
-    int x;
+	char	*tmp;
+	int		i;
+	int		has_n;
 
-    // if (strcmp(s[1], "$?") == 0)
-    // {
-    //     write(1, "x = ", 4);
-    //     write(1, ft_itoa(mem->last_cmd_exit_statue), ft_strlen(ft_itoa(mem->last_cmd_exit_statue)));
-    //     write(1, "\n", 1);
-    //     mem->exit_statue = 0;
-    //     return 1;
-    // }
-    // i = 0;
-    // while (s[1][i])
-    // {
-    //     if (s[1][i] == ')')
-    //     {
-    //         mem->exit_statue = 1;
-    //         return 1;
-    //     }
-    //     i++;
-    // }
-    x = 1;
-    if (s[1] && strcmp(s[1], "-n") == 0)
-        x = 2;
-    i = x;
-    while (s[i])
-    {
-        if (i > x)
-            write(1, " ", 1);
-        write(1, s[i], ft_strlen(s[i]));
-        i++;
-    }
-    if (x == 1 || tab_2d_len(s) == 1)
-        write(1, "\n", 1);
-    mem->exit_statue = 0;
-    return 1;
+	i = 0;
+	has_n = 0;
+	if (s[1] && ft_strncmp(s[1], "-n", 2) == 0)
+		has_n = 1;
+	if (has_n)
+		i++;
+	while (s[++i])
+	{
+		if ((!has_n && i > 1) || (has_n && i > 2))
+			ft_putchar_fd(' ', 1);
+		ft_putstr_fd(s[i], 1);
+	}
+	if (!has_n || strarr_len(s) == 1)
+		ft_putchar_fd('\n', 1);
+	mem->exit_statue = 0;
+	return (1);
 }
