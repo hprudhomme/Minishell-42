@@ -38,31 +38,30 @@ char	*my_getenv(char **env, char *elem)
 		>
 	If PWD doesn't exist, return :
 		minishell >
+	The arrow color is red if the previous command failed
 */
 char	*get_prompt(t_mem *mem)
 {
 	char	*prompt;
 	char	*pwd;
 	char	*temp;
+	char	*start;
 
 	pwd = my_getenv(mem->my_env, "PWD");
 	if (pwd)
 	{
 		temp = ft_strjoin("\n\033[36m", pwd);
 		free(pwd);
-		if (!temp)
-			return (NULL);
-		prompt = ft_strjoin(temp, "\033[0m\n\033[32m❯\033[0m ");
+		start = ft_strjoin(temp, "\033[0m\n");
 		free(temp);
-		if (!prompt)
-			return (NULL);
 	}
 	else
-	{
-		prompt = ft_strdup("\n\033[36mminishell\033[0m \033[32m❯\033[0m ");
-		if (!prompt)
-			return (NULL);
-	}
+		start = ft_strdup("\n\033[36mminishell\033[0m ");
+	if (mem->last_cmd_exit_statue == 0)
+		prompt = ft_strjoin(start, "\033[32m❯\033[0m ");
+	else
+		prompt = ft_strjoin(start, "\033[31m❯\033[0m ");
+	free(start);
 	return (prompt);
 }
 
@@ -80,7 +79,7 @@ char	*take_input(t_mem *mem)
 		if (ctrlC)
 		{
 			ctrlC = 0;
-			return NULL;
+			return (NULL);
 		}
 		else
 		{

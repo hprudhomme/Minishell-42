@@ -1,6 +1,6 @@
 #include "../../include/minishell.h"
 
-void 	init_exec_loop(t_exec_loop *exec_loop)
+void	init_exec_loop(t_exec_loop *exec_loop)
 {
 	exec_loop->redirect_path = NULL;
 	exec_loop->right_path = NULL;
@@ -12,15 +12,16 @@ t_mem	*initialize_mem(void)
 
 	mem = (t_mem *)malloc(sizeof(t_mem));
 	mem->exec_loop = (t_exec_loop *)malloc(sizeof(t_exec_loop));
-		init_exec_loop(mem->exec_loop);
+	init_exec_loop(mem->exec_loop);
 	mem->my_env = NULL;
 	mem->path_tab = NULL;
 	mem->tmpfile = "buzz";
 	mem->exit_statue = 0;
-    return (mem);
+	mem->last_cmd_exit_statue = 0;
+	return (mem);
 }
 
-void 	free_exec_loop(t_exec_loop *exec_loop)
+void	free_exec_loop(t_exec_loop *exec_loop)
 {
 	if (exec_loop->redirect_path)
 		free(exec_loop->redirect_path);
