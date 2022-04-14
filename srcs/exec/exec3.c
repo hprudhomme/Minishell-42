@@ -10,7 +10,7 @@ void    exec_cmd(t_mem *mem, t_cmdlst *lst, char **env)
         if (strcmp(lst->command, "cd") == 0 || strcmp(lst->command, "exit") == 0 || strcmp(lst->command, "export") == 0 || strcmp(lst->command, "unset") == 0)
             exit(0);
         if (strcmp(lst->command, "pwd") == 0)
-            ft_pwd(mem->my_env, mem);
+            ft_pwd(mem);
         if (strcmp(lst->command, "env") == 0)
             ft_env(mem->my_env, mem);
         if (strcmp(lst->command, "echo") == 0)

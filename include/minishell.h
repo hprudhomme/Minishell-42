@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:57:56 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/14 08:37:47 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/14 08:57:52 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int   	ft_env(char **my_env, t_mem *mem);
 char    **ft_unsets(t_mem *mem, char **args);
 char 	**ft_unset(t_mem *mem, char *s);
 
-int 	ft_pwd(char **my_env, t_mem *mem);
+int 	ft_pwd(t_mem *mem);
 void	ft_exit(t_mem *mem, t_cmdlst *lst);
 int	    ft_echo(char **s, t_mem *mem);
 void 	ft_cd(char ** cmd, t_mem *mem);
