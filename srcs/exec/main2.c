@@ -2,57 +2,92 @@
 
 int ctrlC = 0;
 
-char *my_getenv(char **env, char *elem/*"PATH"*/)
+/*
+	Return the value of the given env name
+	Return NULL if the value doesn't exist
+	Return NULL on malloc error
+*/
+char	*my_getenv(char **env, char *elem)
 {
-    char    *str;
-    int     i;
-    int     x;
-    int path_len;
-  /* je parcours l’env, je trouve la ligne qui commence par PATH*/
-  /* j’envoie l’adresse de ce qui se trouve apres le ’=’ */
+	char	*str;
+	int		index;
+	int		elem_len;
 
-    path_len = ft_strlen(elem);
-    int index = 0;
-    while (env[index])
-    {
-        if (ft_strncmp(elem, env[index], path_len) == 0)
-            break ;
-        index++;
-    }
-    str = malloc(sizeof(char) * (ft_strlen(env[index]) - path_len));
+	elem_len = ft_strlen(elem);
+	index = 0;
+	while (env[index])
+	{
+		if (ft_strncmp(elem, env[index], elem_len) == 0)
+			break ;
+		index++;
+	}
+	if (!env[index])
+		return (NULL);
+	str = ft_strdup(env[index] + elem_len + 1);
+	if (!str)
+		return (NULL);
+	return (str);
+}
 
-    i = path_len + 1;
-    x = 0;
-    while (env[index][i])
-    {
-        str[x] = env[index][i];
-        i++;
-        x++;
-    }
-    str[x] = '\0';
-    return (str);
+/*
+	Return a string containing the prompt
+	That string is malloced, it need to be free
+	Return NULL on malloc error
+	If PWD exist, return :
+		/home/cestoliv/Documents/DOCS/IT/Dev/42cursus/Minishell-42
+		>
+	If PWD doesn't exist, return :
+		minishell >
+*/
+char	*get_prompt(t_mem *mem)
+{
+	char	*prompt;
+	char	*pwd;
+	char	*temp;
+
+	pwd = my_getenv(mem->my_env, "PWD");
+	if (pwd)
+	{
+		temp = ft_strjoin("\n\033[36m", pwd);
+		free(pwd);
+		if (!temp)
+			return (NULL);
+		prompt = ft_strjoin(temp, "\033[0m\n\033[32m❯\033[0m ");
+		free(temp);
+		if (!prompt)
+			return (NULL);
+	}
+	else
+	{
+		prompt = ft_strdup("\n\033[36mminishell\033[0m \033[32m❯\033[0m ");
+		if (!prompt)
+			return (NULL);
+	}
+	return (prompt);
 }
 
 char	*take_input(t_mem *mem)
 {
 	char	*buf;
+	char	*prompt;
 
-    rl_getc_function = getc;
-	buf = readline("mon_prompt>>> ");
+	rl_getc_function = getc;
+	prompt = get_prompt(mem);
+	buf = readline(prompt);
+	free(prompt);
 	if (!buf)
-    {
-        if (ctrlC)
-        {
-            ctrlC = 0;
-            return NULL;
-        }
-        else
-        {
-            write(1, "\n", 1);
-            free_mem(mem, 1);
-            exit(0);
-        }
-    }
+	{
+		if (ctrlC)
+		{
+			ctrlC = 0;
+			return NULL;
+		}
+		else
+		{
+			free_mem(mem, 1);
+			exit(0);
+		}
+	}
 	if (ft_strlen(buf) == 0)
 	{
 		free(buf);
@@ -65,7 +100,6 @@ char	*take_input(t_mem *mem)
 void    handler()
 {
     ctrlC = 1;
-    write(1, "\n", 1);
 }
 
 char    **my_getenvs(char **env)
@@ -175,6 +209,7 @@ int main(int ac, char **av, char **env)
     signal(SIGINT, handler);
     mem->path_tab = ft_split(getenv("PATH"), ':');
     mem->my_env = my_getenvs(env);
+	ft_printf("\033[2J"); // Clear screen
     while (42)
     {
 		str = take_input(mem);
