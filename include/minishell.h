@@ -57,7 +57,7 @@ typedef struct s_exec_loop
     int fdout;
 	int fdpipe[2];
 	int ret;
-	char *redirect_path;
+	char *redirect_file_path;
 	char *right_path;
 	// char **path_tab;
 }					t_exec_loop;
@@ -101,7 +101,7 @@ void	free_mem(t_mem *mem, int exiting);
 
 //	path
 
-char    *find_right_path(char **path_tab, char *cmd, char *right_path);
+char    *find_exec_path(char **path_tab, char *cmd, char *right_path);
 char    *find_path_redirect_file(char *pwd, char *actuel, char *redirect_path);
 
 // exec
@@ -131,7 +131,7 @@ int		ft_export(t_mem *mem, char *s);
 int		ft_exports(t_mem *mem, char **args);
 int   	ft_env(char **my_env, t_mem *mem);
 char    **ft_unsets(t_mem *mem, char **args);
-char 	**ft_unset(t_mem *mem, char *s);
+char 	**ft_unset(t_mem *mem, char *var);
 
 int 	ft_pwd(t_mem *mem);
 void	ft_exit(t_mem *mem, t_cmdlst *lst);

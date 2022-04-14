@@ -1,6 +1,11 @@
 #include "../../include/minishell.h"
 
-char    **ft_unset(t_mem *mem, char *s)
+/*
+	if var isnt find return env without refreshing it
+    else return a refresh env without this var
+*/
+
+char    **ft_unset(t_mem *mem, char *var)
 {
     char **new;
     char **temp;
@@ -8,7 +13,7 @@ char    **ft_unset(t_mem *mem, char *s)
     int j;
 
 
-    if (!is_in_env(mem->my_env, s))
+    if (!is_in_env(mem->my_env, var))
     {
         mem->exit_statue += 1;
         return mem->my_env;
@@ -22,7 +27,7 @@ char    **ft_unset(t_mem *mem, char *s)
     while (mem->my_env[i])
     {
         temp = ft_split(mem->my_env[i], '=');
-        if (strcmp(temp[0], s) == 0)
+        if (strcmp(temp[0], var) == 0)
             i++;
         else
             new[j++] = ft_strdup(mem->my_env[i++]);

@@ -42,6 +42,10 @@ char **supp_last_elem_tab2d(char **tab)
     return new;
 }
 
+/*
+	return new pwd path
+*/
+
 char *concat_path(char **tab, char *str)
 {
     char *s;

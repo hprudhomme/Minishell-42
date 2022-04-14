@@ -1,5 +1,11 @@
 #include "../../include/minishell.h"
 
+/*
+	Return 2 if is builtin and change env
+	Return 1 if is builtin
+    return 0 if not builtin
+*/
+
 int     is_builtin(char *cmd)
 {
     if (strcmp(cmd, "cd") == 0)
@@ -19,6 +25,11 @@ int     is_builtin(char *cmd)
     return (0);
 }
 
+/*
+	init var for exec loop
+    call before exec loop or at the end of loop when next_to_do is && or ||
+*/
+
 void    init_exec(t_mem *mem, t_cmdlst *lst)
 {
     mem->exec_loop->tmpin = dup(0);
@@ -30,15 +41,20 @@ void    init_exec(t_mem *mem, t_cmdlst *lst)
     mem->exit_statue = 0;
 }
 
+/*
+	reset var for exec loop
+    call after exec loop or at the end of loop when next_to_do is && or ||
+*/
+
 void    reset_exec(t_mem *mem)
 {
     dup2(mem->exec_loop->tmpin,0);
     dup2(mem->exec_loop->tmpout,1);
     close(mem->exec_loop->tmpin);
     close(mem->exec_loop->tmpout);
-    if (mem->exec_loop->redirect_path)
-        free(mem->exec_loop->redirect_path);
-    mem->exec_loop->redirect_path = NULL;
+    if (mem->exec_loop->redirect_file_path)
+        free(mem->exec_loop->redirect_file_path);
+    mem->exec_loop->redirect_file_path = NULL;
     mem->exec_loop->right_path = NULL;
     mem->exit_statue = 0;
 }

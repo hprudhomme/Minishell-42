@@ -1,6 +1,10 @@
 #include "../../include/minishell.h"
 
-int my_env_place_elem(char **my_env, char *elem/*"PATH"*/)
+/*
+	return index of given elem in env
+*/
+
+int my_env_index_elem(char **my_env, char *elem/*"PATH"*/)
 {
     int path_len;
     int index;
@@ -16,6 +20,11 @@ int my_env_place_elem(char **my_env, char *elem/*"PATH"*/)
     return index;
 }
 
+/*
+	change path of pwd in env
+    return env with new pwd
+*/
+
 char **change_pwd(char **temp2, char **my_env)
 {
     int pwd_place;
@@ -24,11 +33,11 @@ char **change_pwd(char **temp2, char **my_env)
     int i;
 
     i = 0;
-    pwd_place = my_env_place_elem(my_env, "PWD");
+    pwd_place = my_env_index_elem(my_env, "PWD");
     temp = (char **)malloc(sizeof(char *) * (tab_2d_len(my_env) + 1));
     if (!temp)
         return NULL;
-    pwd_place = my_env_place_elem(my_env, "PWD");
+    pwd_place = my_env_index_elem(my_env, "PWD");
     new_pwd = concat_path(temp2, "PWD=");
     while (my_env[i])
     {
@@ -44,12 +53,17 @@ char **change_pwd(char **temp2, char **my_env)
     return temp;
 }
 
+/*
+	change path of oldpwd in env
+    return env with new oldpwd
+*/
+
 char **change_oldpwd(char *pwd, char **my_env)
 {
     char *new_old_pwd;
     int old_env_place;
 
-    old_env_place = my_env_place_elem(my_env, "OLDPWD");
+    old_env_place = my_env_index_elem(my_env, "OLDPWD");
     new_old_pwd = ft_strjoin( "OLDPWD=", pwd);
     free(my_env[old_env_place]);
     my_env[old_env_place] = ft_strdup(new_old_pwd);
@@ -57,10 +71,14 @@ char **change_oldpwd(char *pwd, char **my_env)
     return my_env;
 }
 
+/*
+	change path of pwd in env for absolute path
+*/
+
 char **change_pwd_absolute(char *path, char **my_env)
 {
     int i;
-    int pwd_place;
+    int pwd_index;
     char **temp;
     char *new_pwd;
 
@@ -68,11 +86,11 @@ char **change_pwd_absolute(char *path, char **my_env)
     temp = (char **)malloc(sizeof(char *) * (tab_2d_len(my_env) + 1));
     if (!temp)
         return NULL;
-    pwd_place = my_env_place_elem(my_env, "PWD");
+    pwd_index = my_env_index_elem(my_env, "PWD");
     new_pwd = ft_strjoin("PWD=", path);
     while (my_env[i])
     {
-        if (i == pwd_place)            
+        if (i == pwd_index)            
             temp[i] = ft_strdup(new_pwd);
         else
             temp[i] = ft_strdup(my_env[i]);
@@ -83,6 +101,10 @@ char **change_pwd_absolute(char *path, char **my_env)
     free(new_pwd);
     return temp;
 }
+
+/*
+	change path of pwd in env for relativ path
+*/
 
 char **change_pwd_relativ(char *path, char **my_env)
 {
@@ -111,6 +133,10 @@ char **change_pwd_relativ(char *path, char **my_env)
     return my_env;
 }
 
+/*
+	change env (oldpwd and pwd) depending on if it's absolute or relativ path
+*/
+
 char **change_my_env(char **cmd, char **my_env)
 {
     char **temp;
@@ -130,6 +156,11 @@ char **change_my_env(char **cmd, char **my_env)
     free(pwd);
     return my_env;
 }
+
+/*
+	if can't change directory (chdir return -1), exit statut = 1
+    else change env (pwd, oldpwd), exit statut = 0
+*/
 
 void ft_cd(char **cmd, t_mem *mem)
 {

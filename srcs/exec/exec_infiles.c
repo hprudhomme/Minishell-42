@@ -1,5 +1,11 @@
 #include "../../include/minishell.h"
 
+/*
+	if there is a << in command
+    open a tmpfile
+    new prompt, write buf in it
+*/
+
 void    handle_heredocs(t_mem *mem, t_cmdlst *lst)
 {
     int     fd;
@@ -22,6 +28,10 @@ void    handle_heredocs(t_mem *mem, t_cmdlst *lst)
     close(mem->exec_loop->fdin);
 }
 
+/*
+	set up infiles (< et <<)
+*/
+
 void    setup_infiles(t_cmdlst *lst, t_mem *mem)
 {
     char *str;
@@ -35,6 +45,11 @@ void    setup_infiles(t_cmdlst *lst, t_mem *mem)
         handle_heredocs(mem, lst);
     }
 }
+
+/*
+	if there was a << in command
+    delete tmpfile
+*/
 
 void    delete_tpmfile(t_mem *mem)
 {

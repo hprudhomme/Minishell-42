@@ -12,20 +12,17 @@ int     tab_2d_len(char **tab)
 
 void    free_tab_2d(char **tab)
 {
-    // printf("-------- start free ------------\n");
     int i;
 
     i = 0;
     while (tab[i])
     {
-        // printf("str = %s\n", tab[i]);
         if (tab[i])
             free(tab[i]);
         i++;
     }
     if (tab)
         free(tab);
-    // printf("-------- end free ------------\n");
 }
 
 int     is_in_env(char **my_env, char *s)
@@ -52,62 +49,6 @@ int     is_in_env(char **my_env, char *s)
     }
     return 1;
 }
-
-// char    **supp_elem_env(char **my_env, char *s)
-// {
-//     char **new;
-//     char **temp;
-//     int i;
-//     int j;
-
-
-//     if (!is_in_env(my_env, s))
-//         return my_env;
-//     i = 0;
-//     j = 0;
-//     new = (char **)malloc(sizeof(char *) * (tab_2d_len(my_env)));
-//     if (!new)
-//         return NULL;
-//     i = 0;
-//     while (my_env[i])
-//     {
-//         temp = ft_split(my_env[i], '=');
-//         if (strcmp(temp[0], s) == 0)
-//             i++;
-//         else
-//             new[j++] = ft_strdup(my_env[i++]);
-//         free_tab_2d(temp);
-//     }
-//     new[j] = NULL;
-//     free_tab_2d(my_env);
-//     return new;
-// }
-
-// char    **append_env(char **my_env, char *s)
-// {
-//     char **new;
-//     char **temp;
-//     int i;
-
-//     i = 0;
-//     temp = ft_split(s, '=');
-//     if (is_in_env(my_env, temp[0]))
-//         my_env = supp_elem_env(my_env, temp[0]);
-//     free_tab_2d(temp);
-//     new = (char **)malloc(sizeof(char *) * (tab_2d_len(my_env) + 2));
-//     if (!new)
-//         return NULL;
-//     while (my_env[i])
-//     {
-//         new[i] = ft_strdup(my_env[i]);
-//         i++;
-//     }
-//     new[i] = ft_strdup(s);
-//     i++;
-//     new[i] = NULL;
-//     free_tab_2d(my_env);
-//     return new;
-// }
 
 int cmdlist_len(t_cmdlst *lst)
 {

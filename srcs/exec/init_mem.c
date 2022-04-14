@@ -2,7 +2,7 @@
 
 void	init_exec_loop(t_exec_loop *exec_loop)
 {
-	exec_loop->redirect_path = NULL;
+	exec_loop->redirect_file_path = NULL;
 	exec_loop->right_path = NULL;
 }
 
@@ -23,8 +23,8 @@ t_mem	*initialize_mem(void)
 
 void	free_exec_loop(t_exec_loop *exec_loop)
 {
-	if (exec_loop->redirect_path)
-		free(exec_loop->redirect_path);
+	if (exec_loop->redirect_file_path)
+		free(exec_loop->redirect_file_path);
 	if (exec_loop->right_path)
 		free(exec_loop->right_path);
 	free(exec_loop);

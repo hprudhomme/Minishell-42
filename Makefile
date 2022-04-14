@@ -14,14 +14,14 @@ LST_SRCS	:=	exec/cd_utils.c \
 				exec/cd.c \
 				exec/echo.c \
 				exec/env.c \
-				exec/exec3.c \
+				exec/exec.c \
 				exec/exec_utils.c \
 				exec/exec_utils2.c \
 				exec/exec_infiles.c \
 				exec/exit.c \
 				exec/export.c \
 				exec/init_mem.c \
-				exec/main2.c \
+				exec/main.c \
 				exec/path.c \
 				exec/pwd.c \
 				exec/unset.c \
