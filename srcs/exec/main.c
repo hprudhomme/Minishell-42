@@ -17,7 +17,7 @@ char	*my_getenv(char **env, char *elem)
 	index = 0;
 	while (env[index])
 	{
-		if (ft_strncmp(elem, env[index], elem_len) == 0)
+		if (!ft_strcmp(elem, env[index]))
 			break ;
 		index++;
 	}

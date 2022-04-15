@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 09:08:48 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/06 09:08:15 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/15 11:18:53 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 	It's gonna find the end index of the arg after the quotes
 		(it takes the closing quote index as parameter)
 	It return the index of the first space except if that space
-	is after a &&, ||, |, <<, <, >> or >, it's gonna return the
+	is after a &&, ||, |, <<, <, >>, > or ; it's gonna return the
 	index just before that characters
 */
 int	get_arg_end(char *str, int quote_index)
@@ -27,7 +27,7 @@ int	get_arg_end(char *str, int quote_index)
 	int		test_index;
 	int		cur;
 
-	splitchar = ft_split("&& || | << < >> > &", ' ');
+	splitchar = ft_split("&& || | << < >> > & ;", ' ');
 	if (!splitchar)
 		return (0);
 	end_index = index_of(str + quote_index, " ", 1);
@@ -75,10 +75,10 @@ int	get_quotes_end(char *str, int e_end)
 	e_end is equal to the return of get_arg_end
 		on the current string (with a quote_index = 0)
 	A e_end = to -1 means that str start with a special char
-		like quotes, &, |, < or >
+		like quotes, &, |, <, > or ;
 	It can find if the arg is actually longer than the e_end
 		because of some quotes (with get_quotes_end)
-	or if it's lower because of a &&, ||, |, <<, <, >> or > before
+	or if it's lower because of a &&, ||, |, <<, <, >>, > or ; before
 */
 int	get_end_index(char *str, int e_end)
 {
@@ -88,7 +88,7 @@ int	get_end_index(char *str, int e_end)
 
 	if (e_end == 0)
 		return (0);
-	splitchar = ft_split("&& || | << < >> > &", ' ');
+	splitchar = ft_split("&& || | << < >> > & ;", ' ');
 	if (!splitchar)
 		return (0);
 	end_index = get_quotes_end(str, e_end);
@@ -109,7 +109,7 @@ int	get_end_index(char *str, int e_end)
 
 /*
 	Split the given command in the given args list
-	Works like a split on spaces, but it also split on <, <<, >, >>, &&, |, ||
+	Works like a split on spaces, but it also split on <, <<, >, >>, &&, |, ||, ;
 	Of course, it doesn't split on these characters if they are surrounded
 	by simple or double quotes
 
@@ -128,7 +128,8 @@ int	split_args(t_list **args, char *cmd)
 		if (cmd[cur] == ' ')
 			continue ;
 		if (cmd[cur] == '\'' || cmd[cur] == '"' || cmd[cur] == '<'
-			|| cmd[cur] == '&' || cmd[cur] == '|' || cmd[cur] == '>')
+			|| cmd[cur] == '&' || cmd[cur] == '|' || cmd[cur] == '>'
+			|| cmd[cur] == ';')
 			end_index = get_end_index(cmd + cur, -1);
 		else
 			end_index = get_end_index(cmd + cur, get_arg_end(cmd + cur, 0));

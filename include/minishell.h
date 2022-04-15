@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:57:56 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/14 08:57:52 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/15 11:24:18 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ char *concat_path(char **tab, char *str);
 # define NEXT_PIPE		1
 # define NEXT_AND		2
 # define NEXT_OR		3
+# define NEXT_CONTINUE	4
 
 # define OUT_WRITE		0
 # define OUT_APPEND		1
@@ -202,10 +203,14 @@ t_cmdlst	*parsing(char *command);
 int			replace_quotes(char ***args, char **env, int last_exit);
 int			set_in_quotes(char c, int *in_quotes);
 // parsing/utils.c
-char		*ft_strldup(const char *s1, size_t size);
 int			index_of(char *str, char *search, int n);
 int			get_arg_type(char *str);
 int			is_sep(char *str);
-int			ft_strcat(char *dst, char *src);
 
+
+
+// ft_utils.c
+int			ft_strcmp(char *s1, char *s2);
+int			ft_strcat(char *dst, char *src);
+char		*ft_strldup(const char *s1, size_t size);
 #endif
