@@ -146,11 +146,11 @@ int	main(int ac, char **av, char **env)
 		if (!str)
 			continue ;
 		command_list = parsing(str);
+		free(str);
 		if (!command_list)
 			continue ;
 		execute3(command_list, env, mem);
 		cmdlst_clear(&command_list);
-		free(str);
 	}
 	return (0);
 }
