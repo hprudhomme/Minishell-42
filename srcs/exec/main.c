@@ -129,26 +129,28 @@ char    **copy_env(char **env)
     return my_env;
 }
 
-int main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
-    t_mem *mem;
-    t_cmdlst *command_list;
-    char *str;
+	t_mem		*mem;
+	t_cmdlst	*command_list;
+	char		*str;
 
-    mem = initialize_mem();
-    signal(SIGINT, handler);
-    mem->path_tab = ft_split(getenv("PATH"), ':');
-    mem->my_env = copy_env(env);
-	ft_printf("\033[1;1H\033[2J"); // Clear screen
-    while (42)
-    {
+	mem = initialize_mem();
+	signal(SIGINT, handler);
+	mem->path_tab = ft_split(getenv("PATH"), ':');
+	mem->my_env = copy_env(env);
+	ft_printf("\033[1;1H\033[2J");
+	while (42)
+	{
 		str = take_input(mem);
-        if (!str)
-			continue;
-        command_list = parsing(str);
-        execute3(command_list, env, mem);
-        cmdlst_clear(&command_list);
-        free(str);
-    }
-    return 0;
+		if (!str)
+			continue ;
+		command_list = parsing(str);
+		if (!command_list)
+			continue ;
+		execute3(command_list, env, mem);
+		cmdlst_clear(&command_list);
+		free(str);
+	}
+	return (0);
 }
