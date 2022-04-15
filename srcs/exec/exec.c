@@ -1,6 +1,19 @@
 #include "../../include/minishell.h"
 
 /*
+	Print the error corresponding to the given error code
+*/
+static int	print_error(int error_code, char *content)
+{
+	if (error_code == 14)
+	{
+		ft_printf("\033[91m%s '%s'\033[0m\n",
+			"minishell: command not found :", content);
+	}
+	return (1);
+}
+
+/*
 	if builtin cmd do things for
     if not builtin call execve
 */
@@ -25,8 +38,10 @@ void    exec_cmd(t_mem *mem, t_cmdlst *lst, char **env)
     {
         if (execve(exec_path, lst->args, mem->my_env) == -1)
         {
-            write(1, strerror( errno ), ft_strlen(strerror( errno )));
-            write(1, "\n", 1);
+			if (errno == 14)
+				print_error(errno, lst->command);
+			else
+				ft_printf("%s\n", strerror(errno));
             if (exec_path)
                 free(exec_path);
             exit(1);
