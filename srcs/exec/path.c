@@ -9,7 +9,6 @@ char    *find_exec_path(char **path_tab, char *cmd, char *right_path)
     int i;
     int j;
     int x;
-    char    *tmp;
 
     i = 0;
     while (path_tab[i])
@@ -18,20 +17,12 @@ char    *find_exec_path(char **path_tab, char *cmd, char *right_path)
         x = 0;
         right_path = malloc(sizeof(char) * 150);
         while (path_tab[i][j])
-        {
-            right_path[x] = path_tab[i][j];
-            j++;
-            x++;
-        }
+            right_path[x++] = path_tab[i][j++];
         right_path[x] = '/';
         x++;
         j = 0;
         while (cmd[j])
-        {
-            right_path[x] = cmd[j];
-            x++;
-            j++;
-        }
+            right_path[x++] = cmd[j++];
         right_path[x] = '\0';
         if (access(right_path, F_OK) == 0)
             return right_path;
@@ -56,20 +47,12 @@ char    *find_path_redirect_file(char *pwd, char *actuel, char *redirect_path)
     if (!redirect_path)
         return NULL;
     while (pwd[i])
-    {
-        redirect_path[j] = pwd[i];
-        i++;
-        j++;
-    }
+        redirect_path[j++] = pwd[i++];
     redirect_path[j] = '/';
     j++;
     i = 0;
     while (actuel[i])
-    {
-        redirect_path[j] = actuel[i];
-        i++;
-        j++;
-    }
+        redirect_path[j++] = actuel[i++];
     redirect_path[j] = '\0';
     return (redirect_path);
 }
