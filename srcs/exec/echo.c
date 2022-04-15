@@ -33,7 +33,7 @@ int	ft_echo(char **s, t_mem *mem)
 	{
 		if ((!has_n && i > 1) || (has_n && i > 2))
 			ft_putchar_fd(' ', 1);
-		echo_arg(s[1]);
+		echo_arg(s[i]);
 	}
 	if (!has_n || strarr_len(s) == 1)
 		ft_putchar_fd('\n', 1);
