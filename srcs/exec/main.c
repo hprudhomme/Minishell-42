@@ -149,7 +149,7 @@ int	main(int ac, char **av, char **env)
 		free(str);
 		if (!command_list)
 			continue ;
-		execute3(command_list, env, mem);
+		execute(command_list, mem);
 		cmdlst_clear(&command_list);
 	}
 	return (0);

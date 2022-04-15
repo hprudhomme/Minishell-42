@@ -66,6 +66,8 @@ typedef struct s_mem
 {
 	char		**my_env;
 	char		**path_tab;
+	char		*exec_path;
+    char		*path_env;
 	int			exit_statue;
 	int			last_cmd_exit_statue;
 	int			fd_heredocs[2];
@@ -106,9 +108,7 @@ char    *find_path_redirect_file(char *pwd, char *actuel, char *redirect_path);
 
 // exec
 
-void 	execute(t_list2 *list, char **path_tab, char **env, t_mem *mem);
-void	execute2(t_list2 *list, char **path_tab, char **env, t_mem *mem);
-void 	execute3(t_cmdlst *lst, char **env, t_mem *mem);
+void 	execute(t_cmdlst *lst, t_mem *mem);
 
 //	exec_utils
 

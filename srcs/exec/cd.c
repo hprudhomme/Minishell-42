@@ -61,12 +61,12 @@ char **change_pwd(char **temp2, char **my_env)
 char **change_oldpwd(char *pwd, char **my_env)
 {
     char *new_old_pwd;
-    int old_env_place;
+    int old_env_index;
 
-    old_env_place = my_env_index_elem(my_env, "OLDPWD");
+    old_env_index = my_env_index_elem(my_env, "OLDPWD");
     new_old_pwd = ft_strjoin( "OLDPWD=", pwd);
-    free(my_env[old_env_place]);
-    my_env[old_env_place] = ft_strdup(new_old_pwd);
+    free(my_env[old_env_index]);
+    my_env[old_env_index] = ft_strdup(new_old_pwd);
     free(new_old_pwd);
     return my_env;
 }
@@ -121,7 +121,7 @@ char **change_pwd_relativ(char *path, char **my_env)
     {
         if (strcmp(temp[i], "..") == 0)
             temp2 = supp_last_elem_tab2d(temp2);
-        else
+        else if (strcmp(temp[i], ".") != 0)
             temp2 = append_tab_2d(temp2, temp[i]);
         i++;
     }
@@ -133,27 +133,45 @@ char **change_pwd_relativ(char *path, char **my_env)
     return my_env;
 }
 
+char    **change_pwd_home(char **my_env)
+{
+    char *new_pwd;
+    int pwd_index;
+    char *home;
+
+    home = my_getenv(my_env, "HOME");
+    pwd_index = my_env_index_elem(my_env, "PWD");
+    new_pwd = ft_strjoin( "PWD=", home);
+    free(my_env[pwd_index]);
+    my_env[pwd_index] = ft_strdup(new_pwd);
+    free(new_pwd);
+    free(home);
+    return my_env;
+}
+
 /*
 	change env (oldpwd and pwd) depending on if it's absolute or relativ path
 */
 
 char **change_my_env(char **cmd, char **my_env)
 {
-    char **temp;
-    char **temp2;
     char *pwd;
-    int i;
 
     pwd = my_getenv(my_env, "PWD");
-    if (cmd[1][0] == '/')
+    if (!cmd[1])
+    {
+        my_env = change_pwd_home(my_env);
+        my_env = change_oldpwd(pwd, my_env);
+    }
+    else if (cmd[1][0] == '/')
     {
         my_env = change_pwd_absolute(cmd[1], my_env);
         my_env = change_oldpwd(pwd, my_env);
-        return my_env;
     }
     else
         my_env = change_pwd_relativ(cmd[1], my_env);
-    free(pwd);
+    if (pwd)
+        free(pwd);
     return my_env;
 }
 
@@ -164,15 +182,32 @@ char **change_my_env(char **cmd, char **my_env)
 
 void ft_cd(char **cmd, t_mem *mem)
 {
-    if (chdir(cmd[1]) == -1)
+    int x;
+    char *home;
+
+    x = 1;
+    home = my_getenv(mem->my_env, "HOME");
+    if (!cmd[1])
+    {
+        if (chdir(home) == -1)
+        {
+            write(1, strerror( errno ), ft_strlen(strerror( errno )));
+            write(1, "\n", 1);
+            x = 0;
+            mem->exit_statue = 1;
+        }
+    }
+    else if (chdir(cmd[1]) == -1)
     {
         write(1, strerror( errno ), ft_strlen(strerror( errno )));
         write(1, "\n", 1);
+        x = 0;
         mem->exit_statue = 1;
     }
-    else
+    if (x)
     {
         mem->my_env = change_my_env(cmd, mem->my_env);
         mem->exit_statue = 0;
     }
+    free(home);
 }
