@@ -8,7 +8,12 @@ static int	print_error(int error_code, char *content)
 	if (error_code == 14)
 	{
 		ft_printf("\033[91m%s '%s'\033[0m\n",
-			"minishell: command not found :", content);
+			"minishell: command not found:", content);
+	}
+	else if (error_code == 13)
+	{
+		ft_printf("\033[91m%s '%s'\033[0m\n",
+			"minishell: permission denied:", content);
 	}
 	return (1);
 }
@@ -38,7 +43,7 @@ void    exec_cmd(t_mem *mem, t_cmdlst *lst, char **env)
     {
         if (execve(exec_path, lst->args, mem->my_env) == -1)
         {
-			if (errno == 14)
+			if (errno == 14 || errno == 13)
 				print_error(errno, lst->command);
 			else
 				ft_printf("%s\n", strerror(errno));
