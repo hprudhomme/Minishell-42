@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 10:50:09 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/13 14:07:49 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/15 15:15:04 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,13 @@ int	ft_export(t_mem *mem, char *s)
 	if (!temp)
 		return (0);
 	if (is_in_env(mem->my_env, temp[0])) // TODO : there is malloc in it
-		mem->my_env = ft_unset(mem, temp[0]); // TODO : there is malloc in it
+	{
+		new = ft_unset(mem, temp[0]);
+		if (!temp)
+			return (strarr_free(temp));
+		strarr_free(mem->my_env);
+		mem->my_env = new;
+	}
 	strarr_free(temp);
 	if (!strarr_append(&(mem->my_env), s))
 		return (0);

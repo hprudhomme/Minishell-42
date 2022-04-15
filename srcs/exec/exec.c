@@ -61,16 +61,17 @@ void    exec_cmd(t_mem *mem, t_cmdlst *lst, char **env)
 	exec builtin cmd that change env
 */
 
-int     do_builtin(t_cmdlst *lst, t_mem *mem)
+int	do_builtin(t_cmdlst *lst, t_mem *mem)
 {
-    if (strcmp(lst->command, "cd") == 0 && lst->todo_next != 1)
-        ft_cd(lst->args, mem);
-    if (strcmp(lst->command, "export") == 0 && lst->todo_next != 1)
-        if (!ft_exports(mem, lst->args))
+	if (strcmp(lst->command, "cd") == 0 && lst->todo_next != 1)
+		ft_cd(lst->args, mem);
+	if (strcmp(lst->command, "export") == 0 && lst->todo_next != 1)
+		if (!ft_exports(mem, lst->args))
 			return (0);
-    if (strcmp(lst->command, "unset") == 0 && lst->todo_next != 1)
-        ft_unsets(mem, lst->args);
-    return 1;
+	if (strcmp(lst->command, "unset") == 0 && lst->todo_next != 1)
+		if (!ft_unsets(mem, lst->args))
+			return (0);
+	return (1);
 }
 
 /*

@@ -44,7 +44,6 @@ int     is_in_env(char **my_env, char *s)
         free_tab_2d(temp);
     if (i == tab_2d_len(my_env))
     {
-        printf("var not find !!!\n");
         return 0;
     }
     return 1;

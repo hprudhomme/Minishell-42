@@ -5,57 +5,48 @@
     else return a refresh env without this var
 */
 
-char    **ft_unset(t_mem *mem, char *var)
+char	**ft_unset(t_mem *mem, char *var)
 {
-    char **new;
-    char **temp;
-    int i;
-    int j;
+	char	**new;
+	char	**temp;
+	int		i;
+	int		j;
 
-
-    if (!is_in_env(mem->my_env, var))
-    {
-        mem->exit_statue += 1;
-        return mem->my_env;
-    }
-    i = 0;
-    j = 0;
-    new = (char **)malloc(sizeof(char *) * (tab_2d_len(mem->my_env)));
-    if (!new)
-        return mem->my_env;
-    i = 0;
-    while (mem->my_env[i])
-    {
-        temp = ft_split(mem->my_env[i], '=');
-        if (strcmp(temp[0], var) == 0)
-            i++;
-        else
-            new[j++] = ft_strdup(mem->my_env[i++]);
-        free_tab_2d(temp);
-    }
-    new[j] = NULL;
-    free_tab_2d(mem->my_env);
-    return new;
+	i = -1;
+	j = 0;
+	new = (char **)ft_calloc(strarr_len(mem->my_env) - 1, sizeof(char *));
+	if (!new)
+		return (NULL);
+	while (mem->my_env[++i])
+	{
+		temp = ft_split(mem->my_env[i], '=');
+		if (!temp)
+			return (nil(free_array_n(new, j)));
+		if (ft_strcmp(temp[0], var))
+		{
+			new[j++] = ft_strdup(mem->my_env[i]);
+			if (!new[j - 1])
+				return (nil(free_array_n(new, j - 1) + strarr_free(temp)));
+		}
+		strarr_free(temp);
+	}
+	return (new);
 }
 
-
-char    **ft_unsets(t_mem *mem, char **args)
+int	ft_unsets(t_mem *mem, char **args)
 {
-    int i;
+	int		i;
+	char	**temp;
 
-    mem->exit_statue = 0;
-    i = 0;
-    while (args[i])
-    {
-        if (strcmp(args[i], "unset") == 0)
-            break ;
-        i++;
-    }
-    i++;
-    while (args[i])
-    {
-        mem->my_env = ft_unset(mem, args[i]);
-        i++;
-    }
-    return (mem->my_env);
+	mem->exit_statue = 0;
+	i = 0;
+	while (args[++i])
+	{
+		temp = ft_unset(mem, args[i]);
+		if (!temp)
+			return (0);
+		strarr_free(mem->my_env);
+		mem->my_env = temp;
+	}
+	return (1);
 }

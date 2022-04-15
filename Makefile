@@ -35,7 +35,8 @@ LST_SRCS	:=	exec/cd_utils.c \
 				parsing/parsing.c \
 				parsing/quotes.c \
 				parsing/utils.c \
-				ft_utils.c
+				ft_utils.c \
+				utils.c
 LST_OBJS	:=	$(LST_SRCS:.c=.o)
 LST_INCS	:=	minishell.h
 
