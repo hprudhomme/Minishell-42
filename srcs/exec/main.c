@@ -139,7 +139,7 @@ int main(int ac, char **av, char **env)
     signal(SIGINT, handler);
     mem->path_tab = ft_split(getenv("PATH"), ':');
     mem->my_env = copy_env(env);
-	ft_printf("\033[2J"); // Clear screen
+	ft_printf("\033[1;1H\033[2J"); // Clear screen
     while (42)
     {
 		str = take_input(mem);
