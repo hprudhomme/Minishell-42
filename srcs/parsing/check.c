@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 08:21:01 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/11 09:31:15 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/15 11:25:49 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	check_specials(t_list *args)
 			is_special = 0;
 		if (!it_args->next)
 		{
-			if (is_sep(it_args->content))
+			if (is_sep(it_args->content) && ft_strcmp(it_args->content, ";"))
 				return (print_error(3, it_args->content));
 		}
 		it_args = it_args->next;

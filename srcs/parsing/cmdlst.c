@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:31:53 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/11 09:41:42 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/15 11:40:11 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	append_in_args(t_list **args, char *op, char ***array)
 	if (!(*args))
 		return (1);
 	if (ft_strlen(op) == ft_strlen((*args)->content)
-		&& ft_strncmp((*args)->content, op, ft_strlen((*args)->content)) == 0)
+		&& !ft_strcmp((*args)->content, op))
 	{
 		*args = (*args)->next;
 		if (*args && !strarr_append(array, (*args)->content))
@@ -116,7 +116,7 @@ int	create_command_lst(t_cmdlst **command_list, t_list *args)
 	t_cmdlst	*new;
 
 	*command_list = NULL;
-	while (args)
+	while (args && !get_arg_type(args->content))
 	{
 		new = cmdlst_new();
 		if (!new)
