@@ -43,3 +43,11 @@ void	free_mem(t_mem *mem, int exiting)
 	if (exiting)
 		exit(EXIT_SUCCESS);
 }
+
+void	free_path(t_mem *mem)
+{
+	if (mem->exec_path)
+		free(mem->exec_path);
+	if (mem->path_env)
+		free(mem->path_env);
+}

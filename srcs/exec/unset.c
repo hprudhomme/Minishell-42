@@ -1,9 +1,9 @@
 #include "../../include/minishell.h"
 
 /*
-	if var isnt find return env without refreshing it
-    else return a refresh env without this var
-*/
+   if var isnt find return env without refreshing it
+   else return a refresh env without this var
+   */
 
 char	**ft_unset(t_mem *mem, char *var)
 {
@@ -43,7 +43,7 @@ int	ft_unsets(t_mem *mem, char **args)
 	i = 0;
 	while (args[++i])
 	{
-		if (!is_in_env(mem->my_env, args[i])) // TODO : can have malloc error
+		if (!is_in_env(mem->my_env, args[i]))
 		{
 			mem->exit_statue++;
 			continue ;

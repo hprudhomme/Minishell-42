@@ -35,7 +35,7 @@
 typedef struct s_list2_simple_cmd
 {
 	int							nb;
-	char			            **cmd;
+	char						**cmd;
 	int							infile;
 	int							outfile;
 	char						*infile_name;
@@ -45,21 +45,20 @@ typedef struct s_list2_simple_cmd
 
 typedef struct s_list2
 {
-	 t_list2_simple_cmd *premier;
-	 char **env;
+	t_list2_simple_cmd	*premier;
+	char				**env;
 }					t_list2;
 
 typedef struct s_exec_loop
 {
-	int tmpin;
-    int tmpout;
-    int fdin;
-    int fdout;
-	int fdpipe[2];
-	int ret;
-	char *redirect_file_path;
-	char *right_path;
-	// char **path_tab;
+	int		tmpin;
+	int		tmpout;
+	int		fdin;
+	int		fdout;
+	int		fdpipe[2];
+	int		ret;
+	char	*redirect_file_path;
+	char	*right_path;
 }					t_exec_loop;
 
 typedef struct s_mem
@@ -67,12 +66,12 @@ typedef struct s_mem
 	char		**my_env;
 	char		**path_tab;
 	char		*exec_path;
-    char		*path_env;
+	char		*path_env;
 	int			exit_statue;
 	int			last_cmd_exit_statue;
 	int			fd_heredocs[2];
 	char		*tmpfile;
-	t_exec_loop *exec_loop;
+	t_exec_loop	*exec_loop;
 }					t_mem;
 
 typedef struct s_outlst
@@ -95,65 +94,82 @@ typedef struct s_cmdlst
 
 // init
 
-t_mem	*initialize_mem(void);
+t_mem		*initialize_mem(void);
 
 // free
 
-void	free_mem(t_mem *mem, int exiting);
+void		free_mem(t_mem *mem, int exiting);
+void		free_path(t_mem *mem);
 
 //	path
 
-char    *find_exec_path(char **path_tab, char *cmd, char *right_path);
-char    *find_path_redirect_file(char *pwd, char *actuel, char *redirect_path);
+char		*find_exec_path(char **path_tab, char *cmd, char *right_path);
+char		*find_path_redirect_file(char *pwd, char *actuel,
+				char *redirect_path);
 
 // exec
 
-void 	execute(t_cmdlst *lst, t_mem *mem);
+void		execute(t_cmdlst *lst, t_mem *mem);
 
 //	exec_utils
 
-void    init_outlst_loop(t_mem *mem, t_cmdlst *lst, int i);
-int		save_last_exit_statue(t_mem *mem, t_cmdlst *lst);
-void    init_exec(t_mem *mem, t_cmdlst *lst);
-void    reset_exec(t_mem *mem);
-int     is_builtin(char *cmd);
-void    write_exit_statue(t_mem *mem, int i);
+void		init_outlst_loop(t_mem *mem, t_cmdlst *lst, int i);
+int			save_last_exit_statue(t_mem *mem, t_cmdlst *lst);
+void		init_exec(t_mem *mem, t_cmdlst *lst);
+void		reset_exec(t_mem *mem);
+int			is_builtin(char *cmd);
+void		write_exit_statue(t_mem *mem, int i);
+void		init_exec_cmd(t_mem *mem, t_cmdlst *lst);
+int			is_exiting(t_cmdlst *lst);
+int			exec_builtin(t_mem *mem, t_cmdlst *lst);
 
 // exec_infiles
 
-void    handle_heredocs(t_mem *mem, t_cmdlst *lst);
-void    setup_infiles(t_cmdlst *lst, t_mem *mem);
-void    delete_tpmfile(t_mem *mem);
+void		handle_heredocs(t_mem *mem, t_cmdlst *lst);
+void		setup_infiles(t_cmdlst *lst, t_mem *mem);
+void		delete_tpmfile(t_mem *mem);
+
+// env fct in env.c
+
+char		**copy_env(char **env);
+char		*my_getenv(char **env, char *elem);
+int			my_env_index_elem(char **my_env, char *elem);
 
 // built-in
 
-int		ft_export(t_mem *mem, char *s);
-int		ft_exports(t_mem *mem, char **args);
-int		ft_env(t_mem *mem);
-int		ft_unsets(t_mem *mem, char **args);
-char	**ft_unset(t_mem *mem, char *var);
+int			ft_export(t_mem *mem, char *s);
+int			ft_exports(t_mem *mem, char **args);
+int			ft_env(t_mem *mem);
+int			ft_unsets(t_mem *mem, char **args);
+char		**ft_unset(t_mem *mem, char *var);
 
-int 	ft_pwd(t_mem *mem);
-void	ft_exit(t_mem *mem, t_cmdlst *lst);
-int	    ft_echo(char **s, t_mem *mem);
-void 	ft_cd(char ** cmd, t_mem *mem);
+int			ft_pwd(t_mem *mem);
+void		ft_exit(t_mem *mem, t_cmdlst *lst);
+int			ft_echo(char **s, t_mem *mem);
+void		ft_cd(char **cmd, t_mem *mem);
+
+// cd2.c
+
+char		**change_oldpwd(char *pwd, char **my_env);
+char		**change_pwd(char **temp2, char **my_env);
+char		**change_pwd_home(char **my_env);
 
 // utils
 
-int     tab_2d_len(char **tab);
-void    free_tab_2d(char **tab);
-char    **append_env(char **my_env, char *s);
-char    **supp_elem_env(char **my_env, char *s);
-int     is_in_env(char **my_env, char *s);
-char 	*my_getenv(char **env, char *elem);
-int		cmdlist_len(t_cmdlst *lst);
-int    	outlst_len(t_outlst *lst);
+int			tab_2d_len(char **tab);
+void		free_tab_2d(char **tab);
+char		**append_env(char **my_env, char *s);
+char		**supp_elem_env(char **my_env, char *s);
+int			is_in_env(char **my_env, char *s);
+char		*my_getenv(char **env, char *elem);
+int			cmdlist_len(t_cmdlst *lst);
+int			outlst_len(t_outlst *lst);
 
 // env_utils
 
-char **append_tab_2d(char **tab, char *s);
-char **supp_last_elem_tab2d(char **tab);
-char *concat_path(char **tab, char *str);
+char		**append_tab_2d(char **tab, char *s);
+char		**supp_last_elem_tab2d(char **tab);
+char		*concat_path(char **tab, char *str);
 
 /*
 	PARSING
@@ -206,8 +222,6 @@ int			set_in_quotes(char c, int *in_quotes);
 int			index_of(char *str, char *search, int n);
 int			get_arg_type(char *str);
 int			is_sep(char *str);
-
-
 
 // ft_utils.c
 int			ft_strcmp(char *s1, char *s2);

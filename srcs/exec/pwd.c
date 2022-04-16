@@ -1,9 +1,9 @@
 #include "../../include/minishell.h"
 
 /*
-	Minishell built-in function (pwd)
-	Print the PWD from the env if found
-*/
+   Minishell built-in function (pwd)
+   Print the PWD from the env if found
+   */
 int	ft_pwd(t_mem *mem)
 {
 	char	*pwd;
