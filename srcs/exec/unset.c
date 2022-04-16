@@ -14,7 +14,7 @@ char	**ft_unset(t_mem *mem, char *var)
 
 	i = -1;
 	j = 0;
-	new = (char **)ft_calloc(strarr_len(mem->my_env) - 1, sizeof(char *));
+	new = (char **)malloc(strarr_len(mem->my_env) * sizeof(char *));
 	if (!new)
 		return (NULL);
 	while (mem->my_env[++i])
@@ -30,6 +30,7 @@ char	**ft_unset(t_mem *mem, char *var)
 		}
 		strarr_free(temp);
 	}
+	new[j] = 0;
 	return (new);
 }
 
@@ -42,6 +43,11 @@ int	ft_unsets(t_mem *mem, char **args)
 	i = 0;
 	while (args[++i])
 	{
+		if (!is_in_env(mem->my_env, args[i])) // TODO : can have malloc error
+		{
+			mem->exit_statue++;
+			continue ;
+		}
 		temp = ft_unset(mem, args[i]);
 		if (!temp)
 			return (0);
