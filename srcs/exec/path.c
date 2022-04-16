@@ -12,6 +12,8 @@ char    *find_exec_path(char **path_tab, char *cmd, char *right_path)
 
 	if (cmd[0] == '.' || cmd[0] == '/')
 		return (ft_strdup(cmd));
+	if (!path_tab)
+		return (NULL);
     i = 0;
     while (path_tab[i])
     {

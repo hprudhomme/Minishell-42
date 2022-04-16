@@ -25,7 +25,7 @@ int     exec_builtin(t_mem *mem, t_cmdlst *lst)
     if (strcmp(lst->command, "pwd") == 0)
         ft_pwd(mem);
     if (strcmp(lst->command, "env") == 0)
-        ft_env(mem->my_env, mem);
+        ft_env(mem);
     if (strcmp(lst->command, "echo") == 0)
         ft_echo(lst->args, mem);
     return (1);
@@ -43,8 +43,7 @@ void    init_exec_cmd(t_mem *mem, t_cmdlst *lst)
     if (mem->path_tab)
         free_tab_2d(mem->path_tab);
     mem->path_tab = ft_split(mem->path_env, ':');
-    if (mem->path_tab)
-        mem->exec_path = find_exec_path(mem->path_tab, lst->command, mem->exec_path);
+    mem->exec_path = find_exec_path(mem->path_tab, lst->command, mem->exec_path);
 }
 
 void    exec_cmd(t_mem *mem, t_cmdlst *lst)
@@ -62,7 +61,7 @@ void    exec_cmd(t_mem *mem, t_cmdlst *lst)
 			if (errno == 14 || errno == 13)
 				print_error(errno, lst->command);
 			else
-				ft_printf("%s\n", strerror(errno));
+				ft_printf("%d %s\n", errno, strerror(errno));
             if (mem->exec_path)
                 free(mem->exec_path);
             if (mem->path_env)

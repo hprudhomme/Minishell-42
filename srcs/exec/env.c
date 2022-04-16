@@ -1,16 +1,12 @@
 #include "../../include/minishell.h"
 
-int    ft_env(char **my_env, t_mem *mem)
+int	ft_env(t_mem *mem)
 {
-    int x;
+	int	x;
 
-    x = 0;
-    while (my_env[x])
-    {
-        write(1, my_env[x], ft_strlen(my_env[x]));
-        write(1, "\n", 1);
-        x++;
-    }
-    mem->exit_statue = 0;
-    return (1);
+	x = -1;
+	while (mem->my_env[++x])
+		ft_printf("%s\n", mem->my_env[x]);
+	mem->exit_statue = 0;
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:57:56 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/15 15:11:16 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/16 12:02:20 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void    delete_tpmfile(t_mem *mem);
 
 int		ft_export(t_mem *mem, char *s);
 int		ft_exports(t_mem *mem, char **args);
-int		ft_env(char **my_env, t_mem *mem);
+int		ft_env(t_mem *mem);
 int		ft_unsets(t_mem *mem, char **args);
 char	**ft_unset(t_mem *mem, char *var);
 
