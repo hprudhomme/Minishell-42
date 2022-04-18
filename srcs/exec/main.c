@@ -1,18 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/18 09:01:31 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 09:52:38 by ocartier         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../include/minishell.h"
-
-int	g_crtl_c = 0;
 
 /*
    Return a string containing the prompt
@@ -50,24 +36,14 @@ char	*get_prompt(t_mem *mem)
 	return (prompt);
 }
 
-void	handler(int i)
-{
-	(void)i;
-	g_crtl_c = 1;
-}
-
-int	not_buf(t_mem *mem)
-{
-	if (g_crtl_c)
-	{
-		g_crtl_c = 0;
-		return (0);
-	}
-	else
-	{
-		free_mem(mem, 1);
-		return (1);
-	}
+void handle_signals(int signo) {
+  if (signo == SIGINT)
+  {
+	write(1, "\n", 1);
+    rl_on_new_line(); // Regenerate the prompt on a newline
+    rl_replace_line("", 0); // Clear the previous text
+    rl_redisplay();
+  }
 }
 
 char	*take_input(t_mem *mem)
@@ -75,16 +51,14 @@ char	*take_input(t_mem *mem)
 	char	*buf;
 	char	*prompt;
 
-	rl_getc_function = getc;
 	prompt = get_prompt(mem);
 	buf = readline(prompt);
 	free(prompt);
 	if (!buf)
 	{
-		if (not_buf(mem))
+			write(1, "\n", 1);
+			free_mem(mem, 1);
 			exit(0);
-		else
-			return (NULL);
 	}
 	if (ft_strlen(buf) == 0)
 	{
@@ -102,7 +76,7 @@ int	main(int ac, char **av, char **env)
 	char		*str;
 
 	mem = initialize_mem();
-	signal(SIGINT, handler);
+	signal(SIGINT, handle_signals);
 	mem->path_tab = ft_split(getenv("PATH"), ':');
 	mem->my_env = copy_env(env);
 	ft_printf("\033[1;1H\033[2J");
