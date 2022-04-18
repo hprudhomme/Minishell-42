@@ -2,9 +2,9 @@ NAME		:=	minishell
 
 CC			:=	clang
 ifdef LDFLAGS
-	FLAGS		:=	$(LDFLAGS)
-else
 	FLAGS		:=	$(LDFLAGS) -lreadline -Llibft -lft
+else
+	FLAGS		:=	-lreadline -Llibft -lft
 endif
 FLAGS		+=	-Wall -Wextra -Werror
 #FLAGS		+=	-g -fsanitize=address
