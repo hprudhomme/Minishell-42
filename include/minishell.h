@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:57:56 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 21:21:24 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 21:35:42 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@
 # include <sys/stat.h>
 # include <sys/signal.h>
 # include <errno.h>
-# include<readline/readline.h>
-# include<readline/history.h>
+# include <string.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 # include "../libft/include/libft.h"
 
