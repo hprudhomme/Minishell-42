@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 09:08:48 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/15 11:18:53 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 22:25:38 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int	split_args(t_list **args, char *cmd)
 	cur = -1;
 	while (cmd[++cur])
 	{
-		if (cmd[cur] == ' ')
+		if (cmd[cur] == ' ' || cmd[cur] == '\t')
 			continue ;
 		if (cmd[cur] == '\'' || cmd[cur] == '"' || cmd[cur] == '<'
 			|| cmd[cur] == '&' || cmd[cur] == '|' || cmd[cur] == '>'
