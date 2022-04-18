@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:57:56 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/16 12:02:20 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 09:47:06 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ typedef struct s_list2_simple_cmd
 	char						*infile_name;
 	char						*outfile_name;
 	struct s_list2_simple_cmd	*next;
-}					t_list2_simple_cmd;
+}	t_list2_simple_cmd;
 
 typedef struct s_list2
 {
 	t_list2_simple_cmd	*premier;
 	char				**env;
-}					t_list2;
+}	t_list2;
 
 typedef struct s_exec_loop
 {
@@ -59,7 +59,7 @@ typedef struct s_exec_loop
 	int		ret;
 	char	*redirect_file_path;
 	char	*right_path;
-}					t_exec_loop;
+}	t_exec_loop;
 
 typedef struct s_mem
 {
@@ -72,7 +72,7 @@ typedef struct s_mem
 	int			fd_heredocs[2];
 	char		*tmpfile;
 	t_exec_loop	*exec_loop;
-}					t_mem;
+}	t_mem;
 
 typedef struct s_outlst
 {
@@ -229,4 +229,7 @@ int			ft_strcat(char *dst, char *src);
 char		*ft_strldup(const char *s1, size_t size);
 // utils.c
 void		*nil(int i);
+int			free_str(char *str);
+int			contains_only(char *str, char c);
+int			replace_var(char *var_val, char *n_arg, int *n_cur);
 #endif
