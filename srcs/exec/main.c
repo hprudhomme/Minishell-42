@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 09:01:31 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 09:52:38 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 12:14:52 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,17 @@ char	*get_prompt(t_mem *mem)
 	pwd = my_getenv(mem->my_env, "PWD");
 	if (pwd)
 	{
-		temp = ft_strjoin("\n\033[36m", pwd);
+		temp = ft_strjoin("\n\001\033[36m\002", pwd);
 		free(pwd);
-		start = ft_strjoin(temp, "\033[0m\n");
+		start = ft_strjoin(temp, "\001\033[0m\002\n");
 		free(temp);
 	}
 	else
-		start = ft_strdup("\n\033[36mminishell\033[0m ");
+		start = ft_strdup("\n\001\033[36m\002minishell\001\033[0m\002 ");
 	if (mem->last_cmd_exit_statue == 0)
-		prompt = ft_strjoin(start, "\033[32m❯\033[0m ");
+		prompt = ft_strjoin(start, "\001\033[32m\002❯\001\033[0m\002 ");
 	else
-		prompt = ft_strjoin(start, "\033[31m❯\033[0m ");
+		prompt = ft_strjoin(start, "\001\033[31m\002❯\001\033[0m\002 ");
 	free(start);
 	return (prompt);
 }
