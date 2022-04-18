@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 09:01:31 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 09:01:32 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 09:52:38 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ char	*get_prompt(t_mem *mem)
 	return (prompt);
 }
 
-void	handler(void)
+void	handler(int i)
 {
+	(void)i;
 	g_crtl_c = 1;
 }
 
