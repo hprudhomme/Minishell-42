@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 09:00:29 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 09:44:49 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 22:37:58 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,20 @@ int	replace_var(char *var_val, char *n_arg, int *n_cur)
 	*n_cur += ft_strcat(n_arg + (*n_cur) - 1, var_val) - 1;
 	free(var_val);
 	return (1);
+}
+
+/*
+	Return the index of the first space or tab of given str
+*/
+int	index_of_newline(char *str)
+{
+	int	index;
+	int	temp;
+
+	index = index_of(str, " ", 1);
+	temp = index_of(str, "\t", 1);
+	if (temp || str[0] == '\t')
+		if (temp < index)
+			index = temp;
+	return (index);
 }

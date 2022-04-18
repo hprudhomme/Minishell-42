@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:57:56 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 21:35:42 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 22:37:09 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,4 +234,5 @@ void		*nil(int i);
 int			free_str(char *str);
 int			contains_only(char *str, char c);
 int			replace_var(char *var_val, char *n_arg, int *n_cur);
+int			index_of_newline(char *str);
 #endif

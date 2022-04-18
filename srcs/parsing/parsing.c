@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 09:08:48 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 22:25:38 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 22:37:43 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 	Return the end of the first arg of given str
 	It's gonna find the end index of the arg after the quotes
 		(it takes the closing quote index as parameter)
-	It return the index of the first space except if that space
+	It return the index of the first space (or tab) except if that space
 	is after a &&, ||, |, <<, <, >>, > or ; it's gonna return the
 	index just before that characters
 */
@@ -30,7 +30,7 @@ int	get_arg_end(char *str, int quote_index)
 	splitchar = ft_split("&& || | << < >> > & ;", ' ');
 	if (!splitchar)
 		return (0);
-	end_index = index_of(str + quote_index, " ", 1);
+	end_index = index_of_newline(str + quote_index);
 	cur = -1;
 	while (splitchar[++cur])
 	{
