@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/18 09:01:31 by ocartier          #+#    #+#             */
+/*   Updated: 2022/04/18 12:14:52 by ocartier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 /*
@@ -21,17 +33,17 @@ char	*get_prompt(t_mem *mem)
 	pwd = my_getenv(mem->my_env, "PWD");
 	if (pwd)
 	{
-		temp = ft_strjoin("\n\033[36m", pwd);
+		temp = ft_strjoin("\n\001\033[36m\002", pwd);
 		free(pwd);
-		start = ft_strjoin(temp, "\033[0m\n");
+		start = ft_strjoin(temp, "\001\033[0m\002\n");
 		free(temp);
 	}
 	else
-		start = ft_strdup("\n\033[36mminishell\033[0m ");
+		start = ft_strdup("\n\001\033[36m\002minishell\001\033[0m\002 ");
 	if (mem->last_cmd_exit_statue == 0)
-		prompt = ft_strjoin(start, "\033[32m❯\033[0m ");
+		prompt = ft_strjoin(start, "\001\033[32m\002>\001\033[0m\002 ");
 	else
-		prompt = ft_strjoin(start, "\033[31m❯\033[0m ");
+		prompt = ft_strjoin(start, "\001\033[31m\002>\001\033[0m\002 ");
 	free(start);
 	return (prompt);
 }
@@ -39,9 +51,9 @@ char	*get_prompt(t_mem *mem)
 void handle_signals(int signo) {
   if (signo == SIGINT)
   {
-	write(1, "\n", 1);
-    rl_on_new_line(); // Regenerate the prompt on a newline
-    rl_replace_line("", 0); // Clear the previous text
+    write(1, "\n", 1);
+    rl_on_new_line();
+    rl_replace_line("", 0);
     rl_redisplay();
   }
 }
