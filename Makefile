@@ -57,7 +57,7 @@ END			:=	\033[0m
 $(DIR_OBJS)/%.o: $(DIR_SRCS)/%.c $(INCS) Makefile libft/libft.a
 	mkdir -p $(DIR_OBJS) $(DIR_OBJS)/parsing $(DIR_OBJS)/exec
 ifdef CPPFLAGS
-	$(CC) -I $(DIR_INCS) -I $(CPPFLAGS) -c $< -o $@
+	$(CC) -I $(DIR_INCS) $(CPPFLAGS) -c $< -o $@
 else
 	$(CC) -I $(DIR_INCS) -c $< -o $@
 endif
