@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/18 09:00:39 by ocartier          #+#    #+#             */
+/*   Updated: 2022/04/18 09:00:40 by ocartier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 /*
@@ -120,7 +132,7 @@ int	change_dir(char **cmd, t_mem *mem)
 }
 
 void	ft_cd(char **cmd, t_mem *mem)
-{	
+{
 	if (change_dir(cmd, mem))
 	{
 		mem->my_env = change_my_env(cmd, mem->my_env);
