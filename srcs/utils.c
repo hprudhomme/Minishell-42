@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 09:00:29 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 22:37:58 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 23:03:52 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	contains_only(char *str, char c)
 */
 int	replace_var(char *var_val, char *n_arg, int *n_cur)
 {
+	n_arg[(*n_cur) - 1] = 0;
 	if (!var_val)
 		return (free_str(n_arg));
 	*n_cur += ft_strcat(n_arg + (*n_cur) - 1, var_val) - 1;
