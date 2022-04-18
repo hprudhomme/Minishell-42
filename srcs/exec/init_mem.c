@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_mem.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/18 09:01:27 by ocartier          #+#    #+#             */
+/*   Updated: 2022/04/18 09:01:28 by ocartier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/minishell.h"
 
 void	init_exec_loop(t_exec_loop *exec_loop)
@@ -42,4 +54,12 @@ void	free_mem(t_mem *mem, int exiting)
 		free(mem);
 	if (exiting)
 		exit(EXIT_SUCCESS);
+}
+
+void	free_path(t_mem *mem)
+{
+	if (mem->exec_path)
+		free(mem->exec_path);
+	if (mem->path_env)
+		free(mem->path_env);
 }

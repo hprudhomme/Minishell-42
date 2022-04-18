@@ -12,6 +12,7 @@ DIR_INCS	:=	include
 
 LST_SRCS	:=	exec/cd_utils.c \
 				exec/cd.c \
+				exec/cd2.c \
 				exec/echo.c \
 				exec/env.c \
 				exec/exec.c \

@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 22:53:22 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/13 08:52:06 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 09:44:07 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,11 @@ int	get_future_arg_len(char *arg, char **env, int last_exit)
 {
 	int		cur;
 	int		in_quotes;
-	int		new_in_quotes;
 	int		future_len;
 	char	*var_val;
 
 	cur = 0;
 	in_quotes = 0;
-	new_in_quotes = 0;
 	future_len = 0;
 	while (arg[cur])
 	{
@@ -111,27 +109,20 @@ char	*replace_in_arg(char *arg, char **env, int lex)
 	n_arg = malloc_new_arg(arg, env, lex);
 	if (!n_arg)
 		return (NULL);
-	cur = 0;
+	cur = -1;
 	n_cur = 0;
 	in_quotes = 0;
-	while (arg[cur])
+	while (arg[++cur])
 	{
 		if (set_in_quotes(arg[cur], &in_quotes) == in_quotes)
 			n_arg[n_cur++] = arg[cur];
 		if (in_quotes != 1 && arg[cur] == '$')
 		{
-			n_arg[n_cur - 1] = 0;
 			var_val = get_env(arg + cur, env, lex);
-			if (!var_val)
-			{
-				free(n_arg);
+			if (!replace_var(var_val, n_arg, &n_cur))
 				return (NULL);
-			}
-			n_cur += ft_strcat(n_arg + n_cur - 1, var_val) - 1;
-			free(var_val);
 			cur += get_envvar_size(arg + cur) - 1;
 		}
-		cur++;
 	}
 	return (n_arg);
 }

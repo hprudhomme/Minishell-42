@@ -13,8 +13,8 @@
 #include "../../include/minishell.h"
 
 /*
-	Print the error corresponding to the given error code
-*/
+   Print the error corresponding to the given error code
+   */
 static int	print_error(int error_code, char *content)
 {
 	if (error_code == 1)
@@ -31,15 +31,15 @@ static int	print_error(int error_code, char *content)
 }
 
 /*
-	Return 1 on syntax error, 0 if there is no error
-	Error :	The env name starts with a number
-			The env name contains other chars than [A-Z][a-z][0-9]_
-			The arg doesn't contain an equal sign
-	Display an error with ft_printf when the error is not the missing equal sign
+   Return 1 on syntax error, 0 if there is no error
+Error :	The env name starts with a number
+The env name contains other chars than [A-Z][a-z][0-9]_
+The arg doesn't contain an equal sign
+Display an error with ft_printf when the error is not the missing equal sign
 
-	E.g.:	1name=oliv
-			na-me=oliv
-			name = oliv
+E.g.:	1name=oliv
+na-me=oliv
+name = oliv
 */
 int	check_format(char	*arg)
 {
@@ -65,11 +65,11 @@ int	check_format(char	*arg)
 }
 
 /*
-	Parse the current string (an arg) and add it to mem->my_env
-	Return 0 on malloc error
-	Return 1 on succeed
-	Return 2 on command error (bad syntax, etc.)
-*/
+   Parse the current string (an arg) and add it to mem->my_env
+   Return 0 on malloc error
+   Return 1 on succeed
+   Return 2 on command error (bad syntax, etc.)
+   */
 int	ft_export(t_mem *mem, char *s)
 {
 	char	**new;
@@ -82,7 +82,7 @@ int	ft_export(t_mem *mem, char *s)
 	temp = ft_split(s, '=');
 	if (!temp)
 		return (0);
-	if (is_in_env(mem->my_env, temp[0])) // TODO : there is malloc in it
+	if (is_in_env(mem->my_env, temp[0]))
 	{
 		new = ft_unset(mem, temp[0]);
 		if (!temp)
@@ -97,9 +97,9 @@ int	ft_export(t_mem *mem, char *s)
 }
 
 /*
-	Run the function ft_export on every args
-	Return 0 on malloc error (some env var may have been set)
-*/
+   Run the function ft_export on every args
+   Return 0 on malloc error (some env var may have been set)
+   */
 int	ft_exports(t_mem *mem, char **args)
 {
 	int	i;

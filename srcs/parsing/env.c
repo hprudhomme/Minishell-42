@@ -6,12 +6,16 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 09:26:28 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/15 11:54:00 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 09:41:32 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+/*
+	Return the len of an env var name
+	Stop at the first = sign
+*/
 int	env_name_size(char *env)
 {
 	int	cur;
@@ -37,7 +41,11 @@ char	*get_env(char *env_name, char **env, int last_exit)
 
 	if (env_name[1] == '?')
 		return (ft_itoa(last_exit));
+	else if (contains_only(env_name, '$'))
+		return (ft_strdup(env_name));
 	else if (env_name[1] == '$')
+		return (ft_strdup("$"));
+	else if (env_name[1] == '"' || env_name[1] == '\'')
 		return (ft_strdup("$"));
 	else if (!ft_isalpha(env_name[1]))
 		return (ft_strdup(""));
@@ -61,10 +69,12 @@ int	get_envvar_size(char *str)
 	int	cur;
 	int	starts_with_num;
 
+	if (contains_only(str, '$'))
+		return (ft_strlen(str));
 	if (!ft_strcmp(str, "$?"))
 		return (2);
 	starts_with_num = 0;
-	if (!ft_isalpha(str[1]) && ft_isdigit(str[1]))
+	if (ft_isdigit(str[1]))
 		starts_with_num = 1;
 	cur = 0;
 	while (str[cur] || (cur == 0 && str[cur] == '$'))
