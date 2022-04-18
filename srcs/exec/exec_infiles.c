@@ -6,17 +6,17 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 09:00:49 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 09:00:50 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 21:28:06 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 /*
-   if there is a << in command
-   open a tmpfile
-   new prompt, write buf in it
-   */
+	if there is a << in command
+	open a tmpfile
+	new prompt, write buf in it
+*/
 
 void	handle_heredocs(t_mem *mem, t_cmdlst *lst)
 {
@@ -27,9 +27,9 @@ void	handle_heredocs(t_mem *mem, t_cmdlst *lst)
 	buf = readline("heredocs>>> ");
 	while (1)
 	{
-		if (strcmp(buf, lst->heredocs[0]) == 0)
+		if (ft_strcmp(buf, lst->heredocs[0]) == 0)
 			break ;
-		write(fd, buf, strlen(buf));
+		write(fd, buf, ft_strlen(buf));
 		write(fd, "\n", 1);
 		buf = readline("heredocs>>> ");
 	}
@@ -41,8 +41,8 @@ void	handle_heredocs(t_mem *mem, t_cmdlst *lst)
 }
 
 /*
-   set up infiles (< et <<)
-   */
+	set up infiles (< et <<)
+*/
 
 void	setup_infiles(t_cmdlst *lst, t_mem *mem)
 {
@@ -59,9 +59,9 @@ void	setup_infiles(t_cmdlst *lst, t_mem *mem)
 }
 
 /*
-   if there was a << in command
-   delete tmpfile
-   */
+	if there was a << in command
+	delete tmpfile
+*/
 
 void	delete_tpmfile(t_mem *mem)
 {

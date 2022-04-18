@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:57:56 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 09:47:06 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 21:21:24 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,6 +225,7 @@ int			is_sep(char *str);
 
 // ft_utils.c
 int			ft_strcmp(char *s1, char *s2);
+int			strcmp_len(char *s1, char *s2);
 int			ft_strcat(char *dst, char *src);
 char		*ft_strldup(const char *s1, size_t size);
 // utils.c

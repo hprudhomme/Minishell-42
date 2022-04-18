@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 11:22:48 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/15 11:25:20 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 21:21:24 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,19 @@
 /*
 	Return 0 when the whole s1 is the same as the start of s2
 */
-int	ft_strcmp(char *s1, char *s2)
+int	strcmp_len(char *s1, char *s2)
 {
 	return (ft_strncmp(s1, s2, ft_strlen(s1)));
+}
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	while (*s1 == *s2 && *s1)
+	{
+		s1++;
+		s2++;
+	}
+	return (*s1 - *s2);
 }
 
 /*

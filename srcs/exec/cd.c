@@ -6,15 +6,15 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 09:00:39 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 09:00:40 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 21:24:34 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 /*
-   change path of pwd in env for absolute path
-   */
+	change path of pwd in env for absolute path
+*/
 
 char	**change_pwd_absolute(char *path, char **my_env)
 {
@@ -44,8 +44,8 @@ char	**change_pwd_absolute(char *path, char **my_env)
 }
 
 /*
-   change path of pwd in env for relativ path
-   */
+	change path of pwd in env for relativ path
+*/
 
 char	**change_pwd_relativ(char *path, char **my_env)
 {
@@ -60,9 +60,9 @@ char	**change_pwd_relativ(char *path, char **my_env)
 	temp2 = ft_split(pwd, '/');
 	while (temp[i])
 	{
-		if (strcmp(temp[i], "..") == 0)
+		if (ft_strcmp(temp[i], "..") == 0)
 			temp2 = supp_last_elem_tab2d(temp2);
-		else if (strcmp(temp[i], ".") != 0)
+		else if (ft_strcmp(temp[i], ".") != 0)
 			temp2 = append_tab_2d(temp2, temp[i]);
 		i++;
 	}
@@ -75,8 +75,8 @@ char	**change_pwd_relativ(char *path, char **my_env)
 }
 
 /*
-   change env (oldpwd and pwd) depending on if it's absolute or relativ path
-   */
+	change env (oldpwd and pwd) depending on if it's absolute or relativ path
+*/
 
 char	**change_my_env(char **cmd, char **my_env)
 {
@@ -101,9 +101,9 @@ char	**change_my_env(char **cmd, char **my_env)
 }
 
 /*
-   if can't change directory (chdir return -1), exit statut = 1
-   else change env (pwd, oldpwd), exit statut = 0
-   */
+	if can't change directory (chdir return -1), exit statut = 1
+	else change env (pwd, oldpwd), exit statut = 0
+*/
 
 int	change_dir(char **cmd, t_mem *mem)
 {

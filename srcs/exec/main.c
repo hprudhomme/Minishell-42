@@ -6,23 +6,23 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 09:01:31 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 12:14:52 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 21:07:32 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 /*
-   Return a string containing the prompt
-   That string is malloced, it need to be free
-   Return NULL on malloc error
-   If PWD exist, return :
-   /home/cestoliv/Documents/DOCS/IT/Dev/42cursus/Minishell-42
-   >
-   If PWD doesn't exist, return :
-   minishell >
-   The arrow color is red if the previous command failed
-   */
+	Return a string containing the prompt
+	That string is malloced, it need to be free
+	Return NULL on malloc error
+	If PWD exist, return :
+		/home/cestoliv/Documents/DOCS/IT/Dev/42cursus/Minishell-42
+		>
+	If PWD doesn't exist, return :
+		minishell >
+	The arrow color is red if the previous command failed
+*/
 char	*get_prompt(t_mem *mem)
 {
 	char	*prompt;
@@ -48,14 +48,15 @@ char	*get_prompt(t_mem *mem)
 	return (prompt);
 }
 
-void handle_signals(int signo) {
-  if (signo == SIGINT)
-  {
-    write(1, "\n", 1);
-    rl_on_new_line();
-    rl_replace_line("", 0);
-    rl_redisplay();
-  }
+void	handle_signals(int signo)
+{
+	if (signo == SIGINT)
+	{
+		ft_printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
 
 char	*take_input(t_mem *mem)
@@ -68,9 +69,9 @@ char	*take_input(t_mem *mem)
 	free(prompt);
 	if (!buf)
 	{
-			write(1, "\n", 1);
-			free_mem(mem, 1);
-			exit(0);
+		ft_printf("\n");
+		free_mem(mem, 1);
+		exit(0);
 	}
 	if (ft_strlen(buf) == 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 09:01:39 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 09:01:40 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 21:07:44 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ char	*try_path(char **path_tab, char *cmd, char *right_path, int i)
 }
 
 /*
-   return a path used as first parameter of execve fct
-   */
+	return a path used as first parameter of execve fct
+*/
 
 char	*find_exec_path(char **path_tab, char *cmd, char *right_path)
 {
@@ -60,8 +60,8 @@ char	*find_exec_path(char **path_tab, char *cmd, char *right_path)
 }
 
 /*
-   return redirect_file_path for outfiles
-   */
+	return redirect_file_path for outfiles
+*/
 
 char	*find_path_redirect_file(char *pwd, char *actuel, char *redirect_path)
 {

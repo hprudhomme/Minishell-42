@@ -6,16 +6,16 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 09:01:41 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 09:01:42 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 21:07:49 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 /*
-   Minishell built-in function (pwd)
-   Print the PWD from the env if found
-   */
+	Minishell built-in function (pwd)
+	Print the PWD from the env if found
+*/
 int	ft_pwd(t_mem *mem)
 {
 	char	*pwd;

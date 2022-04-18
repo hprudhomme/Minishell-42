@@ -6,16 +6,16 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 09:00:41 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 09:00:42 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 21:08:29 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 /*
-   change path of pwd in env
-   return env with new pwd
-   */
+	change path of pwd in env
+	return env with new pwd
+*/
 
 char	**change_pwd(char **temp2, char **my_env)
 {
@@ -46,9 +46,9 @@ char	**change_pwd(char **temp2, char **my_env)
 }
 
 /*
-   change path of oldpwd in env
-   return env with new oldpwd
-   */
+	change path of oldpwd in env
+	return env with new oldpwd
+*/
 
 char	**change_oldpwd(char *pwd, char **my_env)
 {

@@ -6,16 +6,16 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 09:01:44 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 09:01:45 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 21:21:24 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 /*
-   if var isnt find return env without refreshing it
-   else return a refresh env without this var
-   */
+	if var isnt find return env without refreshing it
+	else return a refresh env without this var
+*/
 
 char	**ft_unset(t_mem *mem, char *var)
 {
@@ -34,7 +34,7 @@ char	**ft_unset(t_mem *mem, char *var)
 		temp = ft_split(mem->my_env[i], '=');
 		if (!temp)
 			return (nil(free_array_n(new, j)));
-		if (ft_strcmp(temp[0], var))
+		if (strcmp_len(temp[0], var))
 		{
 			new[j++] = ft_strdup(mem->my_env[i]);
 			if (!new[j - 1])

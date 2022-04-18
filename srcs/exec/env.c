@@ -6,17 +6,17 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 09:00:46 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 09:00:47 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 21:21:24 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 /*
-   Return the value of the given env name
-   Return NULL if the value doesn't exist
-   Return NULL on malloc error
-   */
+	Return the value of the given env name
+	Return NULL if the value doesn't exist
+	Return NULL on malloc error
+*/
 char	*my_getenv(char **env, char *elem)
 {
 	char	*str;
@@ -27,7 +27,7 @@ char	*my_getenv(char **env, char *elem)
 	index = 0;
 	while (env[index])
 	{
-		if (!ft_strcmp(elem, env[index]))
+		if (!strcmp_len(elem, env[index]))
 			break ;
 		index++;
 	}
@@ -40,9 +40,9 @@ char	*my_getenv(char **env, char *elem)
 }
 
 /*
-   Return the a copy of env
-   Return NULL on malloc error
-   */
+	Return the a copy of env
+	Return NULL on malloc error
+*/
 
 char	**copy_env(char **env)
 {
@@ -68,8 +68,8 @@ char	**copy_env(char **env)
 }
 
 /*
-   return index of given elem in env
-   */
+	return index of given elem in env
+*/
 
 int	my_env_index_elem(char **my_env, char *elem)
 {

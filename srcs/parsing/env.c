@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 09:26:28 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 09:41:32 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 21:21:24 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	get_envvar_size(char *str)
 
 	if (contains_only(str, '$'))
 		return (ft_strlen(str));
-	if (!ft_strcmp(str, "$?"))
+	if (!strcmp_len(str, "$?"))
 		return (2);
 	starts_with_num = 0;
 	if (ft_isdigit(str[1]))

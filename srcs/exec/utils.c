@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 09:01:46 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 09:01:47 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 21:25:58 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	is_in_env(char **my_env, char *s)
 	while (my_env[i])
 	{
 		temp = ft_split(my_env[i], '=');
-		if (strcmp(temp[0], s) == 0)
+		if (ft_strcmp(temp[0], s) == 0)
 			break ;
 		free_tab_2d(temp);
 		temp = NULL;

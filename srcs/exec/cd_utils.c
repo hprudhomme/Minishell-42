@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 09:00:36 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 09:00:37 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 21:08:04 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ char	**supp_last_elem_tab2d(char **tab)
 }
 
 /*
-   return new pwd path
-   */
+	return new pwd path
+*/
 
 char	*concat_path(char **tab, char *str)
 {

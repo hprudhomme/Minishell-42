@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:31:53 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/15 11:40:11 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 21:21:24 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	append_in_args(t_list **args, char *op, char ***array)
 	if (!(*args))
 		return (1);
 	if (ft_strlen(op) == ft_strlen((*args)->content)
-		&& !ft_strcmp((*args)->content, op))
+		&& !strcmp_len((*args)->content, op))
 	{
 		*args = (*args)->next;
 		if (*args && !strarr_append(array, (*args)->content))

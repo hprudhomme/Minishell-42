@@ -6,15 +6,15 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 09:01:01 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 09:01:02 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 21:25:50 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 /*
-   Print the error corresponding to the given error code
-   */
+	Print the error corresponding to the given error code
+*/
 static int	print_error(int error_code, char *content)
 {
 	if (error_code == 14)
@@ -55,27 +55,27 @@ void	exec_cmd(t_mem *mem, t_cmdlst *lst)
 }
 
 /*
-   exec builtin cmd that change env
-   */
+	exec builtin cmd that change env
+*/
 
 int	do_builtin(t_cmdlst *lst, t_mem *mem)
 {
-	if (strcmp(lst->command, "cd") == 0 && lst->todo_next != 1)
+	if (ft_strcmp(lst->command, "cd") == 0 && lst->todo_next != 1)
 		ft_cd(lst->args, mem);
-	if (strcmp(lst->command, "export") == 0 && lst->todo_next != 1)
+	if (ft_strcmp(lst->command, "export") == 0 && lst->todo_next != 1)
 		if (!ft_exports(mem, lst->args))
 			return (0);
-	if (strcmp(lst->command, "unset") == 0 && lst->todo_next != 1)
+	if (ft_strcmp(lst->command, "unset") == 0 && lst->todo_next != 1)
 		if (!ft_unsets(mem, lst->args))
 			return (0);
 	return (1);
 }
 
 /*
-   hearts of exec that loop over the number of outfiles
-   create a child process with fork
-   exec cmd
-   */
+	hearts of exec that loop over the number of outfiles
+	create a child process with fork
+	exec cmd
+*/
 
 void	exec_next(t_cmdlst *lst, t_mem *mem, int i)
 {
@@ -84,17 +84,17 @@ void	exec_next(t_cmdlst *lst, t_mem *mem, int i)
 	if (mem->exec_loop->ret == 0)
 		exec_cmd(mem, lst);
 	waitpid(mem->exec_loop->ret, &(mem->exit_statue), 0);
-	if ((strcmp(lst->command, "cd") == 0 && lst->todo_next != 1)
-		|| (strcmp(lst->command, "export") == 0 && lst->todo_next != 1)
-		|| (strcmp(lst->command, "unset") == 0 && lst->todo_next != 1))
+	if ((ft_strcmp(lst->command, "cd") == 0 && lst->todo_next != 1)
+		|| (ft_strcmp(lst->command, "export") == 0 && lst->todo_next != 1)
+		|| (ft_strcmp(lst->command, "unset") == 0 && lst->todo_next != 1))
 		do_builtin(lst, mem);
 	if (lst->heredocs)
 		delete_tpmfile(mem);
 }
 
 /*
-   loop to execute one or multiple command in lst
-   */
+	loop to execute one or multiple command in lst
+*/
 
 void	execute(t_cmdlst *lst, t_mem *mem)
 {

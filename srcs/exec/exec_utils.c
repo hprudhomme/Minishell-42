@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 09:00:56 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 09:00:57 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 21:09:47 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ void	set_up_outfiles(t_mem *mem, t_cmdlst *lst)
 }
 
 /*
-   if next is not a pipe
-   -> if outfiles (> or >>)
-   -> else
-   else
-   -> create a pipe
-   it's all about where u need to put the output :)
-   */
+	if next is not a pipe
+		-> if outfiles (> or >>)
+		-> else
+	else
+		-> create a pipe
+		it's all about where u need to put the output :)
+*/
 
 void	set_up_output(t_mem *mem, t_cmdlst *lst, int i)
 {

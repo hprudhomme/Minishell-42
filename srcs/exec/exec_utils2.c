@@ -6,41 +6,41 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 09:00:59 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 09:01:00 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/18 21:27:36 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
 /*
-   Return 2 if is builtin and change env
-   Return 1 if is builtin
-   return 0 if not builtin
-   */
+	Return 2 if is builtin and change env
+	Return 1 if is builtin
+	return 0 if not builtin
+*/
 
 int	is_builtin(char *cmd)
 {
-	if (strcmp(cmd, "cd") == 0)
+	if (ft_strcmp(cmd, "cd") == 0)
 		return (2);
-	if (strcmp(cmd, "exit") == 0)
+	if (ft_strcmp(cmd, "exit") == 0)
 		return (2);
-	if (strcmp(cmd, "pwd") == 0)
+	if (ft_strcmp(cmd, "pwd") == 0)
 		return (1);
-	if (strcmp(cmd, "env") == 0)
+	if (ft_strcmp(cmd, "env") == 0)
 		return (1);
-	if (strcmp(cmd, "echo") == 0)
+	if (ft_strcmp(cmd, "echo") == 0)
 		return (1);
-	if (strcmp(cmd, "export") == 0)
+	if (ft_strcmp(cmd, "export") == 0)
 		return (2);
-	if (strcmp(cmd, "unset") == 0)
+	if (ft_strcmp(cmd, "unset") == 0)
 		return (2);
 	return (0);
 }
 
 /*
-   init var for exec loop
-   call before exec loop or at the end of loop when next_to_do is && or ||
-   */
+	init var for exec loop
+	call before exec loop or at the end of loop when next_to_do is && or ||
+*/
 
 void	init_exec(t_mem *mem, t_cmdlst *lst)
 {
@@ -54,9 +54,9 @@ void	init_exec(t_mem *mem, t_cmdlst *lst)
 }
 
 /*
-   reset var for exec loop
-   call after exec loop or at the end of loop when next_to_do is && or ||
-   */
+	reset var for exec loop
+	call after exec loop or at the end of loop when next_to_do is && or ||
+*/
 
 void	reset_exec(t_mem *mem)
 {
@@ -73,7 +73,7 @@ void	reset_exec(t_mem *mem)
 
 int	is_exiting(t_cmdlst *lst)
 {
-	if ((strcmp(lst->command, "exit") == 0) && ((lst->todo_next == 0
+	if ((ft_strcmp(lst->command, "exit") == 0) && ((lst->todo_next == 0
 				&& cmdlist_len(lst) == 1) || lst->todo_next == 2
 			|| lst->todo_next == 3))
 		return (1);
@@ -82,15 +82,16 @@ int	is_exiting(t_cmdlst *lst)
 
 int	exec_builtin(t_mem *mem, t_cmdlst *lst)
 {
-	if (strcmp(lst->command, "cd") == 0 || strcmp(lst->command, "exit") == 0
-		|| strcmp(lst->command, "export") == 0
-		|| strcmp(lst->command, "unset") == 0)
+	if (ft_strcmp(lst->command, "cd") == 0
+		|| ft_strcmp(lst->command, "exit") == 0
+		|| ft_strcmp(lst->command, "export") == 0
+		|| ft_strcmp(lst->command, "unset") == 0)
 		return (0);
-	if (strcmp(lst->command, "pwd") == 0)
+	if (ft_strcmp(lst->command, "pwd") == 0)
 		ft_pwd(mem);
-	if (strcmp(lst->command, "env") == 0)
+	if (ft_strcmp(lst->command, "env") == 0)
 		ft_env(mem);
-	if (strcmp(lst->command, "echo") == 0)
+	if (ft_strcmp(lst->command, "echo") == 0)
 		ft_echo(lst->args, mem);
 	return (1);
 }
