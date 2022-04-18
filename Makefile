@@ -1,7 +1,11 @@
 NAME		:=	minishell
 
 CC			:=	clang
-FLAGS		:=	-lreadline -Llibft -lft
+ifdef LDFLAGS
+	FLAGS		:=	$(LDFLAGS)
+else
+	FLAGS		:=	$(LDFLAGS) -lreadline -Llibft -lft
+endif
 FLAGS		+=	-Wall -Wextra -Werror
 #FLAGS		+=	-g -fsanitize=address
 
@@ -52,7 +56,11 @@ END			:=	\033[0m
 
 $(DIR_OBJS)/%.o: $(DIR_SRCS)/%.c $(INCS) Makefile libft/libft.a
 	mkdir -p $(DIR_OBJS) $(DIR_OBJS)/parsing $(DIR_OBJS)/exec
+ifdef CPPFLAGS
+	$(CC) -I $(DIR_INCS) -I $(CPPFLAGS) -c $< -o $@
+else
 	$(CC) -I $(DIR_INCS) -c $< -o $@
+endif
 	printf "$(ERASE)$(BLUE) > Compilation :$(END) $<"
 
 all:		libft $(NAME)
