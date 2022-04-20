@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 09:00:49 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 21:28:06 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/20 11:38:40 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ void	handle_heredocs(t_mem *mem, t_cmdlst *lst)
 
 void	setup_infiles(t_cmdlst *lst, t_mem *mem)
 {
-	char	*str;
-
 	if (lst->infiles)
 		mem->exec_loop->fdin = open(lst->infiles[0], O_RDONLY);
 	if (lst->heredocs)

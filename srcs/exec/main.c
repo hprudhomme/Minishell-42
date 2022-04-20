@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 09:01:31 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/20 11:33:04 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/20 11:39:39 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int	main(int ac, char **av, char **env)
 	t_cmdlst	*command_list;
 	char		*str;
 
+	(void)ac;
+	(void)av;
 	mem = initialize_mem();
 	signal(SIGINT, handle_signals);
 	mem->path_tab = ft_split(getenv("PATH"), ':');

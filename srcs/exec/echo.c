@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 09:00:44 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 09:00:45 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/20 11:38:18 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	echo_arg(char *str)
 
 int	ft_echo(char **s, t_mem *mem)
 {
-	char	*tmp;
 	int		i;
 	int		has_n;
 

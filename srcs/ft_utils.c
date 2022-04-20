@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 11:22:48 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 21:21:24 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/20 11:41:49 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	ft_strcat(char *dst, char *src)
 	Same as ft_strdup, but with a size params to limit
 	the length of the future string.
 */
-char	*ft_strldup(const char *s1, size_t size)
+char	*ft_strldup(const char *s1, int size)
 {
 	int		s1_len;
 	char	*dup;

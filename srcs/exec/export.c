@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 10:50:09 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 21:10:41 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/20 11:39:08 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,7 @@ int	ft_export(t_mem *mem, char *s)
 {
 	char	**new;
 	char	**temp;
-	int		i;
 
-	i = 0;
 	if (check_format(s))
 		return (2);
 	temp = ft_split(s, '=');

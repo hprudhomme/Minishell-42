@@ -6,7 +6,7 @@ ifdef LDFLAGS
 else
 	FLAGS		:=	-lreadline -Llibft -lft
 endif
-FLAGS		+=	-Wall -Wextra -Werror
+CFLAGS		:=	-Wall -Wextra -Werror
 #FLAGS		+=	-g -fsanitize=address
 
 DIR_SRCS	:=	srcs
@@ -57,16 +57,16 @@ END			:=	\033[0m
 $(DIR_OBJS)/%.o: $(DIR_SRCS)/%.c $(INCS) Makefile libft/libft.a
 	mkdir -p $(DIR_OBJS) $(DIR_OBJS)/parsing $(DIR_OBJS)/exec
 ifdef CPPFLAGS
-	$(CC) -I $(DIR_INCS) $(CPPFLAGS) -c $< -o $@
+	$(CC) -I $(DIR_INCS) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 else
-	$(CC) -I $(DIR_INCS) -c $< -o $@
+	$(CC) -I $(DIR_INCS) $(CFLAGS) -c $< -o $@
 endif
 	printf "$(ERASE)$(BLUE) > Compilation :$(END) $<"
 
 all:		libft $(NAME)
 
 $(NAME):	$(OBJS)
-	$(CC) $(OBJS) $(FLAGS) -o $@
+	$(CC) $(OBJS) $(FLAGS) $(CFLAGS) -o $@
 	printf "$(ERASE)$(GREEN)$@ made\n$(END)"
 
 libft:

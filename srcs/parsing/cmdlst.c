@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:31:53 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 21:21:24 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/20 11:40:22 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,6 @@ int	append_in_args(t_list **args, char *op, char ***array)
 */
 int	cmdlist_append_args(t_list **args, t_cmdlst *new)
 {
-	int		ret;
-
 	while (*args && !get_arg_type((*args)->content))
 	{
 		if (!append_out_args(args, ">", &(new->outfiles)))

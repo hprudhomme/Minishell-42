@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 19:04:30 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 21:21:24 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/20 11:40:51 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,8 @@ t_outlst	*outlst_last(t_outlst *lst)
 int	outlst_append(t_outlst **lst, char *filename, char *spe)
 {
 	t_outlst	*new;
-	t_outlst	*first;
 	int			action;
 
-	first = *lst;
 	action = OUT_WRITE;
 	if (ft_strlen(spe) == 2)
 		action = OUT_APPEND;

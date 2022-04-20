@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 09:01:39 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 21:07:44 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/20 11:40:03 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ char	*try_path(char **path_tab, char *cmd, char *right_path, int i)
 char	*find_exec_path(char **path_tab, char *cmd, char *right_path)
 {
 	int	i;
-	int	j;
-	int	x;
 
 	if (cmd[0] == '.' || cmd[0] == '/')
 		return (ft_strdup(cmd));
