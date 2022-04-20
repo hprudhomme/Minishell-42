@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 09:01:27 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 09:01:28 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/20 11:32:59 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,11 @@ void	free_exec_loop(t_exec_loop *exec_loop)
 	free(exec_loop);
 }
 
-void	free_mem(t_mem *mem, int exiting)
+int	free_mem(t_mem *mem)
 {
+	int	exit_status;
+
+	exit_status = mem->last_cmd_exit_statue;
 	if (mem->my_env)
 		free_tab_2d(mem->my_env);
 	if (mem->path_tab)
@@ -52,8 +55,7 @@ void	free_mem(t_mem *mem, int exiting)
 		free_exec_loop(mem->exec_loop);
 	if (mem)
 		free(mem);
-	if (exiting)
-		exit(EXIT_SUCCESS);
+	return (exit_status);
 }
 
 void	free_path(t_mem *mem)

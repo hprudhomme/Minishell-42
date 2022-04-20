@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 09:01:01 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 21:25:50 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/20 11:32:23 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	exec_cmd(t_mem *mem, t_cmdlst *lst)
 				print_error(errno, lst->command);
 			else
 				ft_printf("%d %s\n", errno, strerror(errno));
+			if (errno == 14)
+				exit(127);
 			free_path(mem);
 			exit(1);
 		}
@@ -84,6 +86,7 @@ void	exec_next(t_cmdlst *lst, t_mem *mem, int i)
 	if (mem->exec_loop->ret == 0)
 		exec_cmd(mem, lst);
 	waitpid(mem->exec_loop->ret, &(mem->exit_statue), 0);
+	mem->exit_statue = WEXITSTATUS(mem->exit_statue);
 	if ((ft_strcmp(lst->command, "cd") == 0 && lst->todo_next != 1)
 		|| (ft_strcmp(lst->command, "export") == 0 && lst->todo_next != 1)
 		|| (ft_strcmp(lst->command, "unset") == 0 && lst->todo_next != 1))

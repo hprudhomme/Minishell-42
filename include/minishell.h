@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:57:56 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 22:37:09 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/20 10:57:44 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ t_mem		*initialize_mem(void);
 
 // free
 
-void		free_mem(t_mem *mem, int exiting);
+int			free_mem(t_mem *mem);
 void		free_path(t_mem *mem);
 
 //	path

@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 09:01:31 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/18 21:07:32 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/20 11:33:04 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,7 @@ char	*take_input(t_mem *mem)
 	if (!buf)
 	{
 		ft_printf("\n");
-		free_mem(mem, 1);
-		exit(0);
+		exit(free_mem(mem));
 	}
 	if (ft_strlen(buf) == 0)
 	{
@@ -105,5 +104,5 @@ int	main(int ac, char **av, char **env)
 		execute(command_list, mem);
 		cmdlst_clear(&command_list);
 	}
-	return (0);
+	return (free_mem(mem));
 }
