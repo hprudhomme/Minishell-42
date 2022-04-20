@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 19:57:56 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/20 11:41:56 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/20 12:31:07 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,18 @@
 # include <string.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-
 # include "../libft/include/libft.h"
+
+/*
+	global
+*/
+
+extern pid_t		g_pid;
 
 /*
 	EXEC
 */
+
 typedef struct s_list2_simple_cmd
 {
 	int							nb;
@@ -57,7 +63,6 @@ typedef struct s_exec_loop
 	int		fdin;
 	int		fdout;
 	int		fdpipe[2];
-	int		ret;
 	char	*redirect_file_path;
 	char	*right_path;
 }	t_exec_loop;

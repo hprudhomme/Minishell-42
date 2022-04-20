@@ -6,11 +6,13 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 09:01:31 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/20 11:39:39 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/20 12:32:13 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+int	g_pid = 0;
 
 /*
 	Return a string containing the prompt
@@ -48,14 +50,26 @@ char	*get_prompt(t_mem *mem)
 	return (prompt);
 }
 
+/*
+	On SIGINT => new prompt
+	On SIGQUIT => nothing
+*/
 void	handle_signals(int signo)
 {
+	if (g_pid)
+		return ;
 	if (signo == SIGINT)
 	{
 		ft_printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
+	}
+	else if (signo == SIGQUIT)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+		ft_printf("  \b\b");
 	}
 }
 
@@ -89,8 +103,10 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
+	g_pid = 0;
 	mem = initialize_mem();
 	signal(SIGINT, handle_signals);
+	signal(SIGQUIT, handle_signals);
 	mem->path_tab = ft_split(getenv("PATH"), ':');
 	mem->my_env = copy_env(env);
 	ft_printf("\033[1;1H\033[2J");

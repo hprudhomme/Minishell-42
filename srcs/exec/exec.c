@@ -6,7 +6,7 @@
 /*   By: ocartier <ocartier@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 09:01:01 by ocartier          #+#    #+#             */
-/*   Updated: 2022/04/20 11:32:23 by ocartier         ###   ########.fr       */
+/*   Updated: 2022/04/20 12:33:02 by ocartier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,11 @@ int	do_builtin(t_cmdlst *lst, t_mem *mem)
 void	exec_next(t_cmdlst *lst, t_mem *mem, int i)
 {
 	init_outlst_loop(mem, lst, i);
-	mem->exec_loop->ret = fork();
-	if (mem->exec_loop->ret == 0)
+	g_pid = fork();
+	if (g_pid == 0)
 		exec_cmd(mem, lst);
-	waitpid(mem->exec_loop->ret, &(mem->exit_statue), 0);
+	waitpid(g_pid, &(mem->exit_statue), 0);
+	g_pid = 0;
 	mem->exit_statue = WEXITSTATUS(mem->exit_statue);
 	if ((ft_strcmp(lst->command, "cd") == 0 && lst->todo_next != 1)
 		|| (ft_strcmp(lst->command, "export") == 0 && lst->todo_next != 1)
